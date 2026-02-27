@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Daily Brief — February 27, 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 48px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .header .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .header .subtitle {
+      color: #90a4ae;
+      font-size: 14px;
+    }
+
+    .header .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(79, 195, 247, 0.12);
+      border: 1px solid rgba(79, 195, 247, 0.3);
+      color: #4fc3f7;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .news-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 12px 0 0 12px;
+    }
+
+    .card.us::before { background: #4fc3f7; }
+    .card.china::before { background: #ef5350; }
+    .card.global::before { background: #66bb6a; }
+    .card.industry::before { background: #ffa726; }
+    .card.safety::before { background: #ab47bc; }
+
+    .card:hover {
+      border-color: #3a3a3a;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: #555;
+      min-width: 28px;
+      margin-top: 2px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .tag-us { background: rgba(79, 195, 247, 0.15); color: #4fc3f7; }
+    .tag-china { background: rgba(239, 83, 80, 0.15); color: #ef5350; }
+    .tag-global { background: rgba(102, 187, 106, 0.15); color: #66bb6a; }
+    .tag-industry { background: rgba(255, 167, 38, 0.15); color: #ffa726; }
+    .tag-safety { background: rgba(171, 71, 188, 0.15); color: #ce93d8; }
+    .tag-policy { background: rgba(38, 198, 218, 0.15); color: #26c6da; }
+    .tag-breaking { background: rgba(255, 82, 82, 0.2); color: #ff5252; }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .card-brief {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .meta-item .icon {
+      font-size: 12px;
+    }
+
+    .meta-item a {
+      color: #4fc3f7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .meta-item a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid #1e1e1e;
+      color: #444;
+      font-size: 12px;
+    }
+
+    .footer strong {
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 26px; }
+      .card-title { font-size: 16px; }
+      .card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">AI Daily Brief</div>
+  <h1>🤖 Top AI Stories</h1>
+  <div class="subtitle">Friday, February 27, 2026 · Curated for the global AI-aware reader</div>
+  <div class="badge-row">
+    <span class="badge">🇺🇸 United States</span>
+    <span class="badge">🇨🇳 China</span>
+    <span class="badge">🌍 Global</span>
+    <span class="badge">14 Stories</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- US Section -->
+  <div class="section-label">🇺🇸 United States</div>
+  <div class="news-grid">
+
+    <!-- 1 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#01</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">Anthropic Rejects Pentagon Ultimatum — Refuses Unrestricted Military AI Use</div>
+      <div class="card-brief">
+        Anthropic CEO Dario Amodei publicly rejected the Pentagon's demand for unrestricted use of Claude AI, citing two red lines: no mass surveillance of American citizens and no fully autonomous weapons. The Pentagon had threatened contract termination and potential "supply chain risk" designation. Anthropic maintains current AI isn't reliable enough for autonomous weapons and that mass domestic surveillance violates democratic values. The standoff highlights growing tensions between AI safety commitments and national security demands.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> HeyGoTrade / The Hindu</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.heygotrade.com/en/news/anthropic-refuses-pentagons-ultimatum-on-unrestricted-ai-use/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#02</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">xAI Loses Half Its Founding Team — Co-Founder Toby Pohlen Resigns</div>
+      <div class="card-brief">
+        Elon Musk's xAI has lost its seventh co-founder in under three years, with Toby Pohlen announcing his resignation. The departure brings founder turnover above 50%, raising questions about internal dynamics at the AI startup. Despite the exodus, xAI continues aggressive hiring and recently signed a deal allowing Grok to be used in Pentagon classified systems — taking a starkly different stance on military AI use than rival Anthropic.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Finviz / Silicon Republic</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://finviz.com/news/324746/elon-musks-xai-loses-half-its-founders-as-toby-pohlen-steps-down-amid-ipo-push" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#03</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Google Launches Nano Banana 2 Globally — Free AI Image Generation for All</div>
+      <div class="card-brief">
+        Google has globally released "Nano Banana 2" (Gemini 3.1 Flash Image), its latest AI image generation model. The free-to-public tool offers faster high-resolution image generation with improved text rendering, multi-language support, and real-time web search integration. It's being rolled out across Google products including Gemini app, AI Mode in Search, Lens, AI Studio, and Vertex AI. The launch signals Google's push to dominate consumer AI creative tools.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Hindu / CW Taiwan</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.thehindu.com/sci-tech/technology/google-rolls-out-nano-banana-2-after-viral-success-of-ai-image-generation-tool/article70682467.ece" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#04</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Meta Signs Multi-Billion Dollar Deal to Rent Google AI Chips</div>
+      <div class="card-brief">
+        Meta Platforms has entered a multi-billion dollar agreement to rent AI chips from Google for developing new AI models. The deal represents a significant shift in cloud AI infrastructure dynamics, with Meta diversifying beyond its traditional suppliers. The partnership highlights Google's growing strength in AI infrastructure and Meta's aggressive AI investment strategy as competition intensifies across the sector.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Business Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.businesstimes.com.sg/international/global/meta-signs-multi-billion-dollar-deal-rent-google-ai-chips-report" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#05</div>
+        <div class="card-tags">
+          <span class="tag tag-safety">Safety</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Strengthens Safety Protocols After Canada School Shooting</div>
+      <div class="card-brief">
+        OpenAI announced enhanced safety measures following a Canadian school shooting where the perpetrator had used ChatGPT. The company will establish a direct law enforcement contact point and improve detection for repeat violators. OpenAI revealed the shooter had been banned in June 2025 but evaded restrictions with a second account. The incident has intensified scrutiny of AI platforms' responsibility in monitoring and reporting potentially harmful use.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Daily Maverick / The Hindu</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.dailymaverick.co.za/article/2026-02-27-openai-outlines-steps-to-boost-safety-mety-measures-in-response-to-canada-school/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#06</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Reportedly Raising $100 Billion War Chest for Acquisitions</div>
+      <div class="card-brief">
+        OpenAI is reportedly in the process of raising an additional $100 billion in cash, fueling speculation about major acquisitions and talent recruitment drives. The fundraising comes as the AI arms race intensifies and would give OpenAI significant firepower to acquire competitors, secure compute resources, or poach top researchers. The company also appointed Arvind KC as its new Chief People Officer to manage its rapidly expanding workforce.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Information / AI Magazine</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.theinformation.com/newsletters/dealmaker/openai-builds-m-war-chest" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#07</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Nvidia Stock Drops 5.5% Despite Record Earnings — Michael Burry Flags Risk</div>
+      <div class="card-brief">
+        Nvidia shares fell over 5% on February 27 despite reporting 65% YoY revenue growth to $216B. Legendary investor Michael Burry warned of "structural downside risk" from $95.2 billion in non-cancellable supply contracts with manufacturers like TSMC — up from $16B a year ago. Burry drew parallels to Cisco's dot-com collapse. CEO Jensen Huang's comments about software stocks being oversold prompted sector rotation from chips to SaaS. Nvidia remains the world's most valuable company at $4.6T market cap.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> HeyGoTrade / Nasdaq</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.heygotrade.com/en/news/michael-burry-flags-nvidias-growing-risk-after-earnings-beat/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- China Section -->
+  <div class="section-label">🇨🇳 China</div>
+  <div class="news-grid">
+
+    <!-- 8 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#08</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">Anthropic Accuses DeepSeek, Moonshot AI & MiniMax of "Industrial-Scale" Data Theft</div>
+      <div class="card-brief">
+        Anthropic has accused three Chinese AI firms of orchestrating massive distillation attacks against Claude. The companies allegedly created ~24,000 fraudulent accounts to extract over 16 million conversation records. Moonshot AI reportedly extracted 3.4M records, DeepSeek 150K. A Trump official suggested DeepSeek's latest model heavily relied on distilling from US AI companies. All three Chinese firms have denied wrongdoing. The allegations represent one of the most serious IP theft claims in AI history.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Seoul Economic Daily / Tech Informed</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://en.sedaily.com/international/2026/02/27/anthropic-accuses-deepseek-chinese-ai-firms-of-data-theft" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#09</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">DeepSeek Withholds V4 Model from US Chipmakers — Prioritizes Huawei</div>
+      <div class="card-brief">
+        DeepSeek has reportedly deviated from industry norms by withholding early access to its upcoming V4 model from US chipmakers Nvidia and AMD, instead sharing it exclusively with domestic partners including Huawei. The move is viewed as strategic retaliation amid US-China tech tensions and export controls. DeepSeek's low-cost models have already triggered a global AI price war. The company's V3.2 model ranks among the top five most-used on OpenRouter.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Standard / Seeking Alpha</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.thestandard.com.hk/tech-and-startup/article/325308/DeepSeek-withholds-latest-AI-model-from-US-chipmakers-including-Nvidia-sources-say" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#10</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Moonshot AI Seeking $12 Billion Valuation — Kimi K2.5 Revenue Surges</div>
+      <div class="card-brief">
+        Moonshot AI is reportedly seeking up to $12 billion in a new funding round led by existing investors Alibaba and Tencent. The company's Kimi K2.5 model has seen cumulative revenue in the past 20 days surpass its entire 2025 total. Both Kimi K2.5 and DeepSeek V3.2 rank in OpenRouter's top five most-used models. The milestone comes as China's AI token usage in February 2026 exceeded that of the US for the first time, marking a historic shift in global AI consumption.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Tech in Asia / Caixin Global</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.techinasia.com/news/chinas-moonshot-ai-reportedly-seeks-12b-valuation-in-new-funding" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#11</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Alibaba Debuts "Wonder on Ice" AI Experience at Milano Cortina Olympics</div>
+      <div class="card-brief">
+        Alibaba unveiled "Wonder on Ice," an immersive AI experience at Milan's Sforza Castle for the Milano Cortina 2026 Winter Olympics. Powered by Alibaba Cloud and Qwen3 models, it marks the first use of LLM technology in Olympic fan engagement. Separately, Alibaba launched Qwen AI Glasses at MWC 2026 with pre-orders opening in March, and plans to release AI rings and earphones globally throughout 2026. The company also deployed its Zhenwu 810E chip across 10,000-card clusters.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Digital News Asia / Sinchew</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.digitalnewsasia.com/business/alibaba-group-debuts-wonder-ice-immersive-ai-experience-milans-sforza-castle-milano-cortina" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 12 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#12</div>
+        <div class="card-tags">
+          <span class="tag tag-global">Milestone</span>
+        </div>
+      </div>
+      <div class="card-title">China's AI Token Usage Surpasses US for First Time in February 2026</div>
+      <div class="card-brief">
+        China's demand for AI tokens surged 1.3-fold in February 2026, overtaking US usage for the first time in history. The milestone reflects the rapid adoption of DeepSeek, Moonshot AI's Kimi, and other domestic models. Both Kimi K2.5 and DeepSeek V3.2 rank among OpenRouter's top five most-used models. The shift signals a fundamental realignment in global AI consumption patterns as China's cost-effective models gain worldwide traction.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Caixin Global</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.caixinglobal.com/2026-02-27/business-brief-feb-27-chinas-ai-model-usage-overtakes-us-102417422.html" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#13</div>
+        <div class="card-tags">
+          <span class="tag tag-global">Global</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Huawei Joins Agentic AI Foundation as Gold Member</div>
+      <div class="card-brief">
+        Huawei has joined the Agentic AI Foundation as a Gold Member, becoming one of the first Chinese companies to formally contribute to shaping agentic AI open standards alongside major US tech players. The move is seen as strategic positioning to influence the future architecture of autonomous AI systems. It comes as China accelerates its national AI policy aimed at establishing the country as the world's primary AI innovation center by 2030.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Tech Wire Asia</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://techwireasia.com/2026/02/huawei-agentic-ai-open-standards-aaif/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Global Section -->
+  <div class="section-label">🌍 Global & Regional</div>
+  <div class="news-grid">
+
+    <!-- 14 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#14</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">EU</span>
+        </div>
+      </div>
+      <div class="card-title">EU AI Act High-Risk Guidelines Delayed — Digital Omnibus May Push Deadlines to 2027</div>
+      <div class="card-brief">
+        The European Commission has delayed publishing practical guidelines for "high-risk" AI systems under the EU AI Act, creating uncertainty for businesses. The August 2, 2026 deadline for high-risk obligations approaches, but a proposed "Digital Omnibus" package could defer enforcement until December 2027 and extend simplified requirements for SMEs. Harmonized standards translating AI Act requirements into technical frameworks are expected in H2 2026. The delays have fueled calls for postponement from industry groups.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Europa.eu / Hyperight</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://hyperight.com/eu-ai-act-high-risk-guidelines-delay-february-2026/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>AI Daily Brief</strong> · Curated by Amy 🌸 · February 27, 2026<br />
+  Stories sourced from public news as of today. Not financial or professional advice.
+</div>
+
+</body>
+</html>

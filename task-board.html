@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Board — Amy & Louis</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a0f;
+      color: #e8e8e8;
+      min-height: 100vh;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 32px 24px;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 2px solid rgba(79, 195, 247, 0.4);
+    }
+
+    .header-text h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .header-text p {
+      color: #90a4ae;
+      font-size: 13px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+
+    .stats-bar {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .stat-card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 16px 24px;
+      min-width: 140px;
+    }
+
+    .stat-number {
+      font-size: 28px;
+      font-weight: 800;
+      color: #4fc3f7;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .columns { grid-template-columns: 1fr; }
+    }
+
+    .column {
+      background: #121216;
+      border: 1px solid #1e1e24;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .column-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid #1e1e24;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .column-header.done { background: rgba(76, 175, 80, 0.08); }
+    .column-header.todo { background: rgba(255, 167, 38, 0.08); }
+
+    .column-icon { font-size: 18px; }
+
+    .column-title {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .column-header.done .column-title { color: #66bb6a; }
+    .column-header.todo .column-title { color: #ffa726; }
+
+    .task-list {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    .task-card {
+      background: #1a1a1f;
+      border: 1px solid #2a2a30;
+      border-radius: 10px;
+      padding: 16px;
+      transition: border-color 0.2s, transform 0.1s;
+    }
+
+    .task-card:hover {
+      border-color: #3a3a45;
+      transform: translateX(2px);
+    }
+
+    .task-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .task-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.4;
+    }
+
+    .task-date {
+      font-size: 11px;
+      color: #666;
+      white-space: nowrap;
+    }
+
+    .task-summary {
+      font-size: 13px;
+      color: #999;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .task-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .tag-high { background: rgba(239, 83, 80, 0.15); color: #ef5350; }
+    .tag-medium { background: rgba(255, 167, 38, 0.15); color: #ffa726; }
+    .tag-low { background: rgba(102, 187, 106, 0.15); color: #66bb6a; }
+    .tag-auto { background: rgba(79, 195, 247, 0.15); color: #4fc3f7; }
+    .tag-blocked { background: rgba(158, 158, 158, 0.15); color: #9e9e9e; }
+
+    .task-details {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #2a2a30;
+    }
+
+    .task-details ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .task-details li {
+      font-size: 12px;
+      color: #777;
+      padding: 4px 0;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .task-details li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #4fc3f7;
+      font-size: 10px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #555;
+      font-size: 13px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 24px;
+      color: #444;
+      font-size: 12px;
+      border-top: 1px solid #1a1a1f;
+      margin-top: 32px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #4fc3f7;
+      text-decoration: none;
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-content">
+    <img class="avatar" src="./2026-02-25-13-34-00-amy-avatar.png" alt="Amy" />
+    <div class="header-text">
+      <h1>Task Board</h1>
+      <p>Amy 🌸 × Louis · Collaboration Tracker</p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <a class="back-link" href="./index.html">← Back to Portal</a>
+
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="stat-number" id="completed-count">4</div>
+      <div class="stat-label">Completed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="pending-count">5</div>
+      <div class="stat-label">Pending</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">2</div>
+      <div class="stat-label">Days Active</div>
+    </div>
+  </div>
+
+  <div class="columns">
+    <!-- Completed Column -->
+    <div class="column">
+      <div class="column-header done">
+        <span class="column-icon">✓</span>
+        <span class="column-title">Completed Tasks</span>
+      </div>
+      <div class="task-list" id="completed-list">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+
+    <!-- Pending Column -->
+    <div class="column">
+      <div class="column-header todo">
+        <span class="column-icon">○</span>
+        <span class="column-title">Pending Tasks</span>
+      </div>
+      <div class="task-list" id="pending-list">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  Last updated: <span id="last-updated">2026-02-27</span> · Tasks are updated daily
+</div>
+
+<script>
+// Task data - in a real implementation this would fetch from tasks.json
+const taskData = {
+  "completed": [
+    {
+      "id": "task-001",
+      "date": "2026-02-26",
+      "title": "AI Newsletter System",
+      "summary": "Built daily AI newsletter with 15 stories, dark-theme HTML, auto-generation via cron at 10am SGT",
+      "details": [
+        "Created newsletter HTML template with US/China/Global sections",
+        "Set up daily cron job for 10am SGT automatic generation",
+        "Built portal page with avatar and dated entries"
+      ]
+    },
+    {
+      "id": "task-002",
+      "date": "2026-02-26",
+      "title": "Portal & Tunnel Setup",
+      "summary": "Created web portal with localtunnel for remote access to files",
+      "details": [
+        "Built index.html portal with avatar",
+        "Set up Python HTTP server + localtunnel",
+        "Added newsletter links with dates"
+      ]
+    },
+    {
+      "id": "task-003",
+      "date": "2026-02-27",
+      "title": "Skills Installation",
+      "summary": "Installed find-skills, skill-creator, and suno-music-creator skills",
+      "details": [
+        "find-skills for discovering new capabilities",
+        "skill-creator for building custom skills",
+        "suno-music-creator for AI music composition"
+      ]
+    },
+    {
+      "id": "task-004",
+      "date": "2026-02-27",
+      "title": "Knowledge Base /clip System",
+      "summary": "Implemented /clip command for saving articles and URLs",
+      "details": [
+        "Created knowledge/entries/ folder structure",
+        "Built KEYWORD_INDEX.md for topic mapping",
+        "Saved first clip: AI game entrepreneurs article"
+      ]
+    }
+  ],
+  "pending": [
+    {
+      "id": "todo-001",
+      "date": "2026-02-28",
+      "title": "Extract WeChat Article Content",
+      "summary": "Use browser to read full content of clipped AI game article",
+      "priority": "medium",
+      "blockedBy": "Need Chrome browser attached"
+    },
+    {
+      "id": "todo-002",
+      "date": "2026-02-28",
+      "title": "Compose Song with Suno",
+      "summary": "Create AI-generated song using suno-music-creator skill",
+      "priority": "low",
+      "blockedBy": "Need Louis to specify song preferences"
+    },
+    {
+      "id": "todo-003",
+      "date": "2026-02-28",
+      "title": "Restart Portal Tunnel",
+      "summary": "Localtunnel died - need to restart for remote access",
+      "priority": "high",
+      "blockedBy": "None - can do anytime"
+    },
+    {
+      "id": "todo-004",
+      "date": "2026-03-01",
+      "title": "Daily AI Newsletter",
+      "summary": "Auto-generated newsletter at 10am SGT (cron scheduled)",
+      "priority": "high",
+      "blockedBy": "Cron scheduled - automatic"
+    },
+    {
+      "id": "todo-005",
+      "date": "2026-02-28",
+      "title": "Install Gemini Video Skill",
+      "summary": "Add google-gemini-media skill for video generation",
+      "priority": "medium",
+      "blockedBy": "None - ready to install"
+    }
+  ]
+};
+
+function renderCompleted() {
+  const container = document.getElementById('completed-list');
+  container.innerHTML = taskData.completed.map(task => `
+    <div class="task-card">
+      <div class="task-header">
+        <div class="task-title">${task.title}</div>
+        <div class="task-date">${task.date}</div>
+      </div>
+      <div class="task-summary">${task.summary}</div>
+      ${task.details ? `
+      <div class="task-details">
+        <ul>
+          ${task.details.map(d => `<li>${d}</li>`).join('')}
+        </ul>
+      </div>
+      ` : ''}
+    </div>
+  `).join('');
+}
+
+function renderPending() {
+  const container = document.getElementById('pending-list');
+  const priorityClass = {
+    'high': 'tag-high',
+    'medium': 'tag-medium',
+    'low': 'tag-low'
+  };
+  
+  container.innerHTML = taskData.pending.map(task => `
+    <div class="task-card">
+      <div class="task-header">
+        <div class="task-title">${task.title}</div>
+        <div class="task-date">${task.date}</div>
+      </div>
+      <div class="task-summary">${task.summary}</div>
+      <div class="task-meta">
+        <span class="tag ${priorityClass[task.priority] || 'tag-medium'}">${task.priority}</span>
+        ${task.blockedBy && task.blockedBy !== 'None - can do anytime' && task.blockedBy !== 'Cron scheduled - automatic' ? 
+          `<span class="tag tag-blocked">Blocked</span>` : ''}
+        ${task.blockedBy === 'Cron scheduled - automatic' ? 
+          `<span class="tag tag-auto">Auto</span>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function updateStats() {
+  document.getElementById('completed-count').textContent = taskData.completed.length;
+  document.getElementById('pending-count').textContent = taskData.pending.length;
+}
+
+// Initialize
+renderCompleted();
+renderPending();
+updateStats();
+</script>
+
+</body>
+</html>
