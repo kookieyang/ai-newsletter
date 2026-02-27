@@ -60,6 +60,14 @@
       "blockedBy": "Need Chrome browser attached"
     },
     {
+      "id": "todo-006",
+      "date": "2026-02-27",
+      "title": "/read WeChat Article — Founder Park OpenClaw Products",
+      "summary": "Read and summarize: 一百个 OpenClaw 产品涌来，我们最近推荐这几款 (https://mp.weixin.qq.com/s/LPffBLgUM3cJMy144XwbOw)",
+      "priority": "medium",
+      "blockedBy": "Need Chrome browser attached"
+    },
+    {
       "id": "todo-002",
       "date": "2026-02-28",
       "title": "Compose Song with Suno",
