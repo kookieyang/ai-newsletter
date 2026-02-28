@@ -292,7 +292,35 @@
   <button id="send-btn">↑</button>
 </div>
 
+<div id="lightbox" onclick="this.style.display='none'">
+  <img id="lb-img" style="display:none;max-width:90vw;max-height:90vh;"/>
+  <video id="lb-vid" controls style="display:none;max-width:90vw;max-height:90vh;"></video>
+</div>
+
 <script>
+// Lightbox function
+function openLightbox(src, type) {
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lb-img');
+  const vid = document.getElementById('lb-vid');
+  lb.style.display = 'flex';
+  lb.style.position = 'fixed';
+  lb.style.inset = '0';
+  lb.style.background = 'rgba(0,0,0,0.9)';
+  lb.style.justifyContent = 'center';
+  lb.style.alignItems = 'center';
+  lb.style.zIndex = '1000';
+  lb.style.cursor = 'zoom-out';
+  if (type === 'img') {
+    img.src = src;
+    img.style.display = 'block';
+    vid.style.display = 'none';
+  } else {
+    vid.src = src;
+    vid.style.display = 'block';
+    img.style.display = 'none';
+  }
+}
 let attachments = [];
 let isRecording = false;
 let mediaRecorder = null;
@@ -460,8 +488,35 @@ async function sendMessage() {
 
   // Optimistic render
   const container = document.getElementById('messages');
+  const cleanText = text.replace(/^\[[^\]]+\]\s*/, '');
+  const formattedText = cleanText.replace(/\n/g, '<br>');
+  
+  let attachmentsHtml = '';
+  if (attachments.length > 0) {
+    attachmentsHtml = '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">' + 
+      attachments.map(att => {
+        if (att.type?.startsWith('image/')) {
+          return `<img src="${att.data}" style="max-width:200px;max-height:200px;border-radius:8px;border:1px solid #5a3a8a;"/>`;
+        } else if (att.type?.startsWith('video/')) {
+          return `<video src="${att.data}" controls style="max-width:200px;max-height:200px;border-radius:8px;border:1px solid #5a3a8a;"></video>`;
+        } else if (att.type?.startsWith('audio/')) {
+          return `<audio src="${att.data}" controls style="width:100%;max-width:250px;"></audio>`;
+        }
+        return `<div style="padding:8px;background:#1e1b2e;border-radius:8px;border:1px solid #5a3a8a;">📎 ${att.name || 'File'}</div>`;
+      }).join('') + 
+    '</div>';
+  }
+  
   const div = document.createElement('div');
-  div.innerHTML = `<div style="text-align:right;padding:10px;"><strong>You:</strong> ${text || '(attachments)'}</div>`;
+  div.innerHTML = `
+    <div class="msg-group user">
+      <div class="bubble user">
+        ${formattedText}
+        ${attachmentsHtml}
+      </div>
+      <div class="ts">${formatTime(Date.now())}</div>
+    </div>
+  `;
   container.appendChild(div);
   container.scrollTop = container.scrollHeight;
 
@@ -478,7 +533,14 @@ async function sendMessage() {
   }
 }
 
-// Load messages (simplified)
+// Format timestamp
+function formatTime(ts) {
+  if (!ts) return '';
+  const d = new Date(ts);
+  return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+}
+
+// Load messages
 async function loadMessages() {
   try {
     const res = await fetch('/api/messages');
@@ -488,11 +550,57 @@ async function loadMessages() {
       container.innerHTML = '<div style="text-align:center;color:#888;padding:60px;"><div style="font-size:48px;margin-bottom:12px;">🌸</div><p>No messages yet</p></div>';
       return;
     }
-    container.innerHTML = messages.map(m => 
-      `<div style="text-align:${m.role === 'user' ? 'right' : 'left'};padding:10px;">
-        <strong>${m.role === 'user' ? 'You' : 'Amy'}:</strong> ${m.text || ''}
-       </div>`
-    ).join('');
+    
+    container.innerHTML = messages.map((m, idx) => {
+      const isUser = m.role === 'user';
+      const text = m.text || '';
+      // Strip timestamp prefix if present
+      const cleanText = text.replace(/^\[[^\]]+\]\s*/, '');
+      
+      // Handle attachments
+      let attachmentsHtml = '';
+      if (m.attachments && m.attachments.length > 0) {
+        attachmentsHtml = '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">' + 
+          m.attachments.map(att => {
+            if (att.type?.startsWith('image/')) {
+              return `<img src="${att.data}" style="max-width:200px;max-height:200px;border-radius:8px;border:1px solid #2e2e3a;cursor:pointer;" onclick="openLightbox('${att.data}', 'img')"/>`;
+            } else if (att.type?.startsWith('video/')) {
+              return `<video src="${att.data}" controls style="max-width:200px;max-height:200px;border-radius:8px;border:1px solid #2e2e3a;"></video>`;
+            } else if (att.type?.startsWith('audio/')) {
+              return `<audio src="${att.data}" controls style="width:100%;max-width:250px;"></audio>`;
+            }
+            return `<div style="padding:8px;background:#1a1a1f;border-radius:8px;border:1px solid #2e2e3a;">📎 ${att.name || 'File'}</div>`;
+          }).join('') + 
+        '</div>';
+      }
+      
+      // Handle media from tool results
+      let toolMediaHtml = '';
+      if (m.toolResults) {
+        for (const tr of m.toolResults) {
+          if (tr.images && tr.images.length > 0) {
+            toolMediaHtml += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">' + 
+              tr.images.map(img => `<img src="data:${img.mimeType || 'image/png'};base64,${img.data}" style="max-width:200px;max-height:200px;border-radius:8px;border:1px solid #2e2e3a;cursor:pointer;" onclick="openLightbox(this.src, 'img')"/>`).join('') + 
+            '</div>';
+          }
+        }
+      }
+      
+      // Convert newlines to <br>
+      const formattedText = cleanText.replace(/\n/g, '<br>');
+      
+      return `
+        <div class="msg-group ${isUser ? 'user' : 'assistant'}">
+          <div class="bubble ${isUser ? 'user' : 'assistant'}">
+            ${formattedText}
+            ${attachmentsHtml}
+            ${toolMediaHtml}
+          </div>
+          <div class="ts">${formatTime(m.timestamp)}</div>
+        </div>
+      `;
+    }).join('');
+    
     container.scrollTop = container.scrollHeight;
   } catch (e) {
     console.error(e);
