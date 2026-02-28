@@ -297,6 +297,11 @@
   <video id="lb-vid" controls style="display:none;max-width:90vw;max-height:90vh;"></video>
 </div>
 
+<div id="copy-menu" style="display:none;position:fixed;background:#1a1a1f;border:1px solid #2e2e3a;border-radius:8px;padding:8px 0;z-index:1000;min-width:120px;box-shadow:0 4px 12px rgba(0,0,0,0.5);">
+  <div id="copy-menu-item" style="padding:8px 16px;cursor:pointer;color:#e8e8f0;font-size:14px;transition:background 0.15s;" onmouseover="this.style.background='#2a2a35'" onmouseout="this.style.background='transparent'">📋 Copy text</div>
+  <div style="padding:8px 16px;color:#888;font-size:11px;border-top:1px solid #2e2e3a;margin-top:4px;">Click elsewhere to close</div>
+</div>
+
 <script>
 // Lightbox function
 function openLightbox(src, type) {
@@ -321,6 +326,42 @@ function openLightbox(src, type) {
     img.style.display = 'none';
   }
 }
+
+// Copy menu function
+let currentCopyText = '';
+function showCopyMenu(element, rawText) {
+  currentCopyText = rawText.replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+  const menu = document.getElementById('copy-menu');
+  const rect = element.getBoundingClientRect();
+  menu.style.display = 'block';
+  menu.style.left = Math.min(rect.left, window.innerWidth - 150) + 'px';
+  menu.style.top = (rect.bottom + 5) + 'px';
+}
+
+// Copy to clipboard
+document.getElementById('copy-menu-item').addEventListener('click', () => {
+  navigator.clipboard.writeText(currentCopyText).then(() => {
+    document.getElementById('copy-menu').style.display = 'none';
+    alert('Copied to clipboard!');
+  }).catch(() => {
+    // Fallback
+    const ta = document.createElement('textarea');
+    ta.value = currentCopyText;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    document.getElementById('copy-menu').style.display = 'none';
+    alert('Copied to clipboard!');
+  });
+});
+
+// Close copy menu when clicking elsewhere
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('#copy-menu') && !e.target.closest('.bubble')) {
+    document.getElementById('copy-menu').style.display = 'none';
+  }
+});
 let attachments = [];
 let isRecording = false;
 let mediaRecorder = null;
@@ -604,9 +645,12 @@ async function loadMessages() {
       // Convert newlines to <br>
       const formattedText = cleanText.replace(/\n/g, '<br>');
       
+      // Escape for data attribute
+      const escapedText = text.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      
       return `
         <div class="msg-group ${isUser ? 'user' : 'assistant'}">
-          <div class="bubble ${isUser ? 'user' : 'assistant'}">
+          <div class="bubble ${isUser ? 'user' : 'assistant'}" data-raw-text="${escapedText}" onclick="showCopyMenu(this, '${escapedText}')">
             ${formattedText}
             ${attachmentsHtml}
             ${toolMediaHtml}
