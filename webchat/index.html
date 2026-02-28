@@ -245,6 +245,7 @@
     width: 100%;
     overflow-y: auto;
     scroll-behavior: smooth;
+    display: block;
   }
   #input::placeholder { color: var(--text-muted); }
   #input-hint {
@@ -603,6 +604,8 @@ const inputHint = document.getElementById('input-hint');
 input.addEventListener('input', () => {
   input.style.height = 'auto';
   input.style.height = Math.min(input.scrollHeight, 160) + 'px';
+  // Scroll to bottom to keep cursor visible
+  input.scrollTop = input.scrollHeight;
 });
 
 input.addEventListener('keydown', (e) => {
@@ -610,9 +613,18 @@ input.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
     e.preventDefault();
     sendMessage();
+    return;
   }
-  // Enter alone creates new line (default behavior)
-  // Shift+Enter also creates new line (default behavior)
+  // After Enter key, scroll to keep cursor visible
+  if (e.key === 'Enter') {
+    setTimeout(() => {
+      const cursorPos = input.selectionStart;
+      const lineHeight = 22; // approximate line height
+      const lines = input.value.substring(0, cursorPos).split('\n').length;
+      const scrollPos = (lines - 1) * lineHeight;
+      input.scrollTop = Math.max(0, scrollPos - input.clientHeight + lineHeight * 2);
+    }, 0);
+  }
 });
 
 input.addEventListener('focus', () => {
