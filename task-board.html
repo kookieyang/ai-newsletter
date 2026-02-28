@@ -266,12 +266,12 @@
 
   <div class="stats-bar">
     <div class="stat-card">
-      <div class="stat-number" id="completed-count">5</div>
-      <div class="stat-label">Completed</div>
-    </div>
-    <div class="stat-card">
       <div class="stat-number" id="pending-count">4</div>
       <div class="stat-label">Pending</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="completed-count">5</div>
+      <div class="stat-label">Completed</div>
     </div>
     <div class="stat-card">
       <div class="stat-number">3</div>
@@ -280,17 +280,6 @@
   </div>
 
   <div class="columns">
-    <!-- Completed Column -->
-    <div class="column">
-      <div class="column-header done">
-        <span class="column-icon">✓</span>
-        <span class="column-title">Completed Tasks</span>
-      </div>
-      <div class="task-list" id="completed-list">
-        <!-- Filled by JS -->
-      </div>
-    </div>
-
     <!-- Pending Column -->
     <div class="column">
       <div class="column-header todo">
@@ -298,6 +287,17 @@
         <span class="column-title">Pending Tasks</span>
       </div>
       <div class="task-list" id="pending-list">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+
+    <!-- Completed Column -->
+    <div class="column">
+      <div class="column-header done">
+        <span class="column-icon">✓</span>
+        <span class="column-title">Completed Tasks</span>
+      </div>
+      <div class="task-list" id="completed-list">
         <!-- Filled by JS -->
       </div>
     </div>
