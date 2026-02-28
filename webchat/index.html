@@ -565,13 +565,18 @@ async function sendMessage() {
   }
   
   const div = document.createElement('div');
+  const msgId = 'msg-' + Date.now();
+  const escapedText = text.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   div.innerHTML = `
-    <div class="msg-group user">
+    <div class="msg-group user" id="${msgId}">
       <div class="bubble user">
         ${formattedText}
         ${attachmentsHtml}
       </div>
-      <div class="ts">${formatTime(Date.now())}</div>
+      <div class="msg-meta">
+        <span class="ts">${formatTime(Date.now())}</span>
+        <button class="copy-btn" onclick="copyMessageText('${msgId}', '${escapedText}')" title="Copy">📋</button>
+      </div>
     </div>
   `;
   container.appendChild(div);
@@ -691,86 +696,6 @@ messagesContainer.addEventListener('scroll', () => {
   const threshold = 100; // pixels from bottom
   isAtBottom = messagesContainer.scrollHeight - messagesContainer.scrollTop - messagesContainer.clientHeight < threshold;
 });
-
-// Load messages without forcing scroll
-async function loadMessages() {
-  try {
-    const res = await fetch('/api/messages');
-    const messages = await res.json();
-    const container = document.getElementById('messages');
-    
-    if (messages.length === 0) {
-      container.innerHTML = '<div style="text-align:center;color:#888;padding:60px;"><div style="font-size:48px;margin-bottom:12px;">🌸</div><p>No messages yet</p></div>';
-      return;
-    }
-    
-    // Store current scroll position
-    const oldScrollHeight = container.scrollHeight;
-    const oldScrollTop = container.scrollTop;
-    
-    container.innerHTML = messages.map((m, idx) => {
-      const isUser = m.role === 'user';
-      const text = m.text || '';
-      const cleanText = text.replace(/^\[[^\]]+\]\s*/, '');
-      
-      const hasText = cleanText.trim().length > 0;
-      const hasAttachments = m.attachments && m.attachments.length > 0;
-      const hasToolMedia = m.toolResults?.some(tr => tr.images && tr.images.length > 0);
-      
-      if (!hasText && !hasAttachments && !hasToolMedia) return '';
-      
-      let attachmentsHtml = '';
-      if (hasAttachments) {
-        attachmentsHtml = '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">' + 
-          m.attachments.map(att => {
-            if (att.type?.startsWith('image/')) {
-              return `<img src="${att.data}" style="max-width:200px;max-height:200px;border-radius:8px;border:1px solid #2e2e3a;cursor:pointer;" onclick="openLightbox('${att.data}', 'img')"/>`;
-            } else if (att.type?.startsWith('video/')) {
-              return `<video src="${att.data}" controls style="max-width:200px;max-height:200px;border-radius:8px;border:1px solid #2e2e3a;"></video>`;
-            } else if (att.type?.startsWith('audio/')) {
-              return `<audio src="${att.data}" controls style="width:100%;max-width:250px;"></audio>`;
-            }
-            return `<div style="padding:8px;background:#1a1a1f;border-radius:8px;border:1px solid #2e2e3a;">📎 ${att.name || 'File'}</div>`;
-          }).join('') + 
-        '</div>';
-      }
-      
-      let toolMediaHtml = '';
-      if (m.toolResults) {
-        for (const tr of m.toolResults) {
-          if (tr.images && tr.images.length > 0) {
-            toolMediaHtml += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">' + 
-              tr.images.map(img => `<img src="data:${img.mimeType || 'image/png'};base64,${img.data}" style="max-width:200px;max-height:200px;border-radius:8px;border:1px solid #2e2e3a;cursor:pointer;" onclick="openLightbox(this.src, 'img')"/>`).join('') + 
-            '</div>';
-          }
-        }
-      }
-      
-      const formattedText = cleanText.replace(/\n/g, '<br>');
-      
-      return `
-        <div class="msg-group ${isUser ? 'user' : 'assistant'}">
-          <div class="bubble ${isUser ? 'user' : 'assistant'}">
-            ${formattedText}
-            ${attachmentsHtml}
-            ${toolMediaHtml}
-          </div>
-          <div class="ts">${formatTime(m.timestamp)}</div>
-        </div>
-      `;
-    }).filter(html => html !== '').join('');
-    
-    // Only scroll to bottom if user was already at bottom
-    if (isAtBottom) {
-      container.scrollTop = container.scrollHeight;
-    } else {
-      // Maintain relative scroll position
-      container.scrollTop = oldScrollTop + (container.scrollHeight - oldScrollHeight);
-    }
-  } catch (e) {
-    console.error(e);
-  }
-}
 
 loadMessages();
 setInterval(loadMessages, 3000);
