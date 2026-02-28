@@ -236,6 +236,9 @@
     resize: none; max-height: 160px; min-height: 22px;
     font-family: inherit;
     width: 100%;
+    overflow: hidden;
+  }
+  #input.has-overflow {
     overflow-y: auto;
   }
   #input::placeholder { color: var(--text-muted); }
@@ -406,10 +409,17 @@ const attachmentPreview = document.getElementById('attachment-preview');
 const voiceUI = document.getElementById('voice-ui');
 const sendBtn = document.getElementById('send-btn');
 
-// Auto-resize textarea
+// Auto-resize textarea - grow to show all content, only scroll when at max-height
 input.addEventListener('input', () => {
   input.style.height = 'auto';
-  input.style.height = Math.min(input.scrollHeight, 160) + 'px';
+  const newHeight = Math.min(input.scrollHeight, 160);
+  input.style.height = newHeight + 'px';
+  // Only enable scrolling when we hit max height
+  if (input.scrollHeight > 160) {
+    input.classList.add('has-overflow');
+  } else {
+    input.classList.remove('has-overflow');
+  }
 });
 
 // Keyboard shortcuts
