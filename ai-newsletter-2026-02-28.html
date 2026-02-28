@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Daily Brief — February 28, 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 48px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .header .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .header .subtitle {
+      color: #90a4ae;
+      font-size: 14px;
+    }
+
+    .header .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(79, 195, 247, 0.12);
+      border: 1px solid rgba(79, 195, 247, 0.3);
+      color: #4fc3f7;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .news-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 12px 0 0 12px;
+    }
+
+    .card.us::before { background: #4fc3f7; }
+    .card.china::before { background: #ef5350; }
+    .card.global::before { background: #66bb6a; }
+    .card.industry::before { background: #ffa726; }
+    .card.safety::before { background: #ab47bc; }
+
+    .card:hover {
+      border-color: #3a3a3a;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: #555;
+      min-width: 28px;
+      margin-top: 2px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .tag-us { background: rgba(79, 195, 247, 0.15); color: #4fc3f7; }
+    .tag-china { background: rgba(239, 83, 80, 0.15); color: #ef5350; }
+    .tag-global { background: rgba(102, 187, 106, 0.15); color: #66bb6a; }
+    .tag-industry { background: rgba(255, 167, 38, 0.15); color: #ffa726; }
+    .tag-safety { background: rgba(171, 71, 188, 0.15); color: #ce93d8; }
+    .tag-policy { background: rgba(38, 198, 218, 0.15); color: #26c6da; }
+    .tag-breaking { background: rgba(255, 82, 82, 0.2); color: #ff5252; }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .card-brief {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .meta-item .icon {
+      font-size: 12px;
+    }
+
+    .meta-item a {
+      color: #4fc3f7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .meta-item a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid #1e1e1e;
+      color: #444;
+      font-size: 12px;
+    }
+
+    .footer strong {
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 26px; }
+      .card-title { font-size: 16px; }
+      .card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">AI Daily Brief</div>
+  <h1>🤖 Top AI Stories</h1>
+  <div class="subtitle">Saturday, February 28, 2026 · Curated for the global AI-aware reader</div>
+  <div class="badge-row">
+    <span class="badge">🇺🇸 United States</span>
+    <span class="badge">🇨🇳 China</span>
+    <span class="badge">🌍 Global</span>
+    <span class="badge">14 Stories</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- US Section -->
+  <div class="section-label">🇺🇸 United States</div>
+  <div class="news-grid">
+
+    <!-- 1 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#01</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">Trump Administration Bans Anthropic — Pentagon Declares AI Startup a "Supply Risk"</div>
+      <div class="card-brief">
+        The Trump administration has directed all federal agencies to terminate contracts with Anthropic and banned government suppliers from working with the company. The Pentagon officially designated Anthropic as a "supply chain risk" after the company refused to allow unrestricted military use of Claude AI. The unprecedented move marks the first time a major US AI lab has been effectively blacklisted by its own government. Anthropic CEO Dario Amodei has refused to back down on the company's safety commitments.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 28, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Business Times / The Verge</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.businesstimes.com.sg/international/trump-directs-us-agencies-toss-anthropics-ai-pentagon-calls-startup-supply-risk" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#02</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Ilya Sutskever Backs Anthropic's Pentagon Stance — Calls for AI Unity</div>
+      <div class="card-brief">
+        OpenAI co-founder Ilya Sutskever publicly praised Anthropic for refusing to back down to Pentagon demands, posting on X: "It's extremely good that Anthropic has not backed down, and it's significant that OpenAI has taken a similar stance." He warned that future situations will be "much more challenging" and called for fierce competitors to "put their differences aside" on critical safety issues. The statement signals growing alignment among AI labs on drawing red lines for military AI use.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 28, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Verge</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.theverge.com/ai-artificial-intelligence" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#03</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Amazon AGI Lab Leader David Luan Departs — To "Cook Up Something New"</div>
+      <div class="card-brief">
+        David Luan, head of Amazon's San Francisco AGI lab, is leaving the company to work on a new project. The departure is notable given Luan was leading Amazon's efforts toward artificial general intelligence — technology that doesn't yet exist. Industry observers expressed surprise at the move, questioning what could be "newer than AGI." The exit adds to recent high-profile departures across major AI labs as talent competition intensifies in the sector.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Verge</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.theverge.com/tech/884372/amazon-agi-lab-leader-david-luan-departure" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#04</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Google Expands Flow AI Tool — Integrates Whisk and ImageFX</div>
+      <div class="card-brief">
+        Google is expanding its Flow AI video generation platform by integrating the experimental Whisk and ImageFX image generator tools. Users can now "generate, edit and animate everything in one unified workspace," combining video and image creation capabilities. The update signals Google's push to consolidate its AI creative tools into a comprehensive platform. Flow launched as a video-only tool but is evolving into a multi-modal creative suite.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Verge</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.theverge.com/ai-artificial-intelligence" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#05</div>
+        <div class="card-tags">
+          <span class="tag tag-safety">Safety</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Would Now Alert Police to Canadian Shooter Under New Safety Protocols</div>
+      <div class="card-brief">
+        OpenAI announced it would have alerted law enforcement about the Canadian school shooter if the account had been discovered today under new safety protocols. The changes come after a fatal shooting in Tumbler Ridge, British Columbia that killed eight people. The suspect's interactions with ChatGPT suggested possible violence, but OpenAI only shut down the account without notifying police. The company is now establishing a direct law enforcement contact point.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Verge</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.theverge.com/ai-artificial-intelligence" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#06</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">eBay Laying Off 800 Workers — 6% of Global Workforce</div>
+      <div class="card-brief">
+        eBay announced it is laying off approximately 800 employees, representing 6% of its global workforce. The cuts come as the e-commerce giant restructures operations amid increasing competition and economic pressures. The move reflects broader trends in the tech industry as companies optimize headcounts while investing heavily in AI capabilities. eBay has been working to modernize its platform with AI-powered features.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 28, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Business Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.businesstimes.com.sg/companies-markets/ebay-laying-about-800-workers-6-global-workforce" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- China Section -->
+  <div class="section-label">🇨🇳 China</div>
+  <div class="news-grid">
+
+    <!-- 7 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#07</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">Chinese AI Startups in Singapore Face Scrutiny — "Next Manus Might Be On This List"</div>
+      <div class="card-brief">
+        Business Times published a comprehensive list of Chinese-founded, Singapore-based AI startups that are drawing increased attention from regulators and investors. The article highlights the growing trend of Chinese AI companies establishing headquarters in Singapore amid US-China tensions. These companies are developing cutting-edge AI agents and models, with industry observers noting that "the next Manus might be on this list" — referring to the breakout Chinese AI agent that recently made headlines.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 28, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Business Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.businesstimes.com.sg/startups-tech/startups/tech-in-asia/chinese-founded-singapore-based-ai-startups-next-manus-might-be-list" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#08</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Alibaba's "Wonder on Ice" AI Experience Debuts at Milano Cortina Olympics</div>
+      <div class="card-brief">
+        Alibaba unveiled "Wonder on Ice," an immersive AI experience at Milan's Sforza Castle for the Milano Cortina 2026 Winter Olympics. Powered by Alibaba Cloud and Qwen3 models, it marks the first use of LLM technology in Olympic fan engagement. The company also launched Qwen AI Glasses at MWC 2026 with pre-orders opening in March, and plans to release AI rings and earphones globally throughout 2026.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Digital News Asia</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.digitalnewsasia.com/business/alibaba-group-debuts-wonder-ice-immersive-ai-experience-milans-sforza-castle-milano-cortina" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#09</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Singapore Factory Output Surges 16.6% on AI Tailwinds</div>
+      <div class="card-brief">
+        Singapore's manufacturing output surged 16.6% driven by AI-related demand, according to economists expecting global AI tailwinds to sustain through H1 2026. The growth reflects the city-state's position as a key hub for semiconductor and AI hardware production. Chinese AI companies are increasingly using Singapore-based manufacturing partners to circumvent trade restrictions while accessing advanced chip packaging capabilities.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 28, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Business Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.businesstimes.com.sg/singapore/economy-policy/economists-expect-global-ai-tailwinds-sustain-through-h1-2026-singapores-factory-output-rises-16-6" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Global Section -->
+  <div class="section-label">🌍 Global & Regional</div>
+  <div class="news-grid">
+
+    <!-- 10 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#10</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+          <span class="tag tag-global">Global</span>
+        </div>
+      </div>
+      <div class="card-title">GlobalAI Bets on Next-Generation Data Centers — Redefining AI Infrastructure</div>
+      <div class="card-brief">
+        AI isn't just adding horsepower to data centers — it's redefining what they are built to do, according to GlobalAI's latest infrastructure investments. The shift is structural, not incremental. Traditional racks and retrofit upgrades can't keep pace with large-scale AI workloads, forcing a redesign of power, cooling and network architecture from the ground up. The company is pioneering AI-optimized data centers with specialized layouts for training and inference workloads.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> SiliconANGLE</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://siliconangle.com/2026/02/27/global-ai-nvidia-data-centers-aifactoriesdatacenters/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#11</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Wall Street Hit by UK Mortgage Lender Collapse — Credit Fears Spread</div>
+      <div class="card-brief">
+        The collapse of a major UK property lender sent shockwaves through Wall Street, raising fears of more credit market "cockroaches." US bank stocks recorded their biggest slide since April's market ructions. The incident highlights ongoing concerns about financial stability as AI-driven trading systems may amplify market movements. Investors are watching for contagion effects in the global credit markets.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 28, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Business Times / FT</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.businesstimes.com.sg/international/global/wall-street-hit-uk-mortgage-lender-collapse-raising-fears-more-credit-cockroaches" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 12 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#12</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">EU</span>
+        </div>
+      </div>
+      <div class="card-title">EU AI Act High-Risk Guidelines Delayed — Digital Omnibus May Push to 2027</div>
+      <div class="card-brief">
+        The European Commission has delayed publishing practical guidelines for "high-risk" AI systems under the EU AI Act. A proposed "Digital Omnibus" package could defer enforcement until December 2027 and extend simplified requirements for SMEs. Harmonized standards translating AI Act requirements into technical frameworks are now expected in H2 2026. The delays have fueled industry calls for postponement as companies struggle with compliance uncertainty.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Hyperight</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://hyperight.com/eu-ai-act-high-risk-guidelines-delay-february-2026/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#13</div>
+        <div class="card-tags">
+          <span class="tag tag-global">Global</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">YouTube's Algorithm Feeds AI Slop to Children — Over 40% of Shorts Recommended</div>
+      <div class="card-brief">
+        A New York Times investigation found that after watching popular children's channels like CoComelon or Bluey, more than 40% of Shorts recommended by YouTube "appeared to contain AI-generated visuals." YouTube doesn't require animated AI videos for children to be labeled, placing moderation burdens on parents. The findings raise concerns about AI-generated content quality and appropriate safeguards for young viewers on major platforms.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 26, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Verge / NYT</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.theverge.com/ai-artificial-intelligence" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#14</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Perplexity's "Computer" Platform Signals Strategic Shift Away From Ads</div>
+      <div class="card-brief">
+        Perplexity launched its "Computer" platform, a system of AI agents that "reasons, delegates, searches, builds, remembers, codes, and delivers." The move represents a strategic shift away from the company's earlier ad-supported model toward a general-purpose digital worker positioned between OpenClaw and Claude Cowork. The retreat from ads signals broader challenges in monetizing AI search through traditional advertising models.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb 25, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Verge / Wired</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.theverge.com/ai-artificial-intelligence" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>AI Daily Brief</strong> · Curated by Amy 🌸 · February 28, 2026<br />
+  Stories sourced from public news as of today. Not financial or professional advice.
+</div>
+
+</body>
+</html>
