@@ -353,27 +353,44 @@ function openLightbox(src, type) {
 }
 
 // Copy message function
-function copyMessageText(msgId, escapedText) {
-  const rawText = escapedText.replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+async function copyMessageText(msgId, escapedText) {
+  // Decode HTML entities
+  const textarea = document.createElement('textarea');
+  textarea.innerHTML = escapedText;
+  const rawText = textarea.value;
   
-  navigator.clipboard.writeText(rawText).then(() => {
-    const btn = document.querySelector(`#${msgId} .copy-btn`);
-    const original = btn.textContent;
-    btn.textContent = '✓';
-    setTimeout(() => btn.textContent = original, 1500);
-  }).catch(() => {
-    // Fallback
+  try {
+    await navigator.clipboard.writeText(rawText);
+    showCopySuccess(msgId);
+  } catch (err) {
+    // Fallback for older browsers
     const ta = document.createElement('textarea');
     ta.value = rawText;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
     document.body.appendChild(ta);
+    ta.focus();
     ta.select();
-    document.execCommand('copy');
+    try {
+      document.execCommand('copy');
+      showCopySuccess(msgId);
+    } catch (e) {
+      console.error('Copy failed:', e);
+    }
     document.body.removeChild(ta);
-    const btn = document.querySelector(`#${msgId} .copy-btn`);
-    const original = btn.textContent;
+  }
+}
+
+function showCopySuccess(msgId) {
+  const btn = document.querySelector(`#${msgId} .copy-btn`);
+  if (btn) {
     btn.textContent = '✓';
-    setTimeout(() => btn.textContent = original, 1500);
-  });
+    btn.style.opacity = '1';
+    setTimeout(() => {
+      btn.textContent = '📋';
+      btn.style.opacity = '0.5';
+    }, 1500);
+  }
 }
 let attachments = [];
 let isRecording = false;
