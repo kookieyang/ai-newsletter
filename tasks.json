@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-27T19:45:00+08:00",
+  "lastUpdated": "2026-02-28T14:55:00+08:00",
   "completed": [
     {
       "id": "task-001",
@@ -48,56 +48,84 @@
         "Saved first clip: AI game entrepreneurs article"
       ],
       "status": "completed"
+    },
+    {
+      "id": "task-005",
+      "date": "2026-02-28",
+      "title": "Fixed Newsletter Cron Job",
+      "summary": "Diagnosed and fixed cron failures, published Feb 28 newsletter, verified system works",
+      "details": [
+        "Investigated 10am cron timeout failure (5min → 30min)",
+        "Manually published Feb 28 newsletter with 14 stories",
+        "Updated cron to handle both /docs/ and root folder deployments",
+        "Tested cron system with weather check - confirmed working"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "task-006",
+      "date": "2026-02-28",
+      "title": "Extracted WeChat Article Content",
+      "summary": "Used browser extension to extract full content of AI game entrepreneur interview",
+      "details": [
+        "Installed OpenClaw browser extension via Homebrew",
+        "Extracted complete Wanaka founder interview from 晚点AI",
+        "Saved structured content to knowledge base with key insights",
+        "Article covers AI game social platform, UGC, and distribution strategy"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "task-007",
+      "date": "2026-02-28",
+      "title": "Composed R&B Song with Suno",
+      "summary": "Created AI-generated R&B song 'AI Is Saving the World' using Suno",
+      "details": [
+        "Generated R&B soul track at 90 BPM with smooth male vocals",
+        "Song title: 'Circuit Heart, Human Hands'",
+        "Theme: AI helping humanity (doctors, artists, teachers, climate)",
+        "Used Suno V5 with warm synth pads and uplifting vibe"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "task-008",
+      "date": "2026-02-28",
+      "title": "Installed Gemini Video Skill",
+      "summary": "Added google-gemini-media skill for multimodal AI capabilities",
+      "details": [
+        "Installed skill at ~/.agents/skills/google-gemini-media/",
+        "Includes Nano Banana image generation",
+        "Veo 3.1 video generation (8-second clips)",
+        "Gemini TTS speech generation",
+        "Image/video/audio understanding capabilities"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "task-009",
+      "date": "2026-02-28",
+      "title": "Check Elon Musk's Recent Posts on X",
+      "summary": "Searched x.com for Elon Musk's posts from last 2 hours, delivered summary via WhatsApp",
+      "details": [
+        "Found 2 reposts from Elon in last 2 hours (no original posts)",
+        "Reposted @Asmongold on immigration policy and deportation",
+        "Reposted @MarioNawfal on SpaceX Starbase parade float at Charro Days",
+        "Delivered findings to WhatsApp (+6583463780)"
+      ],
+      "status": "completed",
+      "completedAt": "2026-02-28T14:55:00+08:00"
     }
   ],
+  "inProgress": [],
   "pending": [
     {
       "id": "todo-001",
-      "date": "2026-02-28",
-      "title": "Extract WeChat Article Content",
-      "summary": "Use browser to read full content of clipped AI game article",
-      "priority": "medium",
-      "blockedBy": "Need Chrome browser attached"
-    },
-    {
-      "id": "todo-006",
-      "date": "2026-02-27",
-      "title": "/read WeChat Article — Founder Park OpenClaw Products",
-      "summary": "Read and summarize: 一百个 OpenClaw 产品涌来，我们最近推荐这几款 (https://mp.weixin.qq.com/s/LPffBLgUM3cJMy144XwbOw)",
-      "priority": "medium",
-      "blockedBy": "Need Chrome browser attached"
-    },
-    {
-      "id": "todo-002",
-      "date": "2026-02-28",
-      "title": "Compose Song with Suno",
-      "summary": "Create AI-generated song using suno-music-creator skill",
-      "priority": "low",
-      "blockedBy": "Need Louis to specify song preferences"
-    },
-    {
-      "id": "todo-003",
-      "date": "2026-02-28",
-      "title": "Restart Portal Tunnel",
-      "summary": "Localtunnel died - need to restart for remote access",
-      "priority": "high",
-      "blockedBy": "None - can do anytime"
-    },
-    {
-      "id": "todo-004",
       "date": "2026-03-01",
       "title": "Daily AI Newsletter",
-      "summary": "Auto-generated newsletter at 10am SGT (cron scheduled)",
+      "summary": "Auto-generated newsletter at 10am SGT (cron scheduled with 30min timeout)",
       "priority": "high",
       "blockedBy": "Cron scheduled - automatic"
-    },
-    {
-      "id": "todo-005",
-      "date": "2026-02-28",
-      "title": "Install Gemini Video Skill",
-      "summary": "Add google-gemini-media skill for video generation",
-      "priority": "medium",
-      "blockedBy": "None - ready to install"
     }
   ]
 }
