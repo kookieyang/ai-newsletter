@@ -243,6 +243,8 @@
     resize: none; max-height: 160px; min-height: 22px;
     font-family: inherit;
     width: 100%;
+    overflow-y: auto;
+    scroll-behavior: smooth;
   }
   #input::placeholder { color: var(--text-muted); }
   #input-hint {
@@ -347,12 +349,15 @@ function renderMarkdown(text) {
     .replace(/(<li>.+<\/li>\n?)+/g, m=>`<ul>${m}</ul>`)
     // Links
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank">$1</a>')
+    // Handle manual line breaks (two spaces + newline becomes <br>)
+    .replace(/  \n/g, '<br/>')
     // Line breaks / paragraphs
     .split(/\n\n+/)
     .map(p => {
       p = p.trim();
       if (!p) return '';
       if (p.match(/^<(h[1-6]|ul|ol|pre|blockquote|hr)/)) return p;
+      // Preserve single line breaks within paragraphs
       return `<p>${p.replace(/\n/g,'<br/>')}</p>`;
     })
     .join('\n');
@@ -416,7 +421,9 @@ function renderMessage(msg, idx) {
     if (!text.trim()) return null;
     const bubble = document.createElement('div');
     bubble.className = 'bubble user md';
-    bubble.innerHTML = renderMarkdown(text);
+    // Preserve line breaks for user messages by converting to <br> before markdown
+    const textWithBreaks = text.replace(/\n/g, '  \n');
+    bubble.innerHTML = renderMarkdown(textWithBreaks);
     const ts = document.createElement('div');
     ts.className = 'ts';
     ts.textContent = formatTime(msg.timestamp);
@@ -516,8 +523,8 @@ function connectSSE() {
 // ── Send message ─────────────────────────────────────────────────────────────
 async function sendMessage() {
   const input = document.getElementById('input');
-  const text = input.value.trim();
-  if (!text) return;
+  const text = input.value;
+  if (!text.trim()) return;
 
   input.value = '';
   input.style.height = 'auto';
@@ -527,7 +534,9 @@ async function sendMessage() {
   const container = document.getElementById('messages');
   const tempGroup = document.createElement('div');
   tempGroup.className = 'msg-group user';
-  tempGroup.innerHTML = `<div class="bubble user md">${renderMarkdown(text)}</div>`;
+  // Preserve line breaks for optimistic rendering too
+  const textWithBreaks = text.replace(/\n/g, '  \n');
+  tempGroup.innerHTML = `<div class="bubble user md">${renderMarkdown(textWithBreaks)}</div>`;
   container.appendChild(tempGroup);
   container.scrollTop = container.scrollHeight;
 
