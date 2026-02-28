@@ -354,11 +354,23 @@ function openLightbox(src, type) {
 
 // Copy message function
 function copyMessageText(msgId, rawText) {
-  console.log('Copy clicked for', msgId);
+  console.log('Copy clicked for', msgId, 'text:', rawText);
+  
+  // Decode JSON string if needed
+  let textToCopy = rawText;
+  try {
+    // Try to parse as JSON (for messages loaded from server)
+    if (typeof rawText === 'string' && rawText.startsWith('"')) {
+      textToCopy = JSON.parse(rawText);
+    }
+  } catch (e) {
+    // If parsing fails, use as-is
+    textToCopy = rawText;
+  }
   
   // Simple copy approach
   const temp = document.createElement('textarea');
-  temp.value = rawText;
+  temp.value = textToCopy;
   temp.style.cssText = 'position:fixed;left:-9999px;top:0';
   document.body.appendChild(temp);
   temp.select();
