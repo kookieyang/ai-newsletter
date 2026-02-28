@@ -212,8 +212,9 @@
     <h1>WebChat UI Enhancement — Design Document</h1>
     <p class="meta">
       <strong>Date:</strong> February 28, 2026 | 
-      <strong>Status:</strong> <span class="status-badge">Pending Review</span> | 
-      <strong>Session:</strong> WebChat
+      <strong>Status:</strong> <span class="status-badge" style="background: #27ae60;">Design Approved</span> | 
+      <strong>Session:</strong> WebChat | 
+      <strong>Ready for:</strong> Sub-Task 1 Implementation
     </p>
 
     <h2>1. Overview</h2>
@@ -419,43 +420,78 @@
       </div>
     </div>
 
-    <h2>8. Open Questions</h2>
-    <p>Please confirm your preferences on the following:</p>
-    <ol>
-      <li><strong>Voice recording:</strong> Hold-to-record (press and hold) or click-to-toggle (click start, click stop)?</li>
-      <li><strong>Video recording:</strong> Inline in chat interface or popup modal window?</li>
-      <li><strong>File size limits:</strong> Are the proposed limits (10MB images, 50MB video) acceptable?</li>
-      <li><strong>Mobile support:</strong> Same UI for desktop and mobile, or simplified mobile version?</li>
-    </ol>
+    <h2>8. Design Decisions</h2>
+    <div class="key-point">
+      <strong>Confirmed Design Decisions:</strong><br>
+      • <strong>Voice recording:</strong> Click-to-toggle (click to start, click to stop)<br>
+      • <strong>Video recording:</strong> Inline in chat interface (no modal)<br>
+      • <strong>File size limits:</strong> 10MB images, 50MB video — accepted<br>
+      • <strong>Platform:</strong> Mac only — no mobile support needed
+    </div>
 
-    <h2>9. Implementation Plan</h2>
+    <h2>9. Implementation Plan (Broken into Sub-Tasks)</h2>
+    <p>
+      Implementation will proceed in <strong>3 sub-tasks</strong>, each delivering a runnable product 
+      for review before proceeding to the next.
+    </p>
     <table>
       <tr>
-        <th>Phase</th>
-        <th>Tasks</th>
+        <th>Sub-Task</th>
+        <th>Deliverable</th>
+        <th>Demo Checklist</th>
         <th>Est. Time</th>
       </tr>
       <tr>
-        <td>Phase 1</td>
-        <td>Change input to textarea, implement Ctrl+Enter send, add hint text</td>
+        <td><strong>1. Input UX</strong></td>
+        <td>Textarea input with keyboard shortcuts</td>
+        <td>
+          • Multi-line textarea working<br>
+          • Enter inserts new line<br>
+          • Ctrl+Enter sends message<br>
+          • Hint text visible<br>
+          • Demo: Type multi-line text, send
+        </td>
         <td>1-2 hours</td>
       </tr>
       <tr>
-        <td>Phase 2</td>
-        <td>File picker integration, attachment preview UI, mixed message composition</td>
+        <td><strong>2. File Attachments</strong></td>
+        <td>File picker + attachment preview + mixed send</td>
+        <td>
+          • 📎 button opens file picker<br>
+          • Images show preview thumbnails<br>
+          • Can attach + type text together<br>
+          • Ctrl+Enter sends both<br>
+          • Demo: Attach screenshot + describe bug
+        </td>
         <td>2-3 hours</td>
       </tr>
       <tr>
-        <td>Phase 3</td>
-        <td>MediaRecorder integration, recording UI, playback preview</td>
+        <td><strong>3. Voice Recording</strong></td>
+        <td>Inline voice record + playback + send</td>
+        <td>
+          • 🎤 button starts recording<br>
+          • Click-to-toggle (not hold)<br>
+          • Shows timer + waveform<br>
+          • Preview before send<br>
+          • Demo: Record voice, preview, send
+        </td>
         <td>2-3 hours</td>
       </tr>
       <tr>
         <td><strong>Total</strong></td>
-        <td></td>
+        <td colspan="2"></td>
         <td><strong>5-8 hours</strong></td>
       </tr>
     </table>
+
+    <h3>9.1 Sub-Task Workflow</h3>
+    <div class="flow-diagram">
+Start → Sub-Task 1 (Input UX) → [Demo to Louis]<br>
+                        ↓ Approved<br>
+           Sub-Task 2 (Attachments) → [Demo to Louis]<br>
+                        ↓ Approved<br>
+           Sub-Task 3 (Voice) → [Final Demo] → Done
+    </div>
 
     <h2>10. Approval</h2>
     <p>

@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-28T15:16:00+08:00",
+  "lastUpdated": "2026-02-28T16:05:00+08:00",
   "completed": [
     {
       "id": "task-001",
@@ -119,24 +119,51 @@
   ],
   "inProgress": [
     {
-      "id": "wip-002",
+      "id": "wip-002a",
       "date": "2026-02-28",
-      "title": "WebChat UI Enhancement",
-      "summary": "Design and implement rich media messaging (images, voice, video), mixed text+media messages, and improved keyboard UX (Enter=new line, Ctrl+Enter=send)",
+      "title": "WebChat UI: Sub-Task 1 — Input UX",
+      "summary": "Implement multi-line textarea with Ctrl+Enter send behavior",
       "priority": "high",
       "session": "WebChat",
-      "startedAt": "2026-02-28T15:16:00+08:00",
-      "status": "design-review",
-      "deliverables": [
-        "Design document reviewed and approved",
-        "Implementation of unified composer",
-        "File attachment support (images, video)",
-        "Voice recording and playback",
-        "Keyboard shortcut changes"
+      "startedAt": "2026-02-28T16:05:00+08:00",
+      "parentTask": "wip-002",
+      "demoChecklist": [
+        "Multi-line textarea working",
+        "Enter inserts new line",
+        "Ctrl+Enter sends message",
+        "Hint text visible below input"
       ]
     }
   ],
   "pending": [
+    {
+      "id": "wip-002b",
+      "date": "2026-02-28",
+      "title": "WebChat UI: Sub-Task 2 — File Attachments",
+      "summary": "File picker, attachment preview, mixed text+media messages",
+      "priority": "high",
+      "blockedBy": "Waiting for Sub-Task 1 completion",
+      "demoChecklist": [
+        "📎 button opens file picker",
+        "Images show preview thumbnails",
+        "Can attach + type text together",
+        "Ctrl+Enter sends both text and attachments"
+      ]
+    },
+    {
+      "id": "wip-002c",
+      "date": "2026-02-28",
+      "title": "WebChat UI: Sub-Task 3 — Voice Recording",
+      "summary": "Inline voice record with click-to-toggle, playback preview, send",
+      "priority": "high",
+      "blockedBy": "Waiting for Sub-Task 2 completion",
+      "demoChecklist": [
+        "🎤 button starts recording",
+        "Click-to-toggle (not hold)",
+        "Shows timer + waveform",
+        "Preview before send"
+      ]
+    },
     {
       "id": "todo-001",
       "date": "2026-03-01",
