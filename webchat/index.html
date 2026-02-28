@@ -557,9 +557,19 @@ async function loadMessages() {
       // Strip timestamp prefix if present
       const cleanText = text.replace(/^\[[^\]]+\]\s*/, '');
       
+      // Check if message has any content
+      const hasText = cleanText.trim().length > 0;
+      const hasAttachments = m.attachments && m.attachments.length > 0;
+      const hasToolMedia = m.toolResults?.some(tr => tr.images && tr.images.length > 0);
+      
+      // Skip empty messages
+      if (!hasText && !hasAttachments && !hasToolMedia) {
+        return '';
+      }
+      
       // Handle attachments
       let attachmentsHtml = '';
-      if (m.attachments && m.attachments.length > 0) {
+      if (hasAttachments) {
         attachmentsHtml = '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">' + 
           m.attachments.map(att => {
             if (att.type?.startsWith('image/')) {
@@ -599,7 +609,7 @@ async function loadMessages() {
           <div class="ts">${formatTime(m.timestamp)}</div>
         </div>
       `;
-    }).join('');
+    }).filter(html => html !== '').join('');
     
     container.scrollTop = container.scrollHeight;
   } catch (e) {
