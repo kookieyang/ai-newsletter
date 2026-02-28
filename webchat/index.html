@@ -597,9 +597,8 @@ async function sendMessage() {
     </div>
   `;
   container.appendChild(div);
-  if (isAtBottom) {
-    container.scrollTop = container.scrollHeight;
-  }
+  // Always scroll to bottom when sending a new message
+  container.scrollTop = container.scrollHeight;
 
   try {
     await fetch('/api/send', {
