@@ -133,23 +133,170 @@
       "completedAt": "2026-02-28T17:20:00+08:00"
     }
   ],
-  "inProgress": [
+  "completed": [
     {
-      "id": "wip-002b",
+      "id": "task-001",
+      "date": "2026-02-26",
+      "title": "AI Newsletter System",
+      "summary": "Built daily AI newsletter with 15 stories, dark-theme HTML, auto-generation via cron at 10am SGT",
+      "details": [
+        "Created newsletter HTML template with US/China/Global sections",
+        "Set up daily cron job for 10am SGT automatic generation",
+        "Built portal page with avatar and dated entries"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "task-002",
+      "date": "2026-02-26",
+      "title": "Portal & Tunnel Setup",
+      "summary": "Created web portal with localtunnel for remote access to files",
+      "details": [
+        "Built index.html portal with avatar",
+        "Set up Python HTTP server + localtunnel",
+        "Added newsletter links with dates"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "task-003",
+      "date": "2026-02-27",
+      "title": "Skills Installation",
+      "summary": "Installed find-skills, skill-creator, and suno-music-creator skills",
+      "details": [
+        "find-skills for discovering new capabilities",
+        "skill-creator for building custom skills",
+        "suno-music-creator for AI music composition"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "task-004",
+      "date": "2026-02-27",
+      "title": "Knowledge Base /clip System",
+      "summary": "Implemented /clip command for saving articles and URLs",
+      "details": [
+        "Created knowledge/entries/ folder structure",
+        "Built KEYWORD_INDEX.md for topic mapping",
+        "Saved first clip: AI game entrepreneurs article"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "task-005",
+      "date": "2026-02-28",
+      "title": "Fixed Newsletter Cron Job",
+      "summary": "Diagnosed and fixed cron failures, published Feb 28 newsletter, verified system works",
+      "details": [
+        "Investigated 10am cron timeout failure (5min → 30min)",
+        "Manually published Feb 28 newsletter with 14 stories",
+        "Updated cron to handle both /docs/ and root folder deployments",
+        "Tested cron system with weather check - confirmed working"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "task-006",
+      "date": "2026-02-28",
+      "title": "Extracted WeChat Article Content",
+      "summary": "Used browser extension to extract full content of AI game entrepreneur interview",
+      "details": [
+        "Installed OpenClaw browser extension via Homebrew",
+        "Extracted complete Wanaka founder interview from 晚点AI",
+        "Saved structured content to knowledge base with key insights",
+        "Article covers AI game social platform, UGC, and distribution strategy"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "task-007",
+      "date": "2026-02-28",
+      "title": "Composed R&B Song with Suno",
+      "summary": "Created AI-generated R&B song 'AI Is Saving the World' using Suno",
+      "details": [
+        "Generated R&B soul track at 90 BPM with smooth male vocals",
+        "Song title: 'Circuit Heart, Human Hands'",
+        "Theme: AI helping humanity (doctors, artists, teachers, climate)",
+        "Used Suno V5 with warm synth pads and uplifting vibe"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "task-008",
+      "date": "2026-02-28",
+      "title": "Installed Gemini Video Skill",
+      "summary": "Added google-gemini-media skill for multimodal AI capabilities",
+      "details": [
+        "Installed skill at ~/.agents/skills/google-gemini-media/",
+        "Includes Nano Banana image generation",
+        "Veo 3.1 video generation (8-second clips)",
+        "Gemini TTS speech generation",
+        "Image/video/audio understanding capabilities"
+      ],
+      "status": "completed"
+    },
+    {
+      "id": "task-009",
+      "date": "2026-02-28",
+      "title": "Check Elon Musk's Recent Posts on X",
+      "summary": "Searched x.com for Elon Musk's posts from last 2 hours, delivered summary via WhatsApp",
+      "details": [
+        "Found 2 reposts from Elon in last 2 hours (no original posts)",
+        "Reposted @Asmongold on immigration policy and deportation",
+        "Reposted @MarioNawfal on SpaceX Starbase parade float at Charro Days",
+        "Delivered findings to WhatsApp (+6583463780)"
+      ],
+      "status": "completed",
+      "completedAt": "2026-02-28T14:55:00+08:00"
+    },
+    {
+      "id": "task-010",
+      "date": "2026-02-28",
+      "title": "WebChat UI: Sub-Task 1 — Input UX",
+      "summary": "Implemented multi-line textarea with Ctrl+Enter send behavior",
+      "details": [
+        "Multi-line textarea working",
+        "Enter creates new line",
+        "Ctrl+Enter sends message",
+        "Hint text visible below input",
+        "Line breaks preserved in messages",
+        "Known issue: textarea scrolling when lines exceed view (to be fixed later)"
+      ],
+      "status": "completed",
+      "completedAt": "2026-02-28T17:20:00+08:00"
+    },
+    {
+      "id": "task-011",
       "date": "2026-02-28",
       "title": "WebChat UI: Sub-Task 2 — File Attachments",
       "summary": "File picker, attachment preview, mixed text+media messages",
-      "priority": "high",
-      "session": "WebChat",
-      "startedAt": "2026-02-28T17:21:00+08:00",
-      "demoChecklist": [
+      "details": [
         "📎 button opens file picker",
-        "Images show preview thumbnails",
+        "Images show preview thumbnails with remove button",
         "Can attach + type text together",
-        "Ctrl+Enter sends both text and attachments"
-      ]
+        "Ctrl+Enter sends both text and attachments",
+        "10MB limit for images, 50MB for videos"
+      ],
+      "status": "completed",
+      "completedAt": "2026-02-28T23:00:00+08:00"
+    },
+    {
+      "id": "task-012",
+      "date": "2026-02-28",
+      "title": "WebChat UI: Sub-Task 3 — Voice Recording",
+      "summary": "Inline voice record with click-to-toggle, playback preview, send",
+      "details": [
+        "🎤 button starts recording",
+        "Click-to-toggle (click to start, click stop to finish)",
+        "Shows timer during recording",
+        "Cancel button to discard",
+        "Voice messages appear as attachments"
+      ],
+      "status": "completed",
+      "completedAt": "2026-02-28T23:00:00+08:00"
     }
   ],
+  "inProgress": [],
   "pending": [
     {
       "id": "wip-002c",
