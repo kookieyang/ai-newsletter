@@ -646,7 +646,13 @@ async function loadMessages() {
     container.innerHTML = messages.map((m, idx) => {
       const isUser = m.role === 'user';
       const text = m.text || '';
-      // Strip timestamp prefix if present
+      
+      // Filter out system/gateway messages that appear as user messages
+      if (text.includes('System: [') && text.includes('Exec completed')) {
+        return '';
+      }
+      
+      // Strip timestamp prefix if present (e.g., "[Sun 2026-03-01 00:54 GMT+8] ")
       const cleanText = text.replace(/^\[[^\]]+\]\s*/, '');
       
       // Check if message has any content
