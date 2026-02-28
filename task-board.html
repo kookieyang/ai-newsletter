@@ -266,11 +266,11 @@
 
   <div class="stats-bar">
     <div class="stat-card">
-      <div class="stat-number" id="pending-count">2</div>
+      <div class="stat-number" id="pending-count">1</div>
       <div class="stat-label">Pending</div>
     </div>
     <div class="stat-card">
-      <div class="stat-number" id="completed-count">7</div>
+      <div class="stat-number" id="completed-count">8</div>
       <div class="stat-label">Completed</div>
     </div>
     <div class="stat-card">
@@ -391,6 +391,19 @@ const taskData = {
         "Theme: AI helping humanity (doctors, artists, teachers, climate)",
         "Used Suno V5 with warm synth pads and uplifting vibe"
       ]
+    },
+    {
+      "id": "task-008",
+      "date": "2026-02-28",
+      "title": "Installed Gemini Video Skill",
+      "summary": "Added google-gemini-media skill for multimodal AI capabilities",
+      "details": [
+        "Installed skill at ~/.agents/skills/google-gemini-media/",
+        "Includes Nano Banana image generation",
+        "Veo 3.1 video generation (8-second clips)",
+        "Gemini TTS speech generation",
+        "Image/video/audio understanding capabilities"
+      ]
     }
   ],
   "pending": [
@@ -401,14 +414,6 @@ const taskData = {
       "summary": "Auto-generated newsletter at 10am SGT (cron scheduled with 30min timeout)",
       "priority": "high",
       "blockedBy": "Cron scheduled - automatic"
-    },
-    {
-      "id": "todo-002",
-      "date": "2026-02-28",
-      "title": "Install Gemini Video Skill",
-      "summary": "Add google-gemini-media skill for video generation",
-      "priority": "medium",
-      "blockedBy": "None - ready to install"
     }
   ]
 };
