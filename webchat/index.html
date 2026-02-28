@@ -480,6 +480,9 @@ async function sendMessage() {
     }));
   }
 
+  // Store attachments for optimistic render BEFORE clearing
+  const currentAttachments = [...attachments];
+  
   input.value = '';
   input.style.height = 'auto';
   attachments = [];
@@ -492,9 +495,9 @@ async function sendMessage() {
   const formattedText = cleanText.replace(/\n/g, '<br>');
   
   let attachmentsHtml = '';
-  if (attachments.length > 0) {
+  if (currentAttachments.length > 0) {
     attachmentsHtml = '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">' + 
-      attachments.map(att => {
+      currentAttachments.map(att => {
         if (att.type?.startsWith('image/')) {
           return `<img src="${att.data}" style="max-width:200px;max-height:200px;border-radius:8px;border:1px solid #5a3a8a;"/>`;
         } else if (att.type?.startsWith('video/')) {
@@ -518,7 +521,9 @@ async function sendMessage() {
     </div>
   `;
   container.appendChild(div);
-  container.scrollTop = container.scrollHeight;
+  if (isAtBottom) {
+    container.scrollTop = container.scrollHeight;
+  }
 
   try {
     await fetch('/api/send', {
