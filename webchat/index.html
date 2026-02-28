@@ -647,13 +647,12 @@ async function loadMessages() {
       const isUser = m.role === 'user';
       const text = m.text || '';
       
-      // Filter out system/gateway messages that appear as user messages
-      if (text.includes('System: [') && text.includes('Exec completed')) {
-        return '';
-      }
-      
-      // Strip timestamp prefix if present (e.g., "[Sun 2026-03-01 00:54 GMT+8] ")
-      const cleanText = text.replace(/^\[[^\]]+\]\s*/, '');
+      // Strip out system/gateway log lines from the text
+      let cleanText = text
+        .split('\n')
+        .filter(line => !line.includes('Exec completed') || !line.includes('🌸 Amy Webchat'))
+        .join('\n')
+        .replace(/^\[[^\]]+\]\s*/, '');  // Also strip timestamp prefix like "[Sun 2026-03-01 00:54 GMT+8] "
       
       // Check if message has any content
       const hasText = cleanText.trim().length > 0;
