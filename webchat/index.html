@@ -621,6 +621,14 @@ function formatTime(ts) {
   return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
 }
 
+// Check if at bottom
+function checkAtBottom() {
+  const container = document.getElementById('messages');
+  if (!container) return true;
+  const threshold = 100;
+  return container.scrollHeight - container.scrollTop - container.clientHeight < threshold;
+}
+
 // Load messages
 async function loadMessages() {
   try {
@@ -631,6 +639,10 @@ async function loadMessages() {
       container.innerHTML = '<div style="text-align:center;color:#888;padding:60px;"><div style="font-size:48px;margin-bottom:12px;">🌸</div><p>No messages yet</p></div>';
       return;
     }
+    
+    // Save current scroll position and check if at bottom
+    const oldScrollTop = container.scrollTop;
+    const wasAtBottom = checkAtBottom();
     
     container.innerHTML = messages.map((m, idx) => {
       const isUser = m.role === 'user';
@@ -699,28 +711,18 @@ async function loadMessages() {
       `;
     }).filter(html => html !== '').join('');
     
-    // Only scroll to bottom if user was already at bottom
-    if (isAtBottom) {
-      container.scrollTop = container.scrollHeight;
+    // Restore scroll position (or scroll to bottom if was at bottom)
+    const newScrollHeight = container.scrollHeight;
+    if (wasAtBottom) {
+      container.scrollTop = newScrollHeight;
+    } else {
+      // Maintain relative position
+      container.scrollTop = oldScrollTop + (newScrollHeight - oldScrollHeight);
     }
   } catch (e) {
     console.error(e);
   }
 }
-
-// Track if user is at bottom
-let isAtBottom = true;
-
-// Need to wait for DOM to be ready
-setTimeout(() => {
-  const messagesContainer = document.getElementById('messages');
-  if (messagesContainer) {
-    messagesContainer.addEventListener('scroll', () => {
-      const threshold = 100; // pixels from bottom
-      isAtBottom = messagesContainer.scrollHeight - messagesContainer.scrollTop - messagesContainer.clientHeight < threshold;
-    });
-  }
-}, 100);
 
 loadMessages();
 setInterval(loadMessages, 3000);
