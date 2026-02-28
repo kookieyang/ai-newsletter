@@ -353,43 +353,31 @@ function openLightbox(src, type) {
 }
 
 // Copy message function
-async function copyMessageText(msgId, escapedText) {
-  // Decode HTML entities
-  const textarea = document.createElement('textarea');
-  textarea.innerHTML = escapedText;
-  const rawText = textarea.value;
+function copyMessageText(msgId, rawText) {
+  console.log('Copy clicked for', msgId);
   
+  // Simple copy approach
+  const temp = document.createElement('textarea');
+  temp.value = rawText;
+  temp.style.cssText = 'position:fixed;left:-9999px;top:0';
+  document.body.appendChild(temp);
+  temp.select();
+  
+  let success = false;
   try {
-    await navigator.clipboard.writeText(rawText);
-    showCopySuccess(msgId);
-  } catch (err) {
-    // Fallback for older browsers
-    const ta = document.createElement('textarea');
-    ta.value = rawText;
-    ta.style.position = 'fixed';
-    ta.style.left = '-9999px';
-    document.body.appendChild(ta);
-    ta.focus();
-    ta.select();
-    try {
-      document.execCommand('copy');
-      showCopySuccess(msgId);
-    } catch (e) {
-      console.error('Copy failed:', e);
-    }
-    document.body.removeChild(ta);
+    success = document.execCommand('copy');
+    console.log('Copy result:', success);
+  } catch (e) {
+    console.error('Copy error:', e);
   }
-}
-
-function showCopySuccess(msgId) {
-  const btn = document.querySelector(`#${msgId} .copy-btn`);
+  
+  document.body.removeChild(temp);
+  
+  // Visual feedback
+  const btn = document.querySelector('#' + msgId + ' .copy-btn');
   if (btn) {
-    btn.textContent = '✓';
-    btn.style.opacity = '1';
-    setTimeout(() => {
-      btn.textContent = '📋';
-      btn.style.opacity = '0.5';
-    }, 1500);
+    btn.textContent = success ? '✓' : '✗';
+    setTimeout(() => btn.textContent = '📋', 1000);
   }
 }
 let attachments = [];
@@ -592,7 +580,7 @@ async function sendMessage() {
       </div>
       <div class="msg-meta">
         <span class="ts">${formatTime(Date.now())}</span>
-        <button class="copy-btn" onclick="copyMessageText('${msgId}', '${escapedText}')" title="Copy">📋</button>
+        <button class="copy-btn" onclick='copyMessageText("${msgId}", ${JSON.stringify(text)})' title="Copy">📋</button>
       </div>
     </div>
   `;
@@ -693,7 +681,7 @@ async function loadMessages() {
           </div>
           <div class="msg-meta">
             <span class="ts">${formatTime(m.timestamp)}</span>
-            <button class="copy-btn" onclick="copyMessageText('${msgId}', '${escapedText}')" title="Copy">📋</button>
+            <button class="copy-btn" onclick='copyMessageText("${msgId}", ${JSON.stringify(text)})' title="Copy">📋</button>
           </div>
         </div>
       `;
