@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-28T17:21:00+08:00",
+  "lastUpdated": "2026-03-02T17:40:00+08:00",
   "completed": [
     {
       "id": "task-001",
@@ -16,11 +16,11 @@
     {
       "id": "task-002",
       "date": "2026-02-26",
-      "title": "Portal & Tunnel Setup",
-      "summary": "Created web portal with localtunnel for remote access to files",
+      "title": "Portal & GitHub Pages Setup",
+      "summary": "Created web portal with GitHub Pages for permanent access",
       "details": [
         "Built index.html portal with avatar",
-        "Set up Python HTTP server + localtunnel",
+        "Deployed to GitHub Pages (kookieyang.github.io/ai-newsletter)",
         "Added newsletter links with dates"
       ],
       "status": "completed"
@@ -79,7 +79,7 @@
       "id": "task-007",
       "date": "2026-02-28",
       "title": "Composed R&B Song with Suno",
-      "summary": "Created AI-generated R&B song 'AI Is Saving the World' using Suno",
+      "summary": "Created AI-generated R&B song 'Circuit Heart, Human Hands' using Suno V5",
       "details": [
         "Generated R&B soul track at 90 BPM with smooth male vocals",
         "Song title: 'Circuit Heart, Human Hands'",
@@ -95,8 +95,7 @@
       "summary": "Added google-gemini-media skill for multimodal AI capabilities",
       "details": [
         "Installed skill at ~/.agents/skills/google-gemini-media/",
-        "Includes Nano Banana image generation",
-        "Veo 3.1 video generation (8-second clips)",
+        "Includes Nano Banana image generation, Veo 3.1 video generation",
         "Gemini TTS speech generation",
         "Image/video/audio understanding capabilities"
       ],
@@ -110,8 +109,7 @@
       "details": [
         "Found 2 reposts from Elon in last 2 hours (no original posts)",
         "Reposted @Asmongold on immigration policy and deportation",
-        "Reposted @MarioNawfal on SpaceX Starbase parade float at Charro Days",
-        "Delivered findings to WhatsApp (+6583463780)"
+        "Reposted @MarioNawfal on SpaceX Starbase parade float at Charro Days"
       ],
       "status": "completed",
       "completedAt": "2026-02-28T14:55:00+08:00"
@@ -119,148 +117,13 @@
     {
       "id": "task-010",
       "date": "2026-02-28",
-      "title": "WebChat UI: Sub-Task 1 — Input UX",
+      "title": "WebChat UI: Input UX",
       "summary": "Implemented multi-line textarea with Ctrl+Enter send behavior",
       "details": [
-        "Multi-line textarea working",
-        "Enter creates new line",
-        "Ctrl+Enter sends message",
+        "Multi-line textarea with auto-resize",
+        "Enter creates new line, Ctrl/Cmd+Enter sends",
         "Hint text visible below input",
-        "Line breaks preserved in messages",
-        "Known issue: textarea scrolling when lines exceed view (to be fixed later)"
-      ],
-      "status": "completed",
-      "completedAt": "2026-02-28T17:20:00+08:00"
-    }
-  ],
-  "completed": [
-    {
-      "id": "task-001",
-      "date": "2026-02-26",
-      "title": "AI Newsletter System",
-      "summary": "Built daily AI newsletter with 15 stories, dark-theme HTML, auto-generation via cron at 10am SGT",
-      "details": [
-        "Created newsletter HTML template with US/China/Global sections",
-        "Set up daily cron job for 10am SGT automatic generation",
-        "Built portal page with avatar and dated entries"
-      ],
-      "status": "completed"
-    },
-    {
-      "id": "task-002",
-      "date": "2026-02-26",
-      "title": "Portal & Tunnel Setup",
-      "summary": "Created web portal with localtunnel for remote access to files",
-      "details": [
-        "Built index.html portal with avatar",
-        "Set up Python HTTP server + localtunnel",
-        "Added newsletter links with dates"
-      ],
-      "status": "completed"
-    },
-    {
-      "id": "task-003",
-      "date": "2026-02-27",
-      "title": "Skills Installation",
-      "summary": "Installed find-skills, skill-creator, and suno-music-creator skills",
-      "details": [
-        "find-skills for discovering new capabilities",
-        "skill-creator for building custom skills",
-        "suno-music-creator for AI music composition"
-      ],
-      "status": "completed"
-    },
-    {
-      "id": "task-004",
-      "date": "2026-02-27",
-      "title": "Knowledge Base /clip System",
-      "summary": "Implemented /clip command for saving articles and URLs",
-      "details": [
-        "Created knowledge/entries/ folder structure",
-        "Built KEYWORD_INDEX.md for topic mapping",
-        "Saved first clip: AI game entrepreneurs article"
-      ],
-      "status": "completed"
-    },
-    {
-      "id": "task-005",
-      "date": "2026-02-28",
-      "title": "Fixed Newsletter Cron Job",
-      "summary": "Diagnosed and fixed cron failures, published Feb 28 newsletter, verified system works",
-      "details": [
-        "Investigated 10am cron timeout failure (5min → 30min)",
-        "Manually published Feb 28 newsletter with 14 stories",
-        "Updated cron to handle both /docs/ and root folder deployments",
-        "Tested cron system with weather check - confirmed working"
-      ],
-      "status": "completed"
-    },
-    {
-      "id": "task-006",
-      "date": "2026-02-28",
-      "title": "Extracted WeChat Article Content",
-      "summary": "Used browser extension to extract full content of AI game entrepreneur interview",
-      "details": [
-        "Installed OpenClaw browser extension via Homebrew",
-        "Extracted complete Wanaka founder interview from 晚点AI",
-        "Saved structured content to knowledge base with key insights",
-        "Article covers AI game social platform, UGC, and distribution strategy"
-      ],
-      "status": "completed"
-    },
-    {
-      "id": "task-007",
-      "date": "2026-02-28",
-      "title": "Composed R&B Song with Suno",
-      "summary": "Created AI-generated R&B song 'AI Is Saving the World' using Suno",
-      "details": [
-        "Generated R&B soul track at 90 BPM with smooth male vocals",
-        "Song title: 'Circuit Heart, Human Hands'",
-        "Theme: AI helping humanity (doctors, artists, teachers, climate)",
-        "Used Suno V5 with warm synth pads and uplifting vibe"
-      ],
-      "status": "completed"
-    },
-    {
-      "id": "task-008",
-      "date": "2026-02-28",
-      "title": "Installed Gemini Video Skill",
-      "summary": "Added google-gemini-media skill for multimodal AI capabilities",
-      "details": [
-        "Installed skill at ~/.agents/skills/google-gemini-media/",
-        "Includes Nano Banana image generation",
-        "Veo 3.1 video generation (8-second clips)",
-        "Gemini TTS speech generation",
-        "Image/video/audio understanding capabilities"
-      ],
-      "status": "completed"
-    },
-    {
-      "id": "task-009",
-      "date": "2026-02-28",
-      "title": "Check Elon Musk's Recent Posts on X",
-      "summary": "Searched x.com for Elon Musk's posts from last 2 hours, delivered summary via WhatsApp",
-      "details": [
-        "Found 2 reposts from Elon in last 2 hours (no original posts)",
-        "Reposted @Asmongold on immigration policy and deportation",
-        "Reposted @MarioNawfal on SpaceX Starbase parade float at Charro Days",
-        "Delivered findings to WhatsApp (+6583463780)"
-      ],
-      "status": "completed",
-      "completedAt": "2026-02-28T14:55:00+08:00"
-    },
-    {
-      "id": "task-010",
-      "date": "2026-02-28",
-      "title": "WebChat UI: Sub-Task 1 — Input UX",
-      "summary": "Implemented multi-line textarea with Ctrl+Enter send behavior",
-      "details": [
-        "Multi-line textarea working",
-        "Enter creates new line",
-        "Ctrl+Enter sends message",
-        "Hint text visible below input",
-        "Line breaks preserved in messages",
-        "Known issue: textarea scrolling when lines exceed view (to be fixed later)"
+        "Line breaks preserved in messages"
       ],
       "status": "completed",
       "completedAt": "2026-02-28T17:20:00+08:00"
@@ -268,14 +131,15 @@
     {
       "id": "task-011",
       "date": "2026-02-28",
-      "title": "WebChat UI: Sub-Task 2 — File Attachments",
-      "summary": "File picker, attachment preview, mixed text+media messages",
+      "title": "WebChat UI: File Attachments",
+      "summary": "File picker, attachment preview, drag & drop, clipboard paste, mixed text+media messages",
       "details": [
         "📎 button opens file picker",
         "Images show preview thumbnails with remove button",
-        "Can attach + type text together",
-        "Ctrl+Enter sends both text and attachments",
-        "10MB limit for images, 50MB for videos"
+        "Drag & drop files onto input area",
+        "Cmd/Ctrl+V paste screenshots from clipboard",
+        "Mixed text + image messages end-to-end working",
+        "Image thumbnails persist in message history"
       ],
       "status": "completed",
       "completedAt": "2026-02-28T23:00:00+08:00"
@@ -283,38 +147,58 @@
     {
       "id": "task-012",
       "date": "2026-02-28",
-      "title": "WebChat UI: Sub-Task 3 — Voice Recording",
-      "summary": "Inline voice record with click-to-toggle, playback preview, send",
+      "title": "WebChat UI: Voice Recording",
+      "summary": "Voice recording with transcription via OpenAI Whisper API",
       "details": [
-        "🎤 button starts recording",
-        "Click-to-toggle (click to start, click stop to finish)",
-        "Shows timer during recording",
-        "Cancel button to discard",
-        "Voice messages appear as attachments"
+        "🎤 button starts recording with click-to-toggle",
+        "Timer shown during recording, cancel button to discard",
+        "Audio transcribed server-side via Whisper API",
+        "Smart mic selection — skips BlackHole/virtual devices",
+        "Esc key cancels recording"
       ],
       "status": "completed",
       "completedAt": "2026-02-28T23:00:00+08:00"
+    },
+    {
+      "id": "task-013",
+      "date": "2026-03-01",
+      "title": "Daily AI Newsletter — March 1",
+      "summary": "Auto-generated and published March 1 newsletter with 15 stories",
+      "details": [
+        "Cron job ran successfully at 10am SGT",
+        "15 stories covering US, China, and Global AI news",
+        "Portal updated with latest newsletter",
+        "GitHub Pages deployed successfully"
+      ],
+      "status": "completed",
+      "completedAt": "2026-03-01T10:30:00+08:00"
+    },
+    {
+      "id": "task-014",
+      "date": "2026-03-02",
+      "title": "WebChat UI: Bug Fixes & Polish",
+      "summary": "Fixed 8 bugs and added polish features for the Amy Webchat UI",
+      "details": [
+        "Fixed multiline input disappearing (auto-resize bug)",
+        "Fixed messages not rendering after code blocks (HTML escaping)",
+        "Fixed message polling dying silently (undeclared variable)",
+        "Fixed copy button breaking on quotes/backticks",
+        "Fixed newlines lost in history (~~NL~~ ASCII marker workaround)",
+        "Fixed image attachments not sent to AI (gateway integration)",
+        "Fixed image thumbnails disappearing from history",
+        "Added system message styling (compact grey bars, click-to-expand)",
+        "Fixed voice recording: BlackHole virtual device auto-skip",
+        "Fixed base64 parsing for audio (codec params in MIME type)"
+      ],
+      "status": "completed",
+      "completedAt": "2026-03-02T17:35:00+08:00"
     }
   ],
   "inProgress": [],
   "pending": [
     {
-      "id": "wip-002c",
-      "date": "2026-02-28",
-      "title": "WebChat UI: Sub-Task 3 — Voice Recording",
-      "summary": "Inline voice record with click-to-toggle, playback preview, send",
-      "priority": "high",
-      "blockedBy": "Waiting for Sub-Task 2 completion",
-      "demoChecklist": [
-        "🎤 button starts recording",
-        "Click-to-toggle (not hold)",
-        "Shows timer + waveform",
-        "Preview before send"
-      ]
-    },
-    {
       "id": "todo-001",
-      "date": "2026-03-01",
+      "date": "2026-03-03",
       "title": "Daily AI Newsletter",
       "summary": "Auto-generated newsletter at 10am SGT (cron scheduled with 30min timeout)",
       "priority": "high",

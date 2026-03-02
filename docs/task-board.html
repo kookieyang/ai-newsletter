@@ -358,11 +358,11 @@ const taskData = {
     {
       "id": "task-002",
       "date": "2026-02-26",
-      "title": "Portal & Tunnel Setup",
-      "summary": "Created web portal with localtunnel for remote access to files",
+      "title": "Portal & GitHub Pages Setup",
+      "summary": "Created web portal with GitHub Pages for permanent access",
       "details": [
         "Built index.html portal with avatar",
-        "Set up Python HTTP server + localtunnel",
+        "Deployed to GitHub Pages (kookieyang.github.io/ai-newsletter)",
         "Added newsletter links with dates"
       ]
     },
@@ -416,7 +416,7 @@ const taskData = {
       "id": "task-007",
       "date": "2026-02-28",
       "title": "Composed R&B Song with Suno",
-      "summary": "Created AI-generated R&B song 'AI Is Saving the World' using Suno",
+      "summary": "Created AI-generated R&B song 'Circuit Heart, Human Hands' using Suno V5",
       "details": [
         "Generated R&B soul track at 90 BPM with smooth male vocals",
         "Song title: 'Circuit Heart, Human Hands'",
@@ -431,8 +431,7 @@ const taskData = {
       "summary": "Added google-gemini-media skill for multimodal AI capabilities",
       "details": [
         "Installed skill at ~/.agents/skills/google-gemini-media/",
-        "Includes Nano Banana image generation",
-        "Veo 3.1 video generation (8-second clips)",
+        "Includes Nano Banana image generation, Veo 3.1 video generation",
         "Gemini TTS speech generation",
         "Image/video/audio understanding capabilities"
       ]
@@ -445,55 +444,84 @@ const taskData = {
       "details": [
         "Found 2 reposts from Elon in last 2 hours (no original posts)",
         "Reposted @Asmongold on immigration policy and deportation",
-        "Reposted @MarioNawfal on SpaceX Starbase parade float at Charro Days",
-        "Delivered findings to WhatsApp (+6583463780)"
+        "Reposted @MarioNawfal on SpaceX Starbase parade float at Charro Days"
       ]
     },
     {
       "id": "task-010",
       "date": "2026-02-28",
-      "title": "WebChat UI: Sub-Task 1 — Input UX",
+      "title": "WebChat UI: Input UX",
       "summary": "Implemented multi-line textarea with Ctrl+Enter send behavior",
       "details": [
-        "Multi-line textarea working",
-        "Enter creates new line",
-        "Ctrl+Enter sends message",
+        "Multi-line textarea with auto-resize",
+        "Enter creates new line, Ctrl/Cmd+Enter sends",
         "Hint text visible below input",
         "Line breaks preserved in messages"
       ]
-    }
-  ],
-  "inProgress": [
+    },
     {
-      "id": "wip-002b",
+      "id": "task-011",
       "date": "2026-02-28",
-      "title": "WebChat UI: Sub-Task 2 — File Attachments",
-      "summary": "File picker, attachment preview, mixed text+media messages",
-      "priority": "high",
-      "session": "WebChat",
-      "startedAt": "2026-02-28T17:21:00+08:00"
+      "title": "WebChat UI: File Attachments",
+      "summary": "File picker, attachment preview, drag & drop, clipboard paste, mixed text+media messages",
+      "details": [
+        "📎 button opens file picker",
+        "Images show preview thumbnails with remove button",
+        "Drag & drop files onto input area",
+        "Cmd/Ctrl+V paste screenshots from clipboard",
+        "Mixed text + image messages end-to-end working",
+        "Image thumbnails persist in message history"
+      ]
+    },
+    {
+      "id": "task-012",
+      "date": "2026-02-28",
+      "title": "WebChat UI: Voice Recording",
+      "summary": "Voice recording with transcription via OpenAI Whisper API",
+      "details": [
+        "🎤 button starts recording with click-to-toggle",
+        "Timer shown during recording, cancel button to discard",
+        "Audio transcribed server-side via Whisper API",
+        "Smart mic selection — skips BlackHole/virtual devices",
+        "Esc key cancels recording"
+      ]
+    },
+    {
+      "id": "task-013",
+      "date": "2026-03-01",
+      "title": "Daily AI Newsletter — March 1",
+      "summary": "Auto-generated and published March 1 newsletter with 15 stories",
+      "details": [
+        "Cron job ran successfully at 10am SGT",
+        "15 stories covering US, China, and Global AI news",
+        "Portal updated with latest newsletter",
+        "GitHub Pages deployed successfully"
+      ]
+    },
+    {
+      "id": "task-014",
+      "date": "2026-03-02",
+      "title": "WebChat UI: Bug Fixes & Polish",
+      "summary": "Fixed 8 bugs and added polish features for the Amy Webchat UI",
+      "details": [
+        "Fixed multiline input disappearing (auto-resize bug)",
+        "Fixed messages not rendering after code blocks (HTML escaping)",
+        "Fixed message polling dying silently (undeclared variable)",
+        "Fixed copy button breaking on quotes/backticks",
+        "Fixed newlines lost in history (~~NL~~ ASCII marker workaround)",
+        "Fixed image attachments not sent to AI (gateway integration)",
+        "Fixed image thumbnails disappearing from history",
+        "Added system message styling (compact grey bars, click-to-expand)",
+        "Fixed voice recording: BlackHole virtual device auto-skip",
+        "Fixed base64 parsing for audio (codec params in MIME type)"
+      ]
     }
   ],
+  "inProgress": [],
   "pending": [
     {
-      "id": "wip-002c",
-      "date": "2026-02-28",
-      "title": "WebChat UI: Sub-Task 3 — Voice Recording",
-      "summary": "Inline voice record with click-to-toggle, playback preview, send",
-      "priority": "high",
-      "blockedBy": "Waiting for Sub-Task 2 completion"
-    },
-    {
-      "id": "wip-002c",
-      "date": "2026-02-28",
-      "title": "WebChat UI: Sub-Task 3 — Voice Recording",
-      "summary": "Inline voice record with click-to-toggle, playback preview, send",
-      "priority": "high",
-      "blockedBy": "Waiting for Sub-Task 2 completion"
-    },
-    {
       "id": "todo-001",
-      "date": "2026-03-01",
+      "date": "2026-03-03",
       "title": "Daily AI Newsletter",
       "summary": "Auto-generated newsletter at 10am SGT (cron scheduled with 30min timeout)",
       "priority": "high",
