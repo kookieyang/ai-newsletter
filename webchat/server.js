@@ -407,6 +407,6 @@ const server = http.createServer((req, res) => {
   res.writeHead(404); res.end('Not found');
 });
 
-server.listen(PORT, '127.0.0.1', () => {
-  console.log(`\n🌸 Amy Webchat running at http://127.0.0.1:${PORT}\n`);
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`\n🌸 Amy Webchat running at http://0.0.0.0:${PORT}\n`);
 });
