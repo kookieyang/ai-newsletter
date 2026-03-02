@@ -85,7 +85,8 @@ function parseMessages(sessionFile) {
 
       if (role === 'user') {
         // Extract text parts (skip system-injected ones)
-        const texts = content.filter(c => c.type === 'text').map(c => c.text || '').join('\n');
+        // Decode U+2028 back to \n (used to preserve newlines through gateway)
+        const texts = content.filter(c => c.type === 'text').map(c => (c.text || '').replace(/\u2028/g, '\n')).join('\n');
         if (texts.trim()) {
           messages.push({ role: 'user', text: texts, timestamp: ts });
         }
@@ -243,7 +244,10 @@ const server = http.createServer((req, res) => {
     req.on('end', () => {
       try {
         const { text } = JSON.parse(body);
-        sendToGateway(text, (err, result) => {
+        // Preserve newlines: gateway webchat channel may strip \n,
+        // so encode as Unicode line separator (U+2028) which survives
+        const encodedText = text.replace(/\n/g, '\u2028');
+        sendToGateway(encodedText, (err, result) => {
           if (err) {
             res.writeHead(500); res.end(JSON.stringify({ error: err.message }));
           } else {
