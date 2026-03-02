@@ -88,8 +88,16 @@ function parseMessages(sessionFile) {
         // Decode newline markers back to \n
         const NL_MARKER = ' ~~NL~~ ';
         const texts = content.filter(c => c.type === 'text').map(c => (c.text || '').replace(new RegExp(NL_MARKER.replace(/~/g, '\\~'), 'g'), '\n')).join('\n');
-        if (texts.trim()) {
-          messages.push({ role: 'user', text: texts, timestamp: ts });
+        // Extract image attachments
+        const imageAttachments = content.filter(c => c.type === 'image' && c.data).map(c => ({
+          type: c.mimeType || 'image/png',
+          name: c.fileName || 'image',
+          data: c.data.startsWith('data:') ? c.data : `data:${c.mimeType || 'image/png'};base64,${c.data}`
+        }));
+        if (texts.trim() || imageAttachments.length > 0) {
+          const userMsg = { role: 'user', text: texts, timestamp: ts };
+          if (imageAttachments.length > 0) userMsg.attachments = imageAttachments;
+          messages.push(userMsg);
         }
       } else if (role === 'assistant') {
         const textParts = content.filter(c => c.type === 'text').map(c => c.text || '');
