@@ -282,7 +282,13 @@ const server = http.createServer((req, res) => {
   const fullPath = path.join(__dirname, filePath);
   if (fs.existsSync(fullPath) && fs.statSync(fullPath).isFile()) {
     const ext = path.extname(fullPath).toLowerCase();
-    res.writeHead(200, { 'Content-Type': MIME[ext] || 'text/plain' });
+    const headers = { 'Content-Type': MIME[ext] || 'text/plain' };
+    // No cache for HTML/JS so updates are picked up immediately
+    if (ext === '.html' || ext === '.js') {
+      headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+      headers['Pragma'] = 'no-cache';
+    }
+    res.writeHead(200, headers);
     res.end(fs.readFileSync(fullPath));
     return;
   }

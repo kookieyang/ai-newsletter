@@ -231,12 +231,14 @@
   }
   #input-wrap:focus-within { border-color: var(--accent-dim); }
   #input {
-    flex: 1; background: none; border: none; outline: none;
+    background: none; border: none; outline: none;
     color: var(--text); font-size: 14.5px; line-height: 1.5;
-    resize: none; max-height: 160px; min-height: 22px;
+    resize: none; max-height: 160px; min-height: 24px;
     font-family: inherit;
     width: 100%;
     overflow: hidden;
+    overflow-y: hidden;
+    flex-shrink: 0;
   }
   #input.has-overflow {
     overflow-y: auto;
@@ -355,40 +357,44 @@ function openLightbox(src, type) {
   }
 }
 
+// HTML-escape text so raw content doesn't corrupt the DOM
+function escapeHtml(str) {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+// Store message texts by ID for safe copy (avoids inline handler escaping issues)
+const messageTextMap = {};
+
 // Copy message function
-function copyMessageText(msgId, rawText) {
-  console.log('Copy clicked for', msgId, 'text:', rawText);
+function copyMessageText(msgId) {
+  const rawText = messageTextMap[msgId] || '';
   
-  // Decode JSON string if needed
-  let textToCopy = rawText;
-  try {
-    // Try to parse as JSON (for messages loaded from server)
-    if (typeof rawText === 'string' && rawText.startsWith('"')) {
-      textToCopy = JSON.parse(rawText);
-    }
-  } catch (e) {
-    // If parsing fails, use as-is
-    textToCopy = rawText;
+  // Use modern clipboard API if available, fallback to execCommand
+  let success = false;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(rawText).then(() => {
+      showCopyFeedback(msgId, true);
+    }).catch(() => {
+      showCopyFeedback(msgId, fallbackCopy(rawText));
+    });
+    return;
   }
-  
-  // Simple copy approach
+  showCopyFeedback(msgId, fallbackCopy(rawText));
+}
+
+function fallbackCopy(text) {
   const temp = document.createElement('textarea');
-  temp.value = textToCopy;
+  temp.value = text;
   temp.style.cssText = 'position:fixed;left:-9999px;top:0';
   document.body.appendChild(temp);
   temp.select();
-  
   let success = false;
-  try {
-    success = document.execCommand('copy');
-    console.log('Copy result:', success);
-  } catch (e) {
-    console.error('Copy error:', e);
-  }
-  
+  try { success = document.execCommand('copy'); } catch (e) {}
   document.body.removeChild(temp);
-  
-  // Visual feedback
+  return success;
+}
+
+function showCopyFeedback(msgId, success) {
   const btn = document.querySelector('#' + msgId + ' .copy-btn');
   if (btn) {
     btn.textContent = success ? '✓' : '✗';
@@ -410,23 +416,33 @@ const voiceUI = document.getElementById('voice-ui');
 const sendBtn = document.getElementById('send-btn');
 
 // Auto-resize textarea - grow to show all content, only scroll when at max-height
-input.addEventListener('input', () => {
-  input.style.height = 'auto';
+function resizeInput() {
+  // Shrink to 1px first (not 'auto') so scrollHeight recalculates accurately
+  // without collapsing to 0 and causing a visual jump
+  input.style.height = '1px';
   const newHeight = Math.min(input.scrollHeight, 160);
   input.style.height = newHeight + 'px';
-  // Only enable scrolling when we hit max height
+  // Only enable scrolling when content exceeds max height
   if (input.scrollHeight > 160) {
     input.classList.add('has-overflow');
   } else {
     input.classList.remove('has-overflow');
   }
-});
+}
+
+input.addEventListener('input', resizeInput);
 
 // Keyboard shortcuts
 input.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
     e.preventDefault();
     sendMessage();
+  } else if (e.key === 'Enter' && !e.ctrlKey && !e.metaKey) {
+    // Let the newline insert naturally, then resize on next frame
+    requestAnimationFrame(resizeInput);
+  } else if (e.key === 'Backspace' || e.key === 'Delete') {
+    // Resize after deletion in case lines were removed
+    requestAnimationFrame(resizeInput);
   }
 });
 
@@ -573,7 +589,7 @@ async function sendMessage() {
   // Optimistic render
   const container = document.getElementById('messages');
   const cleanText = text.replace(/^\[[^\]]+\]\s*/, '');
-  const formattedText = cleanText.replace(/\n/g, '<br>');
+  const formattedText = escapeHtml(cleanText).replace(/\n/g, '<br>');
   
   let attachmentsHtml = '';
   if (currentAttachments.length > 0) {
@@ -593,7 +609,7 @@ async function sendMessage() {
   
   const div = document.createElement('div');
   const msgId = 'msg-' + Date.now();
-  const escapedText = text.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  messageTextMap[msgId] = text;
   div.innerHTML = `
     <div class="msg-group user" id="${msgId}">
       <div class="bubble user">
@@ -602,7 +618,7 @@ async function sendMessage() {
       </div>
       <div class="msg-meta">
         <span class="ts">${formatTime(Date.now())}</span>
-        <button class="copy-btn" onclick='copyMessageText("${msgId}", ${JSON.stringify(text)})' title="Copy">📋</button>
+        <button class="copy-btn" onclick='copyMessageText("${msgId}")' title="Copy">📋</button>
       </div>
     </div>
   `;
@@ -651,6 +667,7 @@ async function loadMessages() {
     
     // Save current scroll position and check if at bottom
     const oldScrollTop = container.scrollTop;
+    const oldScrollHeight = container.scrollHeight;
     const wasAtBottom = checkAtBottom();
     
     container.innerHTML = messages.map((m, idx) => {
@@ -703,12 +720,12 @@ async function loadMessages() {
         }
       }
       
-      // Convert newlines to <br>
-      const formattedText = cleanText.replace(/\n/g, '<br>');
+      // HTML-escape then convert newlines to <br>
+      const formattedText = escapeHtml(cleanText).replace(/\n/g, '<br>');
       
-      // Escape for data attribute  
-      const escapedText = text.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
       const msgId = 'msg-' + idx;
+      // Store raw text in map for safe copy
+      messageTextMap[msgId] = text;
       
       return `
         <div class="msg-group ${isUser ? 'user' : 'assistant'}" id="${msgId}">
@@ -719,7 +736,7 @@ async function loadMessages() {
           </div>
           <div class="msg-meta">
             <span class="ts">${formatTime(m.timestamp)}</span>
-            <button class="copy-btn" onclick='copyMessageText("${msgId}", ${JSON.stringify(text)})' title="Copy">📋</button>
+            <button class="copy-btn" onclick='copyMessageText("${msgId}")' title="Copy">📋</button>
           </div>
         </div>
       `;
@@ -740,6 +757,7 @@ async function loadMessages() {
 
 loadMessages();
 setInterval(loadMessages, 3000);
+// v2 - multiline fix + scroll fix
 </script>
 </body>
 </html>
