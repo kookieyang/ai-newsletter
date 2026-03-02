@@ -367,7 +367,11 @@ const messageTextMap = {};
 
 // Copy message function
 function copyMessageText(msgId) {
-  const rawText = messageTextMap[msgId] || '';
+  let rawText = messageTextMap[msgId] || '';
+  // Strip timestamp prefix like "[Mon 2026-03-02 14:43 GMT+8] "
+  rawText = rawText.replace(/^\[[^\]]+\]\s*/, '');
+  // Decode any remaining ~~NL~~ markers to real newlines
+  rawText = rawText.replace(/ ~~NL~~ /g, '\n');
   
   // Use modern clipboard API if available, fallback to execCommand
   let success = false;
