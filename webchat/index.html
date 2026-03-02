@@ -434,7 +434,10 @@ function resizeInput() {
   }
 }
 
-input.addEventListener('input', resizeInput);
+function updateSendButton() {
+  sendBtn.disabled = !input.value.trim() && attachments.length === 0;
+}
+input.addEventListener('input', () => { resizeInput(); updateSendButton(); });
 
 // Keyboard shortcuts
 input.addEventListener('keydown', (e) => {
@@ -447,10 +450,29 @@ input.addEventListener('keydown', (e) => {
   } else if (e.key === 'Backspace' || e.key === 'Delete') {
     // Resize after deletion in case lines were removed
     requestAnimationFrame(resizeInput);
+  } else if (e.key === 'Escape') {
+    // Clear attachments and cancel recording
+    if (isRecording) {
+      cancelRecording();
+    }
+    if (attachments.length > 0) {
+      attachments = [];
+      renderAttachments();
+    }
   }
 });
 
 sendBtn.addEventListener('click', sendMessage);
+
+// Drag & drop files onto input area
+const inputArea = document.getElementById('input-area');
+inputArea.addEventListener('dragover', (e) => { e.preventDefault(); inputArea.style.borderColor = 'var(--accent)'; });
+inputArea.addEventListener('dragleave', () => { inputArea.style.borderColor = ''; });
+inputArea.addEventListener('drop', (e) => {
+  e.preventDefault();
+  inputArea.style.borderColor = '';
+  Array.from(e.dataTransfer.files).forEach(file => addAttachment(file));
+});
 
 // File attachments
 attachBtn.addEventListener('click', () => fileInput.click());
@@ -477,6 +499,7 @@ function addAttachment(file) {
 }
 
 function renderAttachments() {
+  updateSendButton();
   if (attachments.length === 0) {
     attachmentPreview.classList.add('hidden');
     return;
@@ -761,7 +784,7 @@ async function loadMessages() {
 
 loadMessages();
 setInterval(loadMessages, 3000);
-// v2 - multiline fix + scroll fix
+updateSendButton();
 </script>
 </body>
 </html>
