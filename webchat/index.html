@@ -105,6 +105,43 @@
     border-bottom-left-radius: 4px;
   }
 
+  /* ── System messages (collapsible) ── */
+  .msg-group.system {
+    align-items: center;
+  }
+  .bubble.system {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #6b6b80;
+    font-size: 12px;
+    line-height: 1.5;
+    max-width: 90%;
+    padding: 6px 12px;
+    cursor: pointer;
+    max-height: 2.8em;
+    overflow: hidden;
+    transition: max-height 0.2s ease;
+    position: relative;
+  }
+  .bubble.system::after {
+    content: '▸ click to expand';
+    position: absolute;
+    right: 10px;
+    bottom: 2px;
+    font-size: 10px;
+    color: #4a4a5a;
+  }
+  .bubble.system.expanded {
+    max-height: 500px;
+    overflow-y: auto;
+  }
+  .bubble.system.expanded::after {
+    content: '▾ click to collapse';
+  }
+  .msg-group.system .msg-meta {
+    justify-content: center;
+  }
+
   /* ── Message meta (timestamp + copy) ── */
   .msg-meta {
     display: flex;
@@ -725,6 +762,20 @@ async function loadMessages() {
         .join('\n')
         .replace(/^\[[^\]]+\]\s*/, '');  // Also strip timestamp prefix like "[Sun 2026-03-01 00:54 GMT+8] "
       
+      // Detect system messages
+      const systemPatterns = [
+        /^Pre-compaction memory flush/,
+        /^A new session was started/,
+        /^Read HEARTBEAT\.md/,
+        /^System: \[/,
+      ];
+      const systemAssistantPatterns = [
+        /^NO_REPLY$/,
+        /^HEARTBEAT_OK$/,
+      ];
+      const isSystem = (isUser && systemPatterns.some(p => p.test(text))) ||
+                       (!isUser && systemAssistantPatterns.some(p => p.test(cleanText.trim())));
+
       // Check if message has any content
       const hasText = cleanText.trim().length > 0;
       const hasAttachments = m.attachments && m.attachments.length > 0;
@@ -771,16 +822,18 @@ async function loadMessages() {
       // Store raw text in map for safe copy
       messageTextMap[msgId] = text;
       
+      const msgClass = isSystem ? 'system' : (isUser ? 'user' : 'assistant');
+      
       return `
-        <div class="msg-group ${isUser ? 'user' : 'assistant'}" id="${msgId}">
-          <div class="bubble ${isUser ? 'user' : 'assistant'}">
-            ${formattedText}
+        <div class="msg-group ${msgClass}" id="${msgId}">
+          <div class="bubble ${msgClass}"${isSystem ? ' onclick="this.classList.toggle(\'expanded\')"' : ''}>
+            ${isSystem ? '⚙️ ' : ''}${formattedText}
             ${attachmentsHtml}
             ${toolMediaHtml}
           </div>
           <div class="msg-meta">
             <span class="ts">${formatTime(m.timestamp)}</span>
-            <button class="copy-btn" onclick='copyMessageText("${msgId}")' title="Copy">📋</button>
+            ${!isSystem ? '<button class="copy-btn" onclick=\'copyMessageText("' + msgId + '")\' title="Copy">📋</button>' : ''}
           </div>
         </div>
       `;
