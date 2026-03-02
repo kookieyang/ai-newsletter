@@ -129,7 +129,7 @@ let wsModule;
 try { wsModule = require('/opt/homebrew/lib/node_modules/openclaw/node_modules/ws'); }
 catch { try { wsModule = require('ws'); } catch { wsModule = null; } }
 
-function sendToGateway(text, callback) {
+function sendToGateway(text, attachments, callback) {
   if (!wsModule) return callback(new Error('ws module not available'));
 
   const ws = new wsModule('ws://127.0.0.1:18789', {
@@ -158,9 +158,13 @@ function sendToGateway(text, callback) {
     } else if (msg.type === 'res' && msg.id === 'c1') {
       if (msg.ok) {
         const idempotencyKey = 'wc-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+        const chatParams = { sessionKey: 'agent:main:main', message: text, deliver: false, idempotencyKey };
+        if (Array.isArray(attachments) && attachments.length > 0) {
+          chatParams.attachments = attachments;
+        }
         ws.send(JSON.stringify({
           type: 'req', id: 's1', method: 'chat.send',
-          params: { sessionKey: 'agent:main:main', message: text, deliver: false, idempotencyKey }
+          params: chatParams
         }));
       } else {
         finish(new Error('Connect failed: ' + (msg.error?.code || msg.error?.message)));
@@ -244,12 +248,19 @@ const server = http.createServer((req, res) => {
     req.on('data', d => body += d);
     req.on('end', () => {
       try {
-        const { text } = JSON.parse(body);
+        const parsed = JSON.parse(body);
+        const text = parsed.text || '';
         // Preserve newlines: gateway strips \n, Unicode line chars, and zero-width chars.
         // Use a visible ASCII marker that won't appear in normal text.
         const NL_MARKER = ' ~~NL~~ ';
         const encodedText = text.replace(/\n/g, NL_MARKER);
-        sendToGateway(encodedText, (err, result) => {
+        // Convert attachments from data URLs to gateway format
+        const gwAttachments = (parsed.attachments || []).map(a => {
+          // Strip data URL prefix to get raw base64
+          const base64 = a.data.replace(/^data:[^;]+;base64,/, '');
+          return { type: a.type.split('/')[0], mimeType: a.type, fileName: a.name, content: base64 };
+        });
+        sendToGateway(encodedText, gwAttachments, (err, result) => {
           if (err) {
             res.writeHead(500); res.end(JSON.stringify({ error: err.message }));
           } else {
