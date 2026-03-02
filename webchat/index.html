@@ -560,10 +560,11 @@ function renderAttachments() {
   }
   attachmentPreview.classList.remove('hidden');
   attachmentPreview.innerHTML = attachments.map(att => `
-    <div class="attachment-item">
+    <div class="attachment-item" ${att.type.startsWith('audio/') ? 'style="width:220px;height:auto;min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px;"' : ''}>
       ${att.type.startsWith('image/') ? `<img src="${att.data}"/>` : 
-        att.type.startsWith('video/') ? `<video src="${att.data}" muted></video>` : '📄'}
-      <button class="attachment-remove" onclick="removeAttachment('${att.id}')">×</button>
+        att.type.startsWith('video/') ? `<video src="${att.data}" muted></video>` :
+        att.type.startsWith('audio/') ? `<div style="display:flex;align-items:center;gap:8px;width:100%;"><span style="font-size:14px;">🎤</span><audio src="${att.data}" controls style="flex:1;height:32px;"></audio></div>` : '📄'}
+      <button class="attachment-remove" onclick="removeAttachment('${att.id}')" ${att.type.startsWith('audio/') ? 'style="position:absolute;top:2px;right:2px;width:20px;height:20px;background:rgba(0,0,0,0.7);border:none;border-radius:50%;color:#fff;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;"' : ''}>×</button>
     </div>
   `).join('');
 }
@@ -580,8 +581,35 @@ document.getElementById('cancel-voice').addEventListener('click', cancelRecordin
 
 async function startRecording() {
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    mediaRecorder = new MediaRecorder(stream);
+    // Try to pick a real (non-virtual) microphone by enumerating devices
+    let audioConstraints = true;
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const audioInputs = devices.filter(d => d.kind === 'audioinput');
+      // Prefer a non-virtual device (skip BlackHole, virtual, loopback)
+      const realMic = audioInputs.find(d => !/blackhole|virtual|loopback|soundflower/i.test(d.label));
+      if (realMic) {
+        audioConstraints = { deviceId: { exact: realMic.deviceId } };
+        console.log('Using mic:', realMic.label);
+      } else if (audioInputs.length > 0) {
+        console.warn('No real mic found, available:', audioInputs.map(d => d.label));
+      }
+    } catch (e) { console.warn('Device enumeration failed:', e); }
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: audioConstraints });
+    
+    // Pick a supported mime type — Safari doesn't support webm
+    const mimeOptions = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus', 'audio/wav', ''];
+    let selectedMime = '';
+    for (const mime of mimeOptions) {
+      if (!mime || MediaRecorder.isTypeSupported(mime)) {
+        selectedMime = mime;
+        break;
+      }
+    }
+    const recorderOptions = selectedMime ? { mimeType: selectedMime } : {};
+    console.log('MediaRecorder using:', selectedMime || '(browser default)');
+    
+    mediaRecorder = new MediaRecorder(stream, recorderOptions);
     recordedChunks = [];
     
     mediaRecorder.ondataavailable = (e) => {
@@ -589,14 +617,17 @@ async function startRecording() {
     };
     
     mediaRecorder.onstop = () => {
-      const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+      const actualMime = mediaRecorder.mimeType || selectedMime || 'audio/webm';
+      const ext = actualMime.includes('mp4') ? 'mp4' : actualMime.includes('ogg') ? 'ogg' : 'webm';
+      const blob = new Blob(recordedChunks, { type: actualMime });
+      console.log('Recording stopped:', recordedChunks.length, 'chunks,', blob.size, 'bytes, mime:', actualMime);
       const reader = new FileReader();
       reader.onload = (e) => {
         attachments.push({
           id: Date.now().toString(),
-          file: new File([blob], 'voice-message.webm', { type: 'audio/webm' }),
-          type: 'audio/webm',
-          name: 'voice-message.webm',
+          file: new File([blob], `voice-message.${ext}`, { type: actualMime }),
+          type: actualMime,
+          name: `voice-message.${ext}`,
           data: e.target.result,
           isVoice: true
         });
@@ -606,7 +637,8 @@ async function startRecording() {
       stream.getTracks().forEach(t => t.stop());
     };
     
-    mediaRecorder.start();
+    // Use 250ms timeslice to get frequent data chunks instead of one big blob at the end
+    mediaRecorder.start(250);
     isRecording = true;
     voiceUI.classList.add('active');
     voiceBtn.classList.add('recording');
@@ -707,6 +739,17 @@ async function sendMessage() {
   // Always scroll to bottom when sending a new message
   container.scrollTop = container.scrollHeight;
 
+  // Show transcription indicator if sending audio
+  const hasAudio = currentAttachments.some(a => a.type?.startsWith('audio/'));
+  if (hasAudio) {
+    const indicator = document.createElement('div');
+    indicator.id = 'transcribing-indicator';
+    indicator.style.cssText = 'text-align:center;color:var(--text-muted);font-size:13px;padding:8px;';
+    indicator.innerHTML = '🎤 Transcribing voice message…';
+    container.appendChild(indicator);
+    container.scrollTop = container.scrollHeight;
+  }
+
   try {
     await fetch('/api/send', {
       method: 'POST',
@@ -717,6 +760,8 @@ async function sendMessage() {
     console.error(e);
   } finally {
     sendBtn.disabled = false;
+    const ind = document.getElementById('transcribing-indicator');
+    if (ind) ind.remove();
   }
 }
 

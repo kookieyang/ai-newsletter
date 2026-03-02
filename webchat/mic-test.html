@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html><head><title>Mic Test</title></head>
+<body style="background:#1a1a1f;color:#e8e8f0;font-family:sans-serif;padding:40px;">
+<h2>🎤 Microphone Diagnostic</h2>
+<div id="log" style="white-space:pre-wrap;font-size:13px;line-height:1.8;"></div>
+<br>
+<button id="mic-check" style="padding:10px 20px;font-size:16px;background:#4ade80;color:#000;border:none;border-radius:8px;cursor:pointer;">🔊 Test Mic Level First</button>
+<button id="start" style="padding:10px 20px;font-size:16px;background:#c97be8;color:#fff;border:none;border-radius:8px;cursor:pointer;">⏺ Start Recording</button>
+<button id="stop" style="padding:10px 20px;font-size:16px;background:#ef4444;color:#fff;border:none;border-radius:8px;cursor:pointer;" disabled>⏹ Stop</button>
+<br><br>
+<div id="meter-container" style="display:none;">
+  <div style="display:flex;align-items:center;gap:12px;">
+    <span>Mic Level:</span>
+    <div style="flex:1;max-width:400px;height:20px;background:#2a2a35;border-radius:4px;overflow:hidden;">
+      <div id="meter-bar" style="width:0%;height:100%;background:linear-gradient(90deg,#4ade80,#ef4444);transition:width 50ms;"></div>
+    </div>
+    <span id="meter-value" style="font-size:12px;color:#888;">0%</span>
+  </div>
+  <p id="meter-status" style="font-size:13px;color:#888;margin-top:8px;"></p>
+</div>
+<br>
+<div id="playback"></div>
+
+<script>
+const log = (msg) => { document.getElementById('log').textContent += msg + '\n'; console.log(msg); };
+
+// Check supported MIME types
+const mimes = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus', 'audio/wav', 'audio/aac'];
+log('=== Supported MIME types ===');
+mimes.forEach(m => log(`  ${m}: ${MediaRecorder.isTypeSupported(m) ? '✅' : '❌'}`));
+
+let mediaRecorder, chunks = [], stream;
+let analyserNode, micCheckStream;
+
+// Mic level check
+document.getElementById('mic-check').onclick = async () => {
+  try {
+    micCheckStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const audioCtx = new AudioContext();
+    const source = audioCtx.createMediaStreamSource(micCheckStream);
+    analyserNode = audioCtx.createAnalyser();
+    analyserNode.fftSize = 256;
+    source.connect(analyserNode);
+    
+    const tracks = micCheckStream.getAudioTracks();
+    log('\n=== Mic Check ===');
+    log(`  AudioContext state: ${audioCtx.state}, sampleRate: ${audioCtx.sampleRate}`);
+    tracks.forEach(t => {
+      const s = t.getSettings();
+      log(`  Track: ${t.label}`);
+      log(`  Enabled: ${t.enabled}, Muted: ${t.muted}, ReadyState: ${t.readyState}`);
+      log(`  SampleRate: ${s.sampleRate}, Channels: ${s.channelCount}`);
+    });
+    
+    document.getElementById('meter-container').style.display = 'block';
+    
+    const dataArray = new Uint8Array(analyserNode.frequencyBinCount);
+    let maxSeen = 0;
+    const updateMeter = () => {
+      if (!analyserNode) return;
+      analyserNode.getByteTimeDomainData(dataArray);
+      let max = 0;
+      for (let i = 0; i < dataArray.length; i++) {
+        const v = Math.abs(dataArray[i] - 128);
+        if (v > max) max = v;
+      }
+      const pct = Math.round((max / 128) * 100);
+      if (pct > maxSeen) maxSeen = pct;
+      document.getElementById('meter-bar').style.width = pct + '%';
+      document.getElementById('meter-value').textContent = pct + '%';
+      
+      const status = document.getElementById('meter-status');
+      if (pct > 20) {
+        status.textContent = '✅ Mic is working! Speak and you should see the bar move.';
+        status.style.color = '#4ade80';
+      } else if (maxSeen > 5) {
+        status.textContent = '⚠️ Very low level — check system mic volume.';
+        status.style.color = '#f59e0b';
+      } else {
+        status.textContent = '❌ No signal detected — mic may be muted or wrong device selected.';
+        status.style.color = '#ef4444';
+      }
+      requestAnimationFrame(updateMeter);
+    };
+    updateMeter();
+    log('  🔊 Speak into the mic — watch the level meter above.');
+  } catch (err) {
+    log(`\n❌ Mic check error: ${err.message}`);
+  }
+};
+
+document.getElementById('start').onclick = async () => {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const tracks = stream.getAudioTracks();
+    log('\n=== Audio Track Info ===');
+    tracks.forEach(t => {
+      const s = t.getSettings();
+      log(`  Label: ${t.label}`);
+      log(`  Enabled: ${t.enabled}, Muted: ${t.muted}, ReadyState: ${t.readyState}`);
+      log(`  Settings: sampleRate=${s.sampleRate}, channelCount=${s.channelCount}, deviceId=${s.deviceId?.slice(0,20)}...`);
+    });
+
+    // Pick best MIME
+    let mime = '';
+    for (const m of mimes) {
+      if (MediaRecorder.isTypeSupported(m)) { mime = m; break; }
+    }
+    log(`\nUsing MIME: ${mime || '(default)'}`);
+    
+    const opts = mime ? { mimeType: mime } : {};
+    mediaRecorder = new MediaRecorder(stream, opts);
+    chunks = [];
+    
+    mediaRecorder.ondataavailable = (e) => {
+      log(`  chunk: ${e.data.size} bytes (type: ${e.data.type})`);
+      if (e.data.size > 0) chunks.push(e.data);
+    };
+    
+    mediaRecorder.onstop = () => {
+      const blob = new Blob(chunks, { type: mediaRecorder.mimeType });
+      log(`\n=== Recording Complete ===`);
+      log(`  Chunks: ${chunks.length}`);
+      log(`  Blob size: ${blob.size} bytes`);
+      log(`  Blob type: ${blob.type}`);
+      log(`  MediaRecorder.mimeType: ${mediaRecorder.mimeType}`);
+      
+      const url = URL.createObjectURL(blob);
+      document.getElementById('playback').innerHTML = `
+        <audio controls src="${url}" style="width:100%;max-width:400px;"></audio>
+        <p style="color:#888;font-size:12px;">If you hear nothing, the mic might not be capturing audio.</p>
+      `;
+      
+      // Also read as base64 and show first bytes
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const b64 = e.target.result.split(',')[1];
+        const bytes = atob(b64.slice(0, 40));
+        const hex = Array.from(bytes).map(b => b.charCodeAt(0).toString(16).padStart(2, '0')).join(' ');
+        log(`  Base64 length: ${b64.length}`);
+        log(`  First bytes (hex): ${hex}`);
+      };
+      reader.readAsDataURL(blob);
+      
+      stream.getTracks().forEach(t => t.stop());
+    };
+    
+    mediaRecorder.start(250);
+    log('\n🔴 Recording started (250ms timeslice)...');
+    document.getElementById('start').disabled = true;
+    document.getElementById('stop').disabled = false;
+    
+  } catch (err) {
+    log(`\n❌ Error: ${err.message}`);
+  }
+};
+
+document.getElementById('stop').onclick = () => {
+  if (mediaRecorder && mediaRecorder.state === 'recording') {
+    mediaRecorder.stop();
+    document.getElementById('start').disabled = false;
+    document.getElementById('stop').disabled = true;
+  }
+};
+</script>
+</body>
+</html>

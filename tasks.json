@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-02T17:40:00+08:00",
+  "lastUpdated": "2026-03-02T17:48:00+08:00",
   "completed": [
     {
       "id": "task-001",
@@ -192,6 +192,20 @@
       ],
       "status": "completed",
       "completedAt": "2026-03-02T17:35:00+08:00"
+    },
+    {
+      "id": "task-015",
+      "date": "2026-03-02",
+      "title": "Daily AI Newsletter — March 2",
+      "summary": "Generated and published March 2 newsletter with 13 stories (cron failed, manual generation)",
+      "details": [
+        "Cron job failed (4 consecutive errors with moonshot/kimi-k2.5)",
+        "Generated manually: 13 stories covering US, China, Global, EU",
+        "Top story: Pentagon signs landmark AI deal with OpenAI, bans Anthropic",
+        "Portal updated, GitHub Pages deployed"
+      ],
+      "status": "completed",
+      "completedAt": "2026-03-02T17:48:00+08:00"
     }
   ],
   "inProgress": [],
@@ -203,6 +217,14 @@
       "summary": "Auto-generated newsletter at 10am SGT (cron scheduled with 30min timeout)",
       "priority": "high",
       "blockedBy": "Cron scheduled - automatic"
+    },
+    {
+      "id": "todo-002",
+      "date": "2026-03-02",
+      "title": "Fix Newsletter Cron (4 consecutive errors)",
+      "summary": "Cron job has 4 consecutive errors — investigate and fix to prevent missed newsletters",
+      "priority": "high",
+      "notes": "Mar 2 newsletter generated manually. Cron uses moonshot/kimi-k2.5, may be model-related."
     }
   ]
 }

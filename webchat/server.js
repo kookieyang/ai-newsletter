@@ -56,6 +56,62 @@ const WORKSPACE = path.join(process.env.HOME, '.openclaw/workspace');
 // SSE clients
 const sseClients = new Set();
 
+// ─── Audio Transcription via OpenAI Whisper ──────────────────────────────────
+
+async function transcribeAudio(base64Audio, mimeType) {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) throw new Error('OPENAI_API_KEY not set');
+
+  // Strip data URL prefix if present, and codec params from mime
+  const cleanBase64 = base64Audio.replace(/^data:[^;]+;base64,/, '');
+  const baseMime = mimeType.split(';')[0].trim().toLowerCase();
+  const extMap = { 'audio/webm': 'webm', 'audio/mp4': 'mp4', 'audio/m4a': 'm4a', 'audio/mpeg': 'mp3', 'audio/wav': 'wav', 'audio/ogg': 'ogg', 'audio/flac': 'flac', 'audio/x-m4a': 'm4a' };
+  const ext = extMap[baseMime] || 'webm';
+
+  // Build multipart form data manually
+  const boundary = '----FormBoundary' + crypto.randomBytes(16).toString('hex');
+  const audioBuffer = Buffer.from(cleanBase64, 'base64');
+  console.log(`Whisper: baseMime=${baseMime}, ext=${ext}, audioSize=${audioBuffer.length} bytes, base64len=${cleanBase64.length}`);
+
+  const parts = [];
+  // file part
+  parts.push(`--${boundary}\r\nContent-Disposition: form-data; name="file"; filename="voice.${ext}"\r\nContent-Type: ${mimeType}\r\n\r\n`);
+  parts.push(audioBuffer);
+  parts.push(`\r\n--${boundary}\r\nContent-Disposition: form-data; name="model"\r\n\r\nwhisper-1\r\n--${boundary}--\r\n`);
+
+  const body = Buffer.concat(parts.map(p => typeof p === 'string' ? Buffer.from(p) : p));
+
+  const https = require('https');
+  return new Promise((resolve, reject) => {
+    const req = https.request({
+      hostname: 'api.openai.com',
+      path: '/v1/audio/transcriptions',
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': `multipart/form-data; boundary=${boundary}`,
+        'Content-Length': body.length
+      }
+    }, (res) => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => {
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          try {
+            const json = JSON.parse(data);
+            resolve(json.text || '');
+          } catch { resolve(''); }
+        } else {
+          reject(new Error(`Whisper API ${res.statusCode}: ${data.slice(0, 200)}`));
+        }
+      });
+    });
+    req.on('error', reject);
+    req.write(body);
+    req.end();
+  });
+}
+
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
 function getSessionFile() {
@@ -88,15 +144,18 @@ function parseMessages(sessionFile) {
         // Decode newline markers back to \n
         const NL_MARKER = ' ~~NL~~ ';
         const texts = content.filter(c => c.type === 'text').map(c => (c.text || '').replace(new RegExp(NL_MARKER.replace(/~/g, '\\~'), 'g'), '\n')).join('\n');
-        // Extract image attachments
-        const imageAttachments = content.filter(c => c.type === 'image' && c.data).map(c => ({
-          type: c.mimeType || 'image/png',
-          name: c.fileName || 'image',
-          data: c.data.startsWith('data:') ? c.data : `data:${c.mimeType || 'image/png'};base64,${c.data}`
-        }));
-        if (texts.trim() || imageAttachments.length > 0) {
+        // Extract image and audio attachments
+        const mediaAttachments = content.filter(c => (c.type === 'image' || c.type === 'audio') && c.data).map(c => {
+          const mime = c.mimeType || (c.type === 'audio' ? 'audio/webm' : 'image/png');
+          return {
+            type: mime,
+            name: c.fileName || c.type,
+            data: c.data.startsWith('data:') ? c.data : `data:${mime};base64,${c.data}`
+          };
+        });
+        if (texts.trim() || mediaAttachments.length > 0) {
           const userMsg = { role: 'user', text: texts, timestamp: ts };
-          if (imageAttachments.length > 0) userMsg.attachments = imageAttachments;
+          if (mediaAttachments.length > 0) userMsg.attachments = mediaAttachments;
           messages.push(userMsg);
         }
       } else if (role === 'assistant') {
@@ -254,20 +313,47 @@ const server = http.createServer((req, res) => {
   if (pathname === '/api/send' && req.method === 'POST') {
     let body = '';
     req.on('data', d => body += d);
-    req.on('end', () => {
+    req.on('end', async () => {
       try {
         const parsed = JSON.parse(body);
-        const text = parsed.text || '';
+        let text = parsed.text || '';
+
+        // Separate audio attachments (for transcription) from image/video (for gateway)
+        const audioAttachments = (parsed.attachments || []).filter(a => a.type.startsWith('audio/'));
+        const nonAudioAttachments = (parsed.attachments || []).filter(a => !a.type.startsWith('audio/'));
+
+        // Transcribe audio attachments and prepend to message
+        for (const audio of audioAttachments) {
+          try {
+            // Strip full data URL prefix (handles codecs in mime like "data:audio/webm;codecs=opus;base64,")
+            const base64 = audio.data.replace(/^data:[^,]+,/, '');
+            const audioBytes = Buffer.from(base64, 'base64');
+            console.log(`Audio attachment: type=${audio.type}, name=${audio.name}, base64len=${base64.length}, bytes=${audioBytes.length}, header=${audioBytes.slice(0, 16).toString('hex')}`);
+            const transcription = await transcribeAudio(base64, audio.type);
+            if (transcription.trim()) {
+              const voicePrefix = `🎤 Voice: "${transcription.trim()}"`;
+              text = text.trim() ? `${voicePrefix}\n${text}` : voicePrefix;
+            } else {
+              console.warn('Whisper returned empty transcription');
+            }
+          } catch (err) {
+            console.error('Audio transcription failed:', err.message);
+            // Still send the text without transcription
+            const fallback = '🎤 [Voice message — transcription failed]';
+            text = text.trim() ? `${fallback}\n${text}` : fallback;
+          }
+        }
+
         // Preserve newlines: gateway strips \n, Unicode line chars, and zero-width chars.
-        // Use a visible ASCII marker that won't appear in normal text.
         const NL_MARKER = ' ~~NL~~ ';
         const encodedText = text.replace(/\n/g, NL_MARKER);
-        // Convert attachments from data URLs to gateway format
-        const gwAttachments = (parsed.attachments || []).map(a => {
-          // Strip data URL prefix to get raw base64
+
+        // Convert non-audio attachments from data URLs to gateway format
+        const gwAttachments = nonAudioAttachments.map(a => {
           const base64 = a.data.replace(/^data:[^;]+;base64,/, '');
           return { type: a.type.split('/')[0], mimeType: a.type, fileName: a.name, content: base64 };
         });
+
         sendToGateway(encodedText, gwAttachments, (err, result) => {
           if (err) {
             res.writeHead(500); res.end(JSON.stringify({ error: err.message }));
