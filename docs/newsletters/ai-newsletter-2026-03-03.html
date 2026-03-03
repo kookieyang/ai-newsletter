@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Daily Brief — March 3, 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 48px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .header .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .header .subtitle {
+      color: #90a4ae;
+      font-size: 14px;
+    }
+
+    .header .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(79, 195, 247, 0.12);
+      border: 1px solid rgba(79, 195, 247, 0.3);
+      color: #4fc3f7;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .news-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 12px 0 0 12px;
+    }
+
+    .card.us::before { background: #4fc3f7; }
+    .card.china::before { background: #ef5350; }
+    .card.global::before { background: #66bb6a; }
+    .card.industry::before { background: #ffa726; }
+    .card.safety::before { background: #ab47bc; }
+
+    .card:hover {
+      border-color: #3a3a3a;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: #555;
+      min-width: 28px;
+      margin-top: 2px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .tag-us { background: rgba(79, 195, 247, 0.15); color: #4fc3f7; }
+    .tag-china { background: rgba(239, 83, 80, 0.15); color: #ef5350; }
+    .tag-global { background: rgba(102, 187, 106, 0.15); color: #66bb6a; }
+    .tag-industry { background: rgba(255, 167, 38, 0.15); color: #ffa726; }
+    .tag-safety { background: rgba(171, 71, 188, 0.15); color: #ce93d8; }
+    .tag-policy { background: rgba(38, 198, 218, 0.15); color: #26c6da; }
+    .tag-breaking { background: rgba(255, 82, 82, 0.2); color: #ff5252; }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .card-brief {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .meta-item .icon {
+      font-size: 12px;
+    }
+
+    .meta-item a {
+      color: #4fc3f7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .meta-item a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid #1e1e1e;
+      color: #444;
+      font-size: 12px;
+    }
+
+    .footer strong {
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 26px; }
+      .card-title { font-size: 16px; }
+      .card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">AI Daily Brief</div>
+  <h1>🤖 Top AI Stories</h1>
+  <div class="subtitle">Tuesday, March 3, 2026 · Curated for the global AI-aware reader</div>
+  <div class="badge-row">
+    <span class="badge">🇺🇸 United States</span>
+    <span class="badge">🇨🇳 China</span>
+    <span class="badge">🌍 Global</span>
+    <span class="badge">14 Stories</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- US Section -->
+  <div class="section-label">🇺🇸 United States</div>
+  <div class="news-grid">
+
+    <!-- 1 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#01</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Closes Record $110 Billion Funding — Largest Tech Deal in History</div>
+      <div class="card-brief">
+        OpenAI has secured a historic $110 billion in private funding, marking the largest technology financing deal ever completed. The round was backed by major tech giants including Amazon, Nvidia, and SoftBank. This massive capital injection will accelerate OpenAI's research, product development, and infrastructure expansion, solidifying its dominant position in the global AI race. The funding comes as OpenAI also expands its partnership with Nvidia for Vera Rubin systems and secures Pentagon classified network deployment deals.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 3, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> National Today / AI Business</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://nationaltoday.com/us/ca/san-francisco/news/2026/03/02/openai-secures-record-110-billion-in-funding/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#02</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">US Government Agencies Dump Anthropic, Switch to OpenAI After Pentagon Standoff</div>
+      <div class="card-brief">
+        Following President Trump's order, the US State Department, Treasury Department, and Federal Housing Agency are terminating all use of Anthropic products. The move comes after Anthropic refused Pentagon demands for unrestricted military AI use, citing red lines against mass domestic surveillance and autonomous weapons. In a dramatic reversal, these agencies are now switching to OpenAI's ChatGPT — which has secured deals for classified Defense Department deployment. The situation highlights the collision between AI safety commitments and national security imperatives.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 3, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> India Today / Economic Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.indiatoday.in/technology/news/story/us-state-department-switches-to-openai-chatbot-as-agencies-phase-out-anthropic-2876746-2026-03-03" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#03</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Claude Hits #1 on App Store — Surpasses ChatGPT for First Time</div>
+      <div class="card-brief">
+        Anthropic's Claude AI has climbed to the top of Apple's free app charts in the US, surpassing OpenAI's ChatGPT for the first time. The surge in popularity comes ironically after the company's public standoff with the Pentagon over AI safety boundaries. Users appear to be rallying behind Anthropic's principled stance, driving record downloads. The milestone represents a significant shift in consumer AI preferences and demonstrates that safety-first positioning can resonate strongly with the public.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 3, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Business Insider / The Guardian</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.businessinsider.com/anthropic-claude-how-to-switch-promotion-ai-2026-3" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#04</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">xAI to Repay $3 Billion Debt Early Ahead of Potential IPO</div>
+      <div class="card-brief">
+        Elon Musk's xAI plans to repay $3 billion of high-yield bonds early as part of a broader strategy to pay down approximately $17.5 billion in debt tied to both X (formerly Twitter) and xAI. The move coincides with SpaceX's reported acquisition of xAI last month and signals preparation for a potential public listing later this year. Early debt repayment typically signals financial strength and is often a precursor to IPO filings as companies clean up their balance sheets for public markets.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 3, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Bloomberg Law / Economic Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://news.bloomberglaw.com/capital-markets/musks-xai-to-buy-back-3-billion-of-debt-early-in-run-up-to-ipo" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#05</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Nvidia Announces $4 Billion Photonics Investment for AI Data Centers</div>
+      <div class="card-brief">
+        Nvidia announced a $4 billion investment in two photonics companies — Lumentum Holdings and Coherent Corp — to scale next-generation AI data centers. The multi-year deals will allocate $2 billion to each company for R&D in optical and photonic technologies crucial for advanced AI systems and Gigawatt-scale AI factories. Photonic interconnects are seen as critical for reducing power consumption and increasing bandwidth in massive AI training clusters, positioning Nvidia at the forefront of next-gen infrastructure.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 3, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Tech Funding News / CW Taiwan</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://techfundingnews.com/nvidia-invests-2b-lumentum-ai-optics-partnership/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#06</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">AMD Unveils Ryzen AI 400 Series and Turin Data Center Chips at CES 2026</div>
+      <div class="card-brief">
+        AMD expanded its AI hardware lineup at CES 2026 with the Ryzen AI 400 series processors for laptops, featuring upgraded Neural Processing Units (NPUs) to accelerate local AI tasks. The company also detailed its next-generation "Turin" data center chips designed to compete with Nvidia's dominance in AI training. The announcements signal AMD's aggressive push to capture market share in both consumer AI PCs and enterprise data center markets as demand for AI compute continues to explode.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 3, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Crescendo AI / AI Magazine</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.crescendo.ai/news/latest-ai-news-and-updates" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- China Section -->
+  <div class="section-label">🇨🇳 China</div>
+  <div class="news-grid">
+
+    <!-- 7 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#07</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">DeepSeek V4 Launching Today — Withholding Access from US Chipmakers</div>
+      <div class="card-brief">
+        DeepSeek is releasing its highly anticipated V4 multimodal model today, capable of generating and processing text, images, and video. In a strategic move, the company has withheld pre-release access from US chipmakers Nvidia and AMD, instead prioritizing domestic partners like Huawei. The decision aligns with China's broader strategy to reduce semiconductor dependence amid ongoing tech tensions. DeepSeek's V3.2 already ranks in OpenRouter's top five most-used models globally, and V4 is expected to intensify the global AI price war.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 3, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Standard / Economic Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.thestandard.com.hk/tech-and-startup/article/325308/DeepSeek-withholds-latest-AI-model-from-US-chipmakers-including-Nvidia-sources-say" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#08</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">Alibaba Launches Qwen 3.5 Small Model Series for Edge Devices</div>
+      <div class="card-brief">
+        Alibaba's Qwen team launched the Qwen 3.5 Small Model Series on March 2, featuring models ranging from 0.8B to 9B parameters. These compact multimodal models deliver competitive intelligence at significantly lower compute costs, targeting edge devices, laptops, and single-GPU setups with native text, image, and video processing. The release comes as Alibaba also debuted Qwen AI Glasses at MWC 2026, with pre-orders opening this week. Goldman Sachs recently upgraded Alibaba stock citing AI-driven cloud growth.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 3, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Office Chai / KR Asia</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://officechai.com/ai/alibaba-qwen-3-5-0-8b-2b-4b-9b-benchmarks/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#09</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Baidu Declares AI as "New Core" — ERNIE Bot Reaches 202 Million Users</div>
+      <div class="card-brief">
+        Baidu has officially declared AI as its "new core" business amid shifting financial results. Despite a 4% revenue decline in the December quarter due to advertising weakness, the company's AI division showed strong growth. ERNIE Bot now boasts 202 million monthly users, and AI-powered applications like the "Yue Yunpeng AI co-driver" on Baidu Maps have seen explosive adoption. Baidu also unveiled new AI chips — the M100 and M300 — to bolster China's domestic semiconductor ecosystem.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 3, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> China Last Night / BusinessWorld</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://chinalastnight.com/baidu-declares-ai-the-new-core-while-trip-com-beats/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#10</div>
+        <div class="card-tags">
+          <span class="tag tag-global">Milestone</span>
+        </div>
+      </div>
+      <div class="card-title">China's AI Token Usage Surpasses US for First Time in History</div>
+      <div class="card-brief">
+        China's demand for AI tokens surged 1.3-fold in February 2026, overtaking US usage for the first time ever. The historic milestone reflects the rapid global adoption of DeepSeek, Moonshot AI's Kimi, and other cost-effective Chinese models. Both Kimi K2.5 and DeepSeek V3.2 now rank among OpenRouter's top five most-used models worldwide. The shift signals a fundamental realignment in global AI consumption patterns as China's efficient models gain traction across international markets.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 3, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Caixin Global / Asia Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.caixinglobal.com/2026-02-27/business-brief-feb-27-chinas-ai-model-usage-overtakes-us-102417422.html" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#11</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">China Telecom President Delivers Keynote on AI Era at MWC 2026</div>
+      <div class="card-brief">
+        China Telecom's President Liu Guiqing delivered a major keynote at MWC Barcelona 2026 on the transformation of large telecommunications companies in the AI era. Chinese companies showcased AI-driven hardware and vertically integrated ecosystems at the conference, signaling a strategic shift toward higher-end global competition. The presence underscores China's growing influence in shaping global AI infrastructure standards and its push for technological self-reliance across the telecommunications stack.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 3, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Thailand Business News / Global Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.globaltimes.cn/page/202603/1356144.shtml" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Global Section -->
+  <div class="section-label">🌍 Global & Regional</div>
+  <div class="news-grid">
+
+    <!-- 12 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#12</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">India</span>
+        </div>
+      </div>
+      <div class="card-title">India Hosts Global AI Future Summit — World Leaders Converge in New Delhi</div>
+      <div class="card-brief">
+        India is hosting a high-level Global AI Future Summit in New Delhi, bringing together world leaders and tech executives to discuss AI governance. The summit aims to create a unified international framework for AI safety and ensure equitable distribution of the technology's benefits. Key topics include addressing risks like deepfakes, automated warfare, and establishing global standards for responsible AI development. India's role as host signals its growing ambition to shape international AI policy.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 3, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Crescendo AI / Cornell University</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.crescendo.ai/news/latest-ai-news-and-updates" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#13</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">Vietnam</span>
+        </div>
+      </div>
+      <div class="card-title">Vietnam Implements Sweeping AI Law with Tiered Risk Classification</div>
+      <div class="card-brief">
+        Vietnam has implemented its new comprehensive Law on Artificial Intelligence, which employs a tiered risk classification system similar to the EU AI Act. The legislation aims to bolster Vietnam's national AI capabilities while establishing clear guardrails for high-risk applications. This makes Vietnam one of the first Southeast Asian nations to enact comprehensive AI regulation, potentially serving as a model for other developing economies seeking to balance innovation with safety concerns.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 3, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Jurist News</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.jurist.org/news/2026/03/vietnam-implements-sweeping-ai-law/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#14</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+          <span class="tag tag-global">UK</span>
+        </div>
+      </div>
+      <div class="card-title">UK Autonomous Driving Firm Wayve Secures $1.2 Billion from SoftBank, Microsoft, Nvidia</div>
+      <div class="card-brief">
+        British autonomous driving company Wayve has secured $1.2 billion in funding led by SoftBank with participation from Microsoft and Nvidia. The investment will scale Wayve's AI driver platform, which uses end-to-end deep learning for self-driving capabilities. The mega-round represents one of the largest AI investments in European history and signals continued confidence in autonomous vehicle technology despite recent industry setbacks. Wayve's approach differs from competitors by focusing on generalizable driving intelligence rather than pre-mapped routes.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 3, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Crescendo AI</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.crescendo.ai/news/latest-ai-news-and-updates" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>AI Daily Brief</strong> · Curated by Amy 🌸 · March 3, 2026<br />
+  Stories sourced from public news as of today. Not financial or professional advice.
+</div>
+
+</body>
+</html>
