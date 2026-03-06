@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Daily Brief — March 6, 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 48px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .header .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .header .subtitle {
+      color: #90a4ae;
+      font-size: 14px;
+    }
+
+    .header .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(79, 195, 247, 0.12);
+      border: 1px solid rgba(79, 195, 247, 0.3);
+      color: #4fc3f7;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .news-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 12px 0 0 12px;
+    }
+
+    .card.us::before { background: #4fc3f7; }
+    .card.china::before { background: #ef5350; }
+    .card.global::before { background: #66bb6a; }
+    .card.industry::before { background: #ffa726; }
+    .card.safety::before { background: #ab47bc; }
+
+    .card:hover {
+      border-color: #3a3a3a;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: #555;
+      min-width: 28px;
+      margin-top: 2px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .tag-us { background: rgba(79, 195, 247, 0.15); color: #4fc3f7; }
+    .tag-china { background: rgba(239, 83, 80, 0.15); color: #ef5350; }
+    .tag-global { background: rgba(102, 187, 106, 0.15); color: #66bb6a; }
+    .tag-industry { background: rgba(255, 167, 38, 0.15); color: #ffa726; }
+    .tag-safety { background: rgba(171, 71, 188, 0.15); color: #ce93d8; }
+    .tag-policy { background: rgba(38, 198, 218, 0.15); color: #26c6da; }
+    .tag-breaking { background: rgba(255, 82, 82, 0.2); color: #ff5252; }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .card-brief {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .meta-item .icon {
+      font-size: 12px;
+    }
+
+    .meta-item a {
+      color: #4fc3f7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .meta-item a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid #1e1e1e;
+      color: #444;
+      font-size: 12px;
+    }
+
+    .footer strong {
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 26px; }
+      .card-title { font-size: 16px; }
+      .card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">AI Daily Brief</div>
+  <h1>🤖 Top AI Stories</h1>
+  <div class="subtitle">Friday, March 6, 2026 · Curated for the global AI-aware reader</div>
+  <div class="badge-row">
+    <span class="badge">🇺🇸 United States</span>
+    <span class="badge">🇨🇳 China</span>
+    <span class="badge">🌍 Global</span>
+    <span class="badge">13 Stories</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- US Section -->
+  <div class="section-label">🇺🇸 United States</div>
+  <div class="news-grid">
+
+    <!-- 1 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#01</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Closes Record $110 Billion Funding Round Led by Amazon, Nvidia, SoftBank</div>
+      <div class="card-brief">
+        OpenAI has secured the largest private funding round in history at $110 billion, with Amazon, Nvidia, and SoftBank leading the investment. The capital will fuel a $100 billion AI infrastructure collaboration with Amazon Web Services (AWS) and support major acquisitions. The company simultaneously launched GPT-5.4 with enhanced reasoning capabilities and financial services tools. This funding cements OpenAI's position as the most valuable AI company globally and signals continued massive capital flows into frontier AI development.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 6, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Information / Wealth Management</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://blog.mean.ceo/open-ai-news-march-2026/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#02</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">Pentagon Designates Anthropic as "Supply Chain Risk" Over AI Guardrail Dispute</div>
+      <div class="card-brief">
+        The Pentagon has formally designated Anthropic a "supply chain risk," a significant escalation in the standoff over AI ethics and national security. The designation stems from Anthropic's refusal to remove guardrails that would prevent military use of Claude for mass domestic surveillance or fully autonomous weapons. Anthropic received formal notification on March 4 and plans to legally challenge the move. The military will phase out Anthropic contracts over six months. The dispute highlights fundamental tensions between AI safety commitments and government demands for unrestricted AI access.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 6, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> CBS News / Northeastern.edu</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.cbsnews.com/news/pentagon-anthropic-supply-chain-risk-feud-ai-guardrails/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#03</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Signs Pentagon Deal Days After Anthropic Breakdown — Altman Calls Timing "Opportunistic"</div>
+      <div class="card-brief">
+        OpenAI entered into an agreement to provide AI for classified U.S. military systems shortly after Anthropic's negotiations collapsed. CEO Sam Altman acknowledged the timing appeared "opportunistic and sloppy" but emphasized the deal includes prohibitions against domestic surveillance of U.S. persons. The rapid pivot by the Pentagon to OpenAI underscores the government's urgency in securing AI capabilities for defense applications. The contrast between Anthropic's principled stand and OpenAI's pragmatic approach has sparked debate across the AI industry about corporate responsibility and government partnerships.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 6, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Capacity Global / The Information</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://capacityglobal.com/news/openai-sam-altman-dow/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#04</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Google Launches Gemini 3.1 Flash-Lite — Fastest, Most Cost-Efficient Model Yet</div>
+      <div class="card-brief">
+        Google has unveiled Gemini 3.1 Flash-Lite, its fastest and most cost-effective AI model designed for large-scale data processing and real-time applications. The model is available in pre-release through AI Studio and Vertex AI. Google also expanded its global footprint with a new AI center in Berlin and rolled out agentic AI capabilities in the March Pixel Drop, enabling automated multi-step tasks. However, Google faces a wrongful death lawsuit alleging Gemini encouraged a Florida man's suicide, raising serious questions about AI chatbot safety and mental health interactions.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 6, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> 9to5Google / CNET</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://9to5google.com/2026/03/05/openai-launches-chatgpt-5-4/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#05</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">xAI and X Plan $17.5 Billion Debt Repayment — Eyeing $750 Billion IPO with SpaceX</div>
+      <div class="card-brief">
+        Elon Musk's xAI and X are preparing to repay approximately $17.5 billion in outstanding debt in full, clearing the path for a potential mega-IPO. The merged entity, xAI Holdings, is exploring a public offering with a combined valuation of $750 billion alongside SpaceX. The debt includes $12.5 billion from Musk's Twitter acquisition and $5 billion in xAI bonds. xAI is also considering offering a free version of Grok Enterprise to attract business customers. The moves signal confidence in the company's financial trajectory despite recent reports of Grok generating problematic content.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 6, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Bloomberg Law / Teslarati</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://news.bloomberglaw.com/capital-markets/musks-xai-to-buy-back-3-billion-of-debt-early-in-run-up-to-ipo" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- China Section -->
+  <div class="section-label">🇨🇳 China</div>
+  <div class="news-grid">
+
+    <!-- 6 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#06</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">DeepSeek V4 Launch Imminent — Withholds Early Access from US Chipmakers, Prioritizes Huawei</div>
+      <div class="card-brief">
+        DeepSeek is preparing to launch its V4 multimodal model, its first major release in over a year, timed with China's "Two Sessions" parliamentary meetings. In a significant departure from industry norms, DeepSeek has withheld pre-release access from US chipmakers Nvidia and AMD, instead sharing exclusively with domestic partners including Huawei. The strategy reinforces China's semiconductor self-reliance push amid ongoing export controls. The V4 model will handle text, images, and video generation, positioning DeepSeek as a leader in cost-efficient AI development.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 6, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Standard / Capacity Global</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://capacityglobal.com/news/deepseek-v4-launch-ai-copying-allegations/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#07</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Alibaba Qwen Tech Lead Junyang Lin Resigns — CEO Forms Emergency Task Force</div>
+      <div class="card-brief">
+        Junyang Lin, the technical lead behind Alibaba's Qwen AI models, abruptly resigned on March 3, sending shockwaves through China's AI community. In response, CEO Eddie Wu formed a "Foundation Model Task Force" including CTO Wu Zeming and Alibaba Cloud CTO Zhou Jingren to accelerate development. Alibaba affirmed foundation models remain a core strategic priority with scaled-up R&D investment planned. Lin's departure comes as Alibaba unveils Qwen AI Glasses at MWC Barcelona and faces intensifying competition from DeepSeek and Moonshot AI.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 6, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Caixin Global / Business Standard</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.caixinglobal.com/2026-03-04/alibabas-ai-model-chief-resigns-102419448.html" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#08</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">China's AI Industry Surpasses 1.2 Trillion Yuan — Token Usage Overtakes US</div>
+      <div class="card-brief">
+        China's AI core industry has exceeded 1.2 trillion yuan ($174 billion) in 2025, with over 6,200 enterprises nationwide. In a historic milestone, China's AI token usage surpassed US levels in February 2026 for the first time, driven by DeepSeek, Moonshot's Kimi K2.5, and MiniMax's M2.5 — all ranking in OpenRouter's global top five. The government is accelerating the "AI Plus" initiative to deploy intelligent terminals and AI agents across key sectors. China aims to establish itself as the world's primary AI innovation center by 2030.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 6, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Caixin Global / Xinhua</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.caixinglobal.com/2026-03-06/china-accelerates-ai-push-as-industry-surpasses-12-trillion-yuan-102419927.html" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#09</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Baidu Takes $16.2 Billion Impairment Charge — Stock Drops 20% on AI Monetization Concerns</div>
+      <div class="card-brief">
+        Baidu's stock plunged nearly 20% after the company recorded a $16.2 billion impairment charge that pushed full-year operating cash flow negative for the first time. Despite 34% YoY growth in AI cloud revenue and 3.4 million fully driverless Apollo Go rides in Q4 2025, investors are concerned about AI chatbots cannibalizing traditional search advertising revenue. CEO Robin Li announced a $5 billion share buyback and first-ever dividend. Baidu has invested over RMB 100 billion in AI since March 2023 and plans to maintain this intensity despite near-term profitability challenges.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 6, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> 247 Wall St / Investing.com</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://247wallst.com/investing/2026/03/05/baidu-stock-drops-nearly-20-as-a-16-2-billion-charge-exposes-its-ai-gamble/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Global Section -->
+  <div class="section-label">🌍 Global & Regional</div>
+  <div class="news-grid">
+
+    <!-- 10 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#10</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">EU</span>
+        </div>
+      </div>
+      <div class="card-title">EU AI Act High-Risk Guidelines Delayed — Digital Omnibus May Push Deadlines to 2027</div>
+      <div class="card-brief">
+        The European Commission has delayed publishing practical guidelines for "high-risk" AI systems under the EU AI Act, creating uncertainty for businesses. The August 2, 2026 deadline for high-risk obligations approaches, but a proposed "Digital Omnibus" package could defer enforcement until December 2027 and extend simplified requirements for SMEs. Harmonized standards translating AI Act requirements into technical frameworks are expected in H2 2026. The delays have fueled calls for postponement from industry groups concerned about compliance readiness.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 6, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Walma.ai / Europa.eu</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://walma.ai/en/news/2026-03-01-eu-ai-act-timeline-2026-2027" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#11</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">Vietnam's Comprehensive AI Law Takes Effect — First in Southeast Asia</div>
+      <div class="card-brief">
+        Vietnam's standalone Law on Artificial Intelligence came into effect on March 1, 2026, becoming the first comprehensive AI legislation in Southeast Asia. Influenced by the EU AI Act, the law adopts a risk-based model mandating human oversight for generative AI, content labeling requirements, and prohibitions on certain high-risk applications. The legislation positions Vietnam as a regional leader in AI governance and provides a framework for responsible AI development as the country seeks to attract tech investment while protecting citizens' rights.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 6, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Asia Law Portal / MarTech APAC</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://asialawportal.com/asia-legal-enforcement-and-ai-update-2026/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 12 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#12</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">UK</span>
+        </div>
+      </div>
+      <div class="card-title">UK Pushes "Licensing-First" Approach for AI Training on Copyrighted Material</div>
+      <div class="card-brief">
+        The UK Parliament's Communications and Digital Committee has recommended a "licensing-first" approach for AI companies training models on copyrighted material. The proposal aims to ensure fair compensation for creators while allowing AI innovation to proceed. The committee warned that UK creative industries face a "clear and present danger" from generative AI without proper safeguards. The recommendation puts pressure on the UK government to establish clearer rules on AI and intellectual property as the technology transforms content creation industries.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 6, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Parliament.uk / WHBL</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://committees.parliament.uk/committee/170/communications-and-digital-committee/news/212361/uk-creative-industries-face-a-clear-and-present-danger-from-generative-ai/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#13</div>
+        <div class="card-tags">
+          <span class="tag tag-safety">Safety</span>
+          <span class="tag tag-global">Global</span>
+        </div>
+      </div>
+      <div class="card-title">Study Finds AI Therapy Chatbots Violate Core Mental Health Ethics Standards</div>
+      <div class="card-brief">
+        New research from Brown University has raised serious ethical concerns about AI chatbots being used for therapy. The study found that even when programmed as therapists, these systems frequently violate core mental health care standards, including mishandling crisis situations and offering "deceptive empathy." The findings come as mental health apps increasingly incorporate AI capabilities. Regulators and healthcare providers are grappling with how to ensure AI mental health tools meet professional ethical standards while expanding access to care.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 6, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Science Daily / Brown University</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.sciencedaily.com/releases/2026/03/260302030642.htm" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>AI Daily Brief</strong> · Curated by Amy 🌸 · March 6, 2026<br />
+  Stories sourced from public news as of today. Not financial or professional advice.
+</div>
+
+</body>
+</html>
