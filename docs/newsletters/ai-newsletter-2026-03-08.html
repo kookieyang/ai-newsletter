@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Daily Brief — March 8, 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 48px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .header .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .header .subtitle {
+      color: #90a4ae;
+      font-size: 14px;
+    }
+
+    .header .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(79, 195, 247, 0.12);
+      border: 1px solid rgba(79, 195, 247, 0.3);
+      color: #4fc3f7;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .news-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 12px 0 0 12px;
+    }
+
+    .card.us::before { background: #4fc3f7; }
+    .card.china::before { background: #ef5350; }
+    .card.global::before { background: #66bb6a; }
+    .card.industry::before { background: #ffa726; }
+    .card.safety::before { background: #ab47bc; }
+
+    .card:hover {
+      border-color: #3a3a3a;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: #555;
+      min-width: 28px;
+      margin-top: 2px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .tag-us { background: rgba(79, 195, 247, 0.15); color: #4fc3f7; }
+    .tag-china { background: rgba(239, 83, 80, 0.15); color: #ef5350; }
+    .tag-global { background: rgba(102, 187, 106, 0.15); color: #66bb6a; }
+    .tag-industry { background: rgba(255, 167, 38, 0.15); color: #ffa726; }
+    .tag-safety { background: rgba(171, 71, 188, 0.15); color: #ce93d8; }
+    .tag-policy { background: rgba(38, 198, 218, 0.15); color: #26c6da; }
+    .tag-breaking { background: rgba(255, 82, 82, 0.2); color: #ff5252; }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .card-brief {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .meta-item .icon {
+      font-size: 12px;
+    }
+
+    .meta-item a {
+      color: #4fc3f7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .meta-item a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid #1e1e1e;
+      color: #444;
+      font-size: 12px;
+    }
+
+    .footer strong {
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 26px; }
+      .card-title { font-size: 16px; }
+      .card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">AI Daily Brief</div>
+  <h1>🤖 Top AI Stories</h1>
+  <div class="subtitle">Sunday, March 8, 2026 · Curated for the global AI-aware reader</div>
+  <div class="badge-row">
+    <span class="badge">🇺🇸 United States</span>
+    <span class="badge">🇨🇳 China</span>
+    <span class="badge">🌍 Global</span>
+    <span class="badge">14 Stories</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- US Section -->
+  <div class="section-label">🇺🇸 United States</div>
+  <div class="news-grid">
+
+    <!-- 1 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#01</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Closes Record $110 Billion Funding Round Led by Amazon, Nvidia & SoftBank</div>
+      <div class="card-brief">
+        OpenAI has secured the largest funding round in tech history at $110 billion, with Amazon, Nvidia, and SoftBank leading the investment. The round includes a landmark $100 billion collaboration with AWS for AI infrastructure expansion. The funding gives OpenAI significant firepower for acquisitions and compute resources as the AI arms race intensifies. CEO Sam Altman stated the capital will accelerate the company's mission toward artificial general intelligence.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 8, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> mean.ceo / Business Insider</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://blog.mean.ceo/open-ai-news-march-2026/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#02</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">Pentagon Designates Anthropic as "Supply Chain Risk" in Escalating AI Feud</div>
+      <div class="card-brief">
+        The U.S. Department of Defense has officially designated Anthropic as a "supply chain risk" following the company's refusal to grant unrestricted military use of Claude AI. The designation, enacted March 4, follows Anthropic's rejection of Pentagon demands for autonomous weapons and mass surveillance applications. CEO Dario Amodei has vowed to legally challenge the decision. Federal agencies including Treasury and GSA have been instructed to halt business with Anthropic, though the penalties are less severe than initially threatened.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 8, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Breaking Defense / LA Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://breakingdefense.com/2026/03/anthropic-ceo-says-pentagon-ban-less-harsh-than-hegseth-had-threatened/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#03</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">xAI to Buy Back $3 Billion in Bonds Early Ahead of SpaceX IPO</div>
+      <div class="card-brief">
+        Elon Musk's xAI is planning to repurchase $3 billion in high-yield bonds at a premium of 117 cents on the dollar, signaling preparations for a potential SpaceX IPO. The early debt repayment is unusual given the bonds were expected to remain outstanding for at least two more years. Combined with X (formerly Twitter), the companies intend to repay approximately $17.5 billion in total debt. xAI previously raised $20 billion in a Series E funding round in January 2026.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 8, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Seeking Alpha / Economic Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://seekingalpha.com/news/4559723-xai-to-buy-back-3b-in-high-yield-debt-early-ahead-of-spacex-ipo-report" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#04</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Google Launches Gemini 3.1 Flash-Lite — Fastest, Most Cost-Effective Model Yet</div>
+      <div class="card-brief">
+        Google has introduced Gemini 3.1 Flash-Lite, positioning it as the fastest and most economical model in the Gemini lineup. Priced at $0.25 per million input tokens and $1.50 per million output tokens, it targets developers and businesses requiring real-time processing of large data volumes. The launch comes as frontier AI costs have reportedly decreased tenfold from 2025, with Gemini 3.1 Pro now at $2.00 per million tokens. Google also released a CLI enabling third-party AI agents to integrate with Google Workspace.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 8, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Logos-Pres / Mashable</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://logos-pres.md/en/news/google-has-unveiled-one-of-the-cheapest-artificial-intelligence-models-available/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#05</div>
+        <div class="card-tags">
+          <span class="tag tag-safety">Safety</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Releases GPT-5.4 with Codex Security for Vulnerability Detection</div>
+      <div class="card-brief">
+        OpenAI has launched GPT-5.4 featuring upgraded safety protections and Codex Security, an AI-powered agent that identifies, validates, and proposes fixes for code vulnerabilities. Available in research preview for ChatGPT Pro, Enterprise, Business, and Edu customers, Codex Security has already scanned over 1.2 million commits and uncovered more than 10,561 high-severity issues. The model introduces substantial improvements in professional work capabilities, coding performance, and factual accuracy.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 8, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Help Net Security / The Hacker News</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.helpnetsecurity.com/2026/03/06/openai-chatgpt-gpt%E2%80%915-4-model-release/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#06</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Apple Integrating Google Gemini into Siri for Smarter, Privacy-Focused AI</div>
+      <div class="card-brief">
+        Apple is deepening its partnership with Google by integrating Gemini AI into Siri, promising enhanced on-screen awareness and cross-app functionality while maintaining user privacy through Private Cloud Compute. The integration represents a significant shift in Apple's AI strategy, leveraging Google's model capabilities while preserving its privacy-first approach. Samsung also announced plans to embed Gemini AI into 800 million devices by year-end, introducing "Agentic AI" for complex multi-step tasks across smartphones and home appliances.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 8, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> AI Apps / Marketing Profs</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.aiapps.com/blog/ai-news-march-2026-breakthroughs-launches-trends/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- China Section -->
+  <div class="section-label">🇨🇳 China</div>
+  <div class="news-grid">
+
+    <!-- 7 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#07</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">DeepSeek V4 Launch Prioritizes Huawei — Withholds Early Access from US Chipmakers</div>
+      <div class="card-brief">
+        DeepSeek has officially launched its V4 multimodal model, capable of generating and processing text, images, and video. In a strategic move, the company withheld pre-release access from US chipmakers Nvidia and AMD, instead granting exclusive early access to domestic partners including Huawei Technologies. The launch coincides with China's "Two Sessions" meetings and reinforces Beijing's push for semiconductor self-reliance. DeepSeek's R1 model previously gained global attention for matching US models with less computing power.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 8, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Capacity Global / Dig.watch</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://capacityglobal.com/news/deepseek-v4-launch-ai-copying-allegations/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#08</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Alibaba Forms AI Task Force After Qwen Chief Lin Junyang Departs</div>
+      <div class="card-brief">
+        Alibaba has established a new AI task force led by CEO Eddie Wu, CTO Wu Zeming, and Alibaba Cloud CTO Zhou Jingren following the departure of key Qwen technical leader Lin Junyang. The task force aims to accelerate foundation model development and mobilize group-wide resources for AI initiatives. Alibaba has pledged to uphold its open-source model strategy while channeling additional resources into AI development. The company's Qwen model recently surpassed 73.5 million daily active users during the Spring Festival holiday.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 8, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> SCMP / VnExpress</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.scmp.com/tech/big-tech/article/3345524/alibaba-sets-new-task-force-led-by-ceo-eddie-wu-to-focus-on-ai-model-development" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#09</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Baidu Announces $5B Share Buyback, New AI Chips M100 and M300</div>
+      <div class="card-brief">
+        Baidu has announced a $5 billion share repurchase program alongside its first-ever dividend policy, signaling confidence in AI-driven growth. The company unveiled new AI chips including the M100 for inference (launching early 2026) and the M300 for training and inference (early 2027). Baidu has invested over RMB 100 billion in AI since March 2023, with approximately 70% of mobile search results now containing AI-generated content. Its AI chip unit Kunlunxin is reportedly preparing for an IPO.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 8, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Simply Wall St / Seeking Alpha</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://simplywall.st/stocks/us/media/nasdaq-bidu/baidu/news/baidu-capital-returns-and-ai-growth-put-long-term-value-in-f" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#10</div>
+        <div class="card-tags">
+          <span class="tag tag-global">Milestone</span>
+        </div>
+      </div>
+      <div class="card-title">China's AI Token Usage Surpasses US for First Time in History</div>
+      <div class="card-brief">
+        China's demand for AI tokens surged 1.3-fold in February 2026, officially overtaking US usage for the first time ever. The milestone reflects rapid adoption of domestic models including DeepSeek, Moonshot AI's Kimi, and Alibaba's Qwen. Both Kimi K2.5 and DeepSeek V3.2 rank among OpenRouter's top five most-used models globally. The shift signals a fundamental realignment in global AI consumption patterns as China's cost-effective models gain worldwide traction and challenge US dominance.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 8, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Caixin Global / HKTDC Research</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://research.hktdc.com/en/article/MjI2NDYyMzIzMA" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Global Section -->
+  <div class="section-label">🌍 Global & Regional</div>
+  <div class="news-grid">
+
+    <!-- 11 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#11</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">EU</span>
+        </div>
+      </div>
+      <div class="card-title">EU AI Act Officially in Force — Spain Publishes First Compliance Guidelines</div>
+      <div class="card-brief">
+        The European Union's AI Act has officially come into force, with Spain's national AI authority AESIA publishing the first practical guidelines to help organizations translate the Act's principles into compliance steps. Ireland is set to host the International AI Summit and launch European AI Innovation Month in partnership with the European Commission. Harmonized standards translating AI Act requirements into technical frameworks are expected in the second half of 2026, providing businesses with clearer implementation roadmaps.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 8, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> IAPP / Enterprise Ireland</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://iapp.org/news/a/aesia-s-ai-guidelines-spain-steps-into-the-ai-spotlight" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 12 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#12</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">Asia</span>
+        </div>
+      </div>
+      <div class="card-title">South Korea's Comprehensive AI Basic Act Takes Effect</div>
+      <div class="card-brief">
+        South Korea's "Basic Act on the Development of Artificial Intelligence and the Establishment of a Foundation for Trustworthiness" became effective January 22, 2026. The comprehensive legislation mandates that companies inform users when AI systems are deployed and ensure AI outputs are clearly labeled or watermarked. The act represents one of Asia's most thorough AI governance frameworks, balancing innovation promotion with trustworthiness requirements. South Korea ranks among the top nations in AI adoption and model design according to IMF assessments.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 8, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> China Daily Asia / IMF</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.chinadailyasia.com/hk/article/629995" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#13</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+          <span class="tag tag-global">Global</span>
+        </div>
+      </div>
+      <div class="card-title">Agentic AI Projected in 40% of Enterprise Apps by End of 2026</div>
+      <div class="card-brief">
+        Industry experts project that by the end of 2026, 40% of enterprise applications will incorporate task-specific agentic AI capabilities. Advanced models including Gemini 3 and Claude 4.6 can now dynamically select actions, remember user preferences, and seek clarification when uncertain. The rise of "agentic workflows" represents a shift from simple chatbots to autonomous systems capable of complex multi-step task execution. Andrew Ng notes that while AGI remains decades away, the real AI bubble risk lies in the training layer rather than application deployment.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 8, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Digest AI / AI Hub</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://digestai.news/article/top-ai-news-for-march-2026-breakthroughs-launches-tre" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#14</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+          <span class="tag tag-global">EU</span>
+        </div>
+      </div>
+      <div class="card-title">ECB Survey: AI-Intensive Firms 4% More Likely to Hire Additional Staff</div>
+      <div class="card-brief">
+        A European Central Bank survey indicates that AI-intensive firms are approximately 4% more likely to hire additional staff, challenging narratives of widespread AI-driven job displacement. The findings suggest that AI adoption often leads to job creation rather than elimination within adopting companies. Samsung and Vodafone have also successfully validated a new chipset for AI-native networks across Europe, paving the way for more flexible and efficient telecommunications infrastructure powered by artificial intelligence.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 8, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> ECB / Samsung Newsroom</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.ecb.europa.eu/press/blog/date/2026/html/ecb.blog20260304~d9e34fc95f.en.html" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>AI Daily Brief</strong> · Curated by Amy 🌸 · March 8, 2026<br />
+  Stories sourced from public news as of today. Not financial or professional advice.
+</div>
+
+</body>
+</html>
