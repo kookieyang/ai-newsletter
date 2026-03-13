@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Daily Brief — March 13, 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 48px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .header .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .header .subtitle {
+      color: #90a4ae;
+      font-size: 14px;
+    }
+
+    .header .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(79, 195, 247, 0.12);
+      border: 1px solid rgba(79, 195, 247, 0.3);
+      color: #4fc3f7;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .news-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 12px 0 0 12px;
+    }
+
+    .card.us::before { background: #4fc3f7; }
+    .card.china::before { background: #ef5350; }
+    .card.global::before { background: #66bb6a; }
+    .card.industry::before { background: #ffa726; }
+    .card.safety::before { background: #ab47bc; }
+
+    .card:hover {
+      border-color: #3a3a3a;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: #555;
+      min-width: 28px;
+      margin-top: 2px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .tag-us { background: rgba(79, 195, 247, 0.15); color: #4fc3f7; }
+    .tag-china { background: rgba(239, 83, 80, 0.15); color: #ef5350; }
+    .tag-global { background: rgba(102, 187, 106, 0.15); color: #66bb6a; }
+    .tag-industry { background: rgba(255, 167, 38, 0.15); color: #ffa726; }
+    .tag-safety { background: rgba(171, 71, 188, 0.15); color: #ce93d8; }
+    .tag-policy { background: rgba(38, 198, 218, 0.15); color: #26c6da; }
+    .tag-breaking { background: rgba(255, 82, 82, 0.2); color: #ff5252; }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .card-brief {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .meta-item .icon {
+      font-size: 12px;
+    }
+
+    .meta-item a {
+      color: #4fc3f7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .meta-item a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid #1e1e1e;
+      color: #444;
+      font-size: 12px;
+    }
+
+    .footer strong {
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 26px; }
+      .card-title { font-size: 16px; }
+      .card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">AI Daily Brief</div>
+  <h1>🤖 Top AI Stories</h1>
+  <div class="subtitle">Friday, March 13, 2026 · Curated for the global AI-aware reader</div>
+  <div class="badge-row">
+    <span class="badge">🇺🇸 United States</span>
+    <span class="badge">🇨🇳 China</span>
+    <span class="badge">🌍 Global</span>
+    <span class="badge">15 Stories</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- US Section -->
+  <div class="section-label">🇺🇸 United States</div>
+  <div class="news-grid">
+
+    <!-- 1 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#01</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">Anthropic Sues Pentagon Over "Supply Chain Risk" Designation</div>
+      <div class="card-brief">
+        Anthropic filed two lawsuits against the federal government on March 11, seeking to dismiss the Pentagon's "supply chain risk" designation. The Pentagon had ordered military commanders to remove Claude AI from their systems within 180 days on March 6, following Anthropic's refusal to remove safety guardrails for autonomous weapons. The company argues the designation is unlawful and retaliatory, marking a historic standoff between AI safety commitments and military demands.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 11, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> CBS News / Bank Info Security</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.cbsnews.com/news/pentagon-ai-anthropic-memo-remove-from-key-systems/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#02</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">xAI Loses Half Its Founding Team Ahead of $250B IPO</div>
+      <div class="card-brief">
+        Elon Musk's xAI has lost 50% of its founding team, including co-founders Jimmy Ba and Tony Wu, in the year leading up to its anticipated June 2026 IPO. The exodus raises questions about institutional knowledge retention as the company pursues a $250 billion valuation. Despite the departures, xAI announced "Digital Optimus" (Macrohard), a joint project with Tesla leveraging Grok for computer-controlling AI agents, as part of a $2 billion Tesla investment agreement.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> UC Strategies / Electrek</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://ucstrategies.com/news/xai-lost-half-its-founders-before-a-250b-ipo-in-four-months/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#03</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Acquires Promptfoo, Launches Codex Security Agent</div>
+      <div class="card-brief">
+        OpenAI announced the acquisition of Promptfoo, an AI security and evaluation startup, on March 9, integrating its technology into OpenAI Frontier. The company also launched Codex Security, an AI-powered security agent that has already scanned over 1.2 million commits and identified numerous high-severity vulnerabilities. The moves signal OpenAI's intensified focus on enterprise security as it builds out its agent platform capabilities.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 9, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Futurum Group / The Hacker News</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://futurumgroup.com/insights/openai-acquires-promptfoo-gaining-25-foothold-in-fortune-500-enterprises/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#04</div>
+        <div class="card-tags">
+          <span class="tag tag-safety">Safety</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Robotics Head Resigns Over Military Surveillance Concerns</div>
+      <div class="card-brief">
+        Caitlin Kalinowski, head of robotics at OpenAI, resigned on March 9, citing concerns about the company's agreement with the U.S. government allowing AI technology use for military and domestic surveillance. The departure follows Anthropic's similar standoff with the Pentagon and highlights growing internal tensions at AI labs over ethical boundaries. CEO Sam Altman reportedly warned American tech companies about shifting public perception of the AI industry.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 9, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Taiwan News / Times of India</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://english.cw.com.tw/article/article.action?id=4644" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#05</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Google Expands Gemini Across Workspace, Pixel, and Maps</div>
+      <div class="card-brief">
+        Google deepened Gemini integration across its ecosystem in March. The March Pixel Drop brought agentic AI tasks to the Gemini app, enabling automated grocery shopping and app control. Gemini in Google Sheets achieved near-human accuracy in benchmarks. Google Maps received major AI enhancements including conversational "Ask Maps" and 3D "Immersive Navigation." The company also finalized its acquisition of Wiz to build AI-powered cybersecurity with Gemini integration.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Deccan Herald / BNN Bloomberg</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.deccanherald.com/technology/artificial-intelligence/march-2026-pixel-drop-google-rolls-out-android-update-with-new-ai-features-3920438" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#06</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Adobe CEO Shantanu Narayen Resigns After 18 Years Amid AI Concerns</div>
+      <div class="card-brief">
+        Adobe CEO Shantanu Narayen is stepping down after 18 years at the helm, amid investor skepticism about the company's ability to thrive in the AI era. The departure signals mounting pressure on legacy software companies to demonstrate clear AI strategies. Adobe faces competition from generative AI tools that threaten its core creative software business, and the leadership change may accelerate the company's AI transformation efforts.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Edge Singapore</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.theedgesingapore.com/news/tech/adobe-replace-ceo-amid-investors-ai-concerns" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#07</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Launches GPT-5.4 with Million-Token Context Window</div>
+      <div class="card-brief">
+        OpenAI introduced GPT-5.4 on March 5, featuring a million-token context window, "extreme reasoning mode," and native computer control capabilities for agent interactions. The model represents a significant leap in long-context understanding and reasoning. OpenAI also released GPT-5.3 Instant with improved tone and reduced overly reassuring responses, alongside a comprehensive thinking system card detailing safety evaluations.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 5, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> OpenAI / Mean CEO</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://openai.com/news/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- China Section -->
+  <div class="section-label">🇨🇳 China</div>
+  <div class="news-grid">
+
+    <!-- 8 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#08</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">DeepSeek V4 Enters Testing — Prioritizes Huawei Over Nvidia Chips</div>
+      <div class="card-brief">
+        DeepSeek's next-generation V4 model entered large-scale testing for select industry players around March 4, designed for "AI self-reliance" with optimization for domestic Huawei and Cambricon chips. The strategic move reduces reliance on U.S. Nvidia hardware amid ongoing export controls. Reports also surfaced of a "V4 Lite" model update with expanded context handling, though DeepSeek has not officially confirmed specifications.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 4, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> PYMNTS / Evolink AI</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.pymnts.com/artificial-intelligence-2/2026/deepseek-poised-to-unveil-latest-ai-model/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#09</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Alibaba Restructures AI Leadership After Qwen Executive Resignations</div>
+      <div class="card-brief">
+        Alibaba is reorganizing its AI division following resignations of key Qwen executives including Lin Junyang and Yu Bowen. CEO Eddie Wu formed a new internal task force with CTO Wu Zeming and Alibaba Cloud CTO Zhou Jingren to guide the company's next phase of AI development. The company hired Zhou Hao, a former Google DeepMind senior scientist, to lead post-training research. Despite leadership changes, Qwen has become the most deployed self-hosted model globally.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Digital Commerce 360 / Business Chief</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://businesschief.com/news/inside-alibabas-ceo-led-ai-task-force-initiative" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#10</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Baidu Launches DuClaw Zero-Deployment AI Agent Service</div>
+      <div class="card-brief">
+        Baidu launched DuClaw on March 11, a zero-deployment AI agent service providing instant access to the OpenClaw agent platform without requiring system configuration or API key setup. The service integrates Baidu Search, Baidu Baike, and Baidu Scholar, supporting multiple foundation models. Baidu is offering introductory subscription pricing during March. The launch follows Baidu AI Cloud's Rapid Deployment Solution for OpenClaw introduced in February.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 11, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Investing.com / PR Newswire</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.prnewswire.com/news-releases/baidu-launches-duclaw-enables-zero-deployment-access-to-openclaw-302710924.html" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#11</div>
+        <div class="card-tags">
+          <span class="tag tag-global">Milestone</span>
+        </div>
+      </div>
+      <div class="card-title">China's AI Token Usage Surpasses US for First Time</div>
+      <div class="card-brief">
+        China's AI token demand surged 1.3-fold in February 2026, overtaking US usage for the first time in history according to Caixin Global. The milestone reflects rapid adoption of DeepSeek, Moonshot AI's Kimi K2.5, and other domestic models. Both Kimi K2.5 and DeepSeek V3.2 rank among OpenRouter's top five most-used models. Chinese lenders are increasing loans to tech firms as Beijing aggressively pushes AI adoption across the economy.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Feb-Mar 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Caixin Global / Business Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.businesstimes.com.sg/international/global/chinese-banks-boost-loans-tech-sector-beijing-ramps-ai-push" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Global Section -->
+  <div class="section-label">🌍 Global & Regional</div>
+  <div class="news-grid">
+
+    <!-- 12 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#12</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">EU</span>
+        </div>
+      </div>
+      <div class="card-title">EU Publishes Second Draft of AI Act Code of Practice</div>
+      <div class="card-brief">
+        The European Commission released the second draft of the Code of Practice for labeling AI-generated content under the EU AI Act. Transparency rules are set to take effect on August 2, 2026. The amendments include preliminary political agreements on AI system responsibilities. A study found 27 EU nations now have comprehensive AI legislation, placing Denmark, France, and Greece at the top of global rankings for AI protections.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> IAPP / Babl AI</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://iapp.org/news/a/meps-reach-preliminary-political-agreement-on-AI-omnibus" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#13</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">Asia</span>
+        </div>
+      </div>
+      <div class="card-title">Vietnam Becomes First Southeast Asian Nation with Comprehensive AI Law</div>
+      <div class="card-brief">
+        Vietnam's standalone AI law became effective on March 1, 2026, making it the first Southeast Asian nation with a comprehensive AI regulatory regime. The law establishes frameworks for AI development, deployment, and risk management. The milestone comes as Asian countries accelerate AI governance efforts, with South Korea's Framework Act on AI also taking effect in January 2026.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Asia Law Portal</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://asialawportal.com/asia-legal-enforcement-and-ai-update-2026/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#14</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+          <span class="tag tag-global">Asia</span>
+        </div>
+      </div>
+      <div class="card-title">South Korea Announces $290M AI Push for Smart Factories</div>
+      <div class="card-brief">
+        President Lee Jae Myung announced South Korea will intensify AI transformation across industrial sectors through a 432 billion won ($289.7 million) project for smart factories and AI applications in manufacturing. The initiative represents public-private partnerships to accelerate AI adoption. The Asia-Pacific region shows strong AI commitment with 96% of organizations planning to increase AI investments this year.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Korea Times / Tech Wire Asia</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.koreatimes.co.kr/southkorea/politics/20260313/lee-vows-supports-for-industrial-sectors-in-ai-adoption" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 15 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#15</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+          <span class="tag tag-global">APAC</span>
+        </div>
+      </div>
+      <div class="card-title">Anthropic Expands to Sydney as Asia-Pacific Demand Surges</div>
+      <div class="card-brief">
+        Anthropic opened a new office in Sydney, Australia to meet growing demand for Claude across Australia and New Zealand. The expansion follows the company's $100 million investment in its Claude Partner Network. Anthropic is exploring computing infrastructure expansion in Australia to meet local data residency requirements, even as it faces the Pentagon conflict in the US.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> EdTech Innovation Hub</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.edtechinnovationhub.com/news/anthropic-to-open-sydney-office-as-demand-for-ai-grows-across-australia-and-new-zealand" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>AI Daily Brief</strong> · Curated by Amy 🌸 · March 13, 2026<br />
+  Stories sourced from public news as of today. Not financial or professional advice.
+</div>
+
+</body>
+</html>
