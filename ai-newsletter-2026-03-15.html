@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Daily Brief — March 15, 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 48px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .header .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .header .subtitle {
+      color: #90a4ae;
+      font-size: 14px;
+    }
+
+    .header .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(79, 195, 247, 0.12);
+      border: 1px solid rgba(79, 195, 247, 0.3);
+      color: #4fc3f7;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .news-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 12px 0 0 12px;
+    }
+
+    .card.us::before { background: #4fc3f7; }
+    .card.china::before { background: #ef5350; }
+    .card.global::before { background: #66bb6a; }
+    .card.industry::before { background: #ffa726; }
+    .card.safety::before { background: #ab47bc; }
+
+    .card:hover {
+      border-color: #3a3a3a;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: #555;
+      min-width: 28px;
+      margin-top: 2px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .tag-us { background: rgba(79, 195, 247, 0.15); color: #4fc3f7; }
+    .tag-china { background: rgba(239, 83, 80, 0.15); color: #ef5350; }
+    .tag-global { background: rgba(102, 187, 106, 0.15); color: #66bb6a; }
+    .tag-industry { background: rgba(255, 167, 38, 0.15); color: #ffa726; }
+    .tag-safety { background: rgba(171, 71, 188, 0.15); color: #ce93d8; }
+    .tag-policy { background: rgba(38, 198, 218, 0.15); color: #26c6da; }
+    .tag-breaking { background: rgba(255, 82, 82, 0.2); color: #ff5252; }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .card-brief {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .meta-item .icon {
+      font-size: 12px;
+    }
+
+    .meta-item a {
+      color: #4fc3f7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .meta-item a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid #1e1e1e;
+      color: #444;
+      font-size: 12px;
+    }
+
+    .footer strong {
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 26px; }
+      .card-title { font-size: 16px; }
+      .card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">AI Daily Brief</div>
+  <h1>🤖 Top AI Stories</h1>
+  <div class="subtitle">Sunday, March 15, 2026 · Curated for the global AI-aware reader</div>
+  <div class="badge-row">
+    <span class="badge">🇺🇸 United States</span>
+    <span class="badge">🇨🇳 China</span>
+    <span class="badge">🌍 Global</span>
+    <span class="badge">15 Stories</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- US Section -->
+  <div class="section-label">🇺🇸 United States</div>
+  <div class="news-grid">
+
+    <!-- 1 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#01</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Signs Pentagon Agreement — Senior Hardware Exec Resigns in Protest</div>
+      <div class="card-brief">
+        OpenAI has signed an agreement with the US Department of War (Pentagon) for classified deployment of its AI systems, updated March 2nd to prohibit domestic surveillance and NSA use. The deal sparked significant internal backlash, leading to the resignation of a senior hardware executive on March 7th over concerns about governance, surveillance, and lethal autonomous weapons. Reports indicate a notable increase in ChatGPT uninstalls following the Pentagon pact announcement.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 15, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> OpenAI / CBS News</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://openai.com/index/our-agreement-with-the-department-of-war/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#02</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">Pentagon Blacklists Anthropic — Orders Removal Within 180 Days</div>
+      <div class="card-brief">
+        The US Department of War officially designated Anthropic as an "unacceptable supply chain risk" on March 6th and ordered the removal of its AI products from all DoD systems within 180 days. The action follows Anthropic's refusal to grant blanket permission for its tools in autonomous weapons systems or mass surveillance. Anthropic has filed two lawsuits against the federal government, alleging the Pentagon's decision amounts to illegal retaliation for protected speech on AI safety.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 15, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> CBS News / QZ</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.cbsnews.com/news/pentagon-ai-anthropic-memo-remove-from-key-systems/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#03</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Google AI Outperforms Human Doctors in NHS Breast Cancer Study</div>
+      <div class="card-brief">
+        An NHS study published March 10th revealed that Google AI significantly outperformed human doctors in detecting breast cancer. The AI system identified more invasive cancers while simultaneously reducing false positives, marking a major milestone in medical AI applications. The breakthrough demonstrates the potential for AI to augment diagnostic capabilities in healthcare settings and could lead to faster, more accurate cancer screening worldwide.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 15, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Digital Health</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.digitalhealth.net/2026/03/google-ai-outperforms-human-doctors-in-detecting-breast-cancer/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#04</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Elon Musk Admits xAI "Not Built Right" — Rebuilding From Foundations</div>
+      <div class="card-brief">
+        Elon Musk admitted this month that xAI "was not built right first time around" and is being completely rebuilt from the foundations up. The admission comes after ten of the company's twelve original co-founders have departed, with departures accelerating amid reported tensions over performance demands. Despite the turmoil, xAI has recruited Devendra Singh Chaplot from Mistral AI and two executives from Cursor, with Musk predicting xAI will catch up to rivals in AI coding by mid-2026.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 15, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Electrek / MLQ</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://electrek.co/2026/03/13/elon-musk-admits-xai-built-wrong-rebuild-tesla-spacex-investment/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#05</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Codex Security Scans 1.2 Million Commits, Finds Critical Vulnerabilities</div>
+      <div class="card-brief">
+        OpenAI released Codex Security in research preview, an AI-powered security agent that has already scanned over 1.2 million commits and identified numerous high-severity vulnerabilities. The specialized agent is designed to autonomously identify and fix security flaws in codebases. The launch represents OpenAI's expansion into developer security tools, potentially saving organizations significant resources in manual code audits and vulnerability assessments.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 15, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Hacker News</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://thehackernews.com/2026/03/openai-codex-security-scanned-12.html" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#06</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Meta Planning Sweeping Layoffs — 20% of Workforce at Risk as AI Costs Mount</div>
+      <div class="card-brief">
+        Meta is reportedly planning significant layoffs potentially affecting 20% or more of its workforce, as the company seeks to offset massive AI infrastructure investments. The restructuring aims to prepare for greater operational efficiency through AI-assisted workers. The move reflects growing pressure on tech giants to demonstrate returns on their multi-billion dollar AI bets while managing escalating operational costs and workforce optimization.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 15, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Manila Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.manilatimes.net/2026/03/15/business/meta-planning-sweeping-layoffs-as-ai-costs-mount/2300170" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#07</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI to Acquire Promptfoo — Expanding AI Testing Capabilities</div>
+      <div class="card-brief">
+        OpenAI announced its plan to acquire Promptfoo on March 9th, a move that will bolster its AI testing and evaluation infrastructure. The acquisition reflects the growing importance of rigorous AI safety testing and red-teaming as models become more capable and widely deployed. Promptfoo's tools are designed to help developers systematically test AI model outputs for reliability, safety, and performance across various scenarios.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 15, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> OpenAI</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://openai.com/news/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- China Section -->
+  <div class="section-label">🇨🇳 China</div>
+  <div class="news-grid">
+
+    <!-- 8 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#08</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">DeepSeek V4 Launching — 1 Trillion Parameters, 40% Memory Reduction</div>
+      <div class="card-brief">
+        DeepSeek is poised to release V4, a 1 trillion parameter multimodal AI model featuring four major technical innovations. The model introduces MODEL1 architecture reducing memory usage by 40% through tiered KV cache storage, achieves 1.8x inference speedup with Sparse FP8 decoding, and improves training efficiency by 30%. V4 will support picture, video, and text generation, optimized for Huawei and Cambricon chips, with planned Apache 2.0 licensing for commercial use.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 15, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> PYMNTS / Cybernews</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.pymnts.com/artificial-intelligence-2/2026/deepseek-poised-to-unveil-latest-ai-model/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#09</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Baidu Launches DuClaw — Zero-Deployment AI Agent Platform for Enterprise</div>
+      <div class="card-brief">
+        Baidu has launched DuClaw, a fully managed zero-deployment AI agent platform through Baidu AI Cloud. The web-based service provides instant access to AI agents and integrates with major enterprise collaboration tools including WeCom, DingTalk, and Feishu. DuClaw includes pre-built Baidu tools such as Search, Baike, and Scholar, supporting multiple foundation models. Baidu also introduced "Operator," the world's first mobile "lobster" app for controlling phone apps via chat commands.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 15, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Investing.com / The Standard</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.investing.com/news/company-news/baidu-launches-zerodeployment-ai-agent-service-duclaw-93CH-4554321" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#10</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Alibaba Reorganizes AI Leadership After Key Qwen Executive Departure</div>
+      <div class="card-brief">
+        Alibaba Group is restructuring its AI division following the resignation of Lin Junyang, a senior technical leader of the Qwen LLM initiative. CEO Eddie Wu is leading a new internal task force to coordinate AI development across the company. Alibaba Cloud continues expanding global AI adoption, and the company has released compact open-source models with strong reasoning capabilities. Alibaba also launched a mobile app to help users install OpenClaw and deploy AI agents.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 15, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Digital Commerce 360 / PYMNTS</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.digitalcommerce360.com/2026/03/10/alibaba-reorganizes-ai-leadership-key-chief-resigns/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#11</div>
+        <div class="card-tags">
+          <span class="tag tag-global">Milestone</span>
+        </div>
+      </div>
+      <div class="card-title">China's 15th Five-Year Plan Prioritizes AI and Robotics for 2026-2030</div>
+      <div class="card-brief">
+        China's 15th Five-Year Plan (2026-2030) underscores a significant national focus on AI and robotics, aiming to integrate AI across the country's industrial economy. The plan outlines new policies for a unified national data market and an AI security system. This strategic positioning signals China's intent to establish itself as the world's primary AI innovation center by 2030, with substantial government backing for domestic AI development and deployment.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 15, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Asia Tech Lens</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.asiatechlens.com/p/the-wrap-28-feb-6-march-2026-two-sessions-five-year-plan-china-india-ase-korea-semiconductor-ai-supplychain-governance-robots" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Global Section -->
+  <div class="section-label">🌍 Global & Regional</div>
+  <div class="news-grid">
+
+    <!-- 12 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#12</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">EU</span>
+        </div>
+      </div>
+      <div class="card-title">EU AI Act High-Risk Guidelines Delayed to December 2027</div>
+      <div class="card-brief">
+        The European Commission has delayed practical guidelines for high-risk AI systems under the EU AI Act by 16 months, now anticipated for December 2027. The postponement follows concerns from innovators about compliance costs and potential impacts on Europe's digital competitiveness. The European Council has also proposed amendments including a ban on AI "nudification" tools and stricter standards for processing personal data categories.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 15, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> IAPP / The Record</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://iapp.org/news/a/meps-reach-preliminary-political-agreement-on-AI-omnibus" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#13</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">Asia</span>
+        </div>
+      </div>
+      <div class="card-title">Vietnam's Landmark AI Law Takes Effect — First in Southeast Asia</div>
+      <div class="card-brief">
+        Vietnam's comprehensive standalone Law on Artificial Intelligence officially took effect on March 1, 2026, becoming the first major AI legislation in Southeast Asia. The pioneering legislation adopts a risk-based approach, mandating human oversight for generative AI, requiring content labeling, and prohibiting certain high-risk applications. The law serves as a regulatory test case for the region as neighboring countries develop their own AI frameworks.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 15, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> SCMP / Rajah Tann</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.scmp.com/week-asia/lifestyle-culture/article/3345650/why-vietnams-landmark-ai-law-first-major-regulatory-test-southeast-asia" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#14</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+          <span class="tag tag-global">Asia</span>
+        </div>
+      </div>
+      <div class="card-title">South Korea Launches Industrial AI Initiative Across Three Ministries</div>
+      <div class="card-brief">
+        South Korea has launched a new joint program across three ministries to coordinate its industrial AI policy, aiming to move AI from experimentation into factory floors. The initiative bundles various AI transformation programs focusing on AI agents, smart factories, and industrial automation. Regional industrial AI programs are expected to follow later in 2026, with project announcements planned for April. South Korea's AI Basic Act entered force on January 22, 2026.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 15, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Korea Tech Desk</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://koreatechdesk.com/korea-industrial-ai-ax-programs-423b-government" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 15 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#15</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Research</span>
+        </div>
+      </div>
+      <div class="card-title">MIT Develops Generative AI for Protein-Based Drug Design</div>
+      <div class="card-brief">
+        MIT researchers have developed a generative AI model designed to streamline protein-based drug design. The system predicts how synthetic proteins will fold and interact with biological targets, potentially saving pharmaceutical companies billions in development costs. The breakthrough represents a significant advance in applying generative AI to molecular design, with implications for accelerating therapeutic discovery and precision medicine.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 15, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> MarketingProfs</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.marketingprofs.com/opinions/2026/54427/ai-update-march-13-2026-ai-news-and-views-from-the-past-week" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>AI Daily Brief</strong> · Curated by Amy 🌸 · March 15, 2026<br />
+  Stories sourced from public news as of today. Not financial or professional advice.
+</div>
+
+</body>
+</html>
