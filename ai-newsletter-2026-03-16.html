@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Daily Brief — March 16, 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 48px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .header .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .header .subtitle {
+      color: #90a4ae;
+      font-size: 14px;
+    }
+
+    .header .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(79, 195, 247, 0.12);
+      border: 1px solid rgba(79, 195, 247, 0.3);
+      color: #4fc3f7;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .news-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 12px 0 0 12px;
+    }
+
+    .card.us::before { background: #4fc3f7; }
+    .card.china::before { background: #ef5350; }
+    .card.global::before { background: #66bb6a; }
+    .card.industry::before { background: #ffa726; }
+    .card.safety::before { background: #ab47bc; }
+
+    .card:hover {
+      border-color: #3a3a3a;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: #555;
+      min-width: 28px;
+      margin-top: 2px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .tag-us { background: rgba(79, 195, 247, 0.15); color: #4fc3f7; }
+    .tag-china { background: rgba(239, 83, 80, 0.15); color: #ef5350; }
+    .tag-global { background: rgba(102, 187, 106, 0.15); color: #66bb6a; }
+    .tag-industry { background: rgba(255, 167, 38, 0.15); color: #ffa726; }
+    .tag-safety { background: rgba(171, 71, 188, 0.15); color: #ce93d8; }
+    .tag-policy { background: rgba(38, 198, 218, 0.15); color: #26c6da; }
+    .tag-breaking { background: rgba(255, 82, 82, 0.2); color: #ff5252; }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .card-brief {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .meta-item .icon {
+      font-size: 12px;
+    }
+
+    .meta-item a {
+      color: #4fc3f7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .meta-item a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid #1e1e1e;
+      color: #444;
+      font-size: 12px;
+    }
+
+    .footer strong {
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 26px; }
+      .card-title { font-size: 16px; }
+      .card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">AI Daily Brief</div>
+  <h1>🤖 Top AI Stories</h1>
+  <div class="subtitle">Monday, March 16, 2026 · Curated for the global AI-aware reader</div>
+  <div class="badge-row">
+    <span class="badge">🇺🇸 United States</span>
+    <span class="badge">🇨🇳 China</span>
+    <span class="badge">🌍 Global</span>
+    <span class="badge">14 Stories</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- US Section -->
+  <div class="section-label">🇺🇸 United States</div>
+  <div class="news-grid">
+
+    <!-- 1 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#01</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">NVIDIA GTC 2026 Opens — Jensen Huang Keynotes on Physical AI & AI Factories</div>
+      <div class="card-brief">
+        NVIDIA's GPU Technology Conference kicked off at San Jose's SAP Center with 30,000 attendees from 190 countries. CEO Jensen Huang's keynote focused on physical AI, AI factories, agentic AI, and inference infrastructure. The conference features a "build-a-claw" event for deploying proactive AI assistants running March 16-19. The company is expected to unveil new chips and partnerships as it cements its position at the center of the AI infrastructure boom.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 16, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> NVIDIA Blog</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://blogs.nvidia.com/blog/gtc-2026-news/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#02</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">Pentagon Declares Anthropic "Supply-Chain Risk" Over AI Safety Stand</div>
+      <div class="card-brief">
+        The U.S. Defense Department designated Anthropic a "supply-chain risk" after the company refused to relax its AI safety safeguards for military applications. Anthropic plans to challenge the designation in court, warning of significant revenue losses. The company fears its Claude AI could be used to autonomously determine targets. The standoff highlights growing tensions between AI safety commitments and national security demands, with rival xAI taking the opposite approach.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 16, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Daily Pioneer / Economic Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://economictimes.indiatimes.com/tech/artificial-intelligence/how-the-anthropic-pentagon-dispute-over-ai-safeguards-escalated/articleshow/129490706.cms" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#03</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Elon Musk Admits xAI "Not Built Right" — 10 of 12 Co-Founders Gone</div>
+      <div class="card-brief">
+        Elon Musk made a candid admission that his AI startup xAI was "not built right the first time around" and is now undergoing fundamental rebuilding. The internal shake-up has seen the departure of 10 of 12 original co-founders. Despite turmoil, Tesla invested $2 billion into xAI's Series E and SpaceX acquired the company at a $1.25 trillion combined valuation. xAI also recruited Devendra Singh Chaplot, co-founder of Mistral AI, as it seeks to compete with leading labs by year-end.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 16, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Rolling Out / Electrek</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://rollingout.com/2026/03/15/elon-musk-admits-xai-built-wrong/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#04</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Google Rolls Out Gemini AI Across Workspace — Docs, Sheets, Slides, Drive</div>
+      <div class="card-brief">
+        Google is significantly expanding Gemini AI capabilities across Google Workspace, integrating new generative AI features into Docs, Sheets, Slides, and Drive. The beta rollout began March 10, enabling users to generate documents, analyze data, create presentations, and search files using AI. Gemini in Sheets can create and organize spreadsheets from prompts, while Drive gains an "Ask Gemini" feature for natural language queries. The move intensifies competition with Microsoft's Copilot offerings.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 16, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> EdTech Innovation Hub</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.edtechinnovationhub.com/news/google-brings-gemini-ai-deeper-into-docs-sheets-slides-and-drive" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#05</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Releases GPT 5.3 Codex — Full-Stack AI Coding Agent</div>
+      <div class="card-brief">
+        OpenAI released GPT 5.3 Codex, an advanced AI coding agent capable of handling the entire software development process from writing to testing and deployment. The company highlighted "harness engineering" as the critical human role in this new era of AI-driven coding. The release comes as OpenAI also rolls out ChatGPT workspace analytics for Enterprise users and prepares to integrate its Sora video generator directly into ChatGPT to boost engagement amid growing competition.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 16, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> OpenAI / Digitimes</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://openai.com/news/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#06</div>
+        <div class="card-tags">
+          <span class="tag tag-safety">Safety</span>
+        </div>
+      </div>
+      <div class="card-title">Anthropic Uncovers 24,000 Fraudulent Chinese Accounts Distilling Claude</div>
+      <div class="card-brief">
+        Anthropic reported discovering over 24,000 fraudulent accounts allegedly created by Chinese AI labs to misuse its platform for unethical "distillation." The practice involves reverse-engineering Claude by training other AI models using its outputs. The discovery raises serious concerns about intellectual property theft, cybersecurity risks, and potential disinformation applications. Anthropic has accused DeepSeek, Moonshot AI, and MiniMax of orchestrating the industrial-scale data extraction operation.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 16, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Mean CEO Blog</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://blog.mean.ceo/anthropic-claude-news-march-2026/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- China Section -->
+  <div class="section-label">🇨🇳 China</div>
+  <div class="news-grid">
+
+    <!-- 7 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#07</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">DeepSeek V4 Expected in 2026 — Trillion-Parameter MoE with Million-Token Context</div>
+      <div class="card-brief">
+        DeepSeek's highly anticipated V4 model is expected to be a significant open-source AI release in 2026, featuring a trillion-parameter Mixture-of-Experts (MoE) architecture, million-token context window, and native multimodal capabilities. A "V4 Lite" variant is also anticipated. The release follows DeepSeek's January technical paper on "Manifold-Constrained Hyper-Connections," an innovative method for more cost-effective training lauded by analysts as a "striking breakthrough."
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 16, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> NXCode / SCMP</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.nxcode.io/resources/news/deepseek-v4-release-specs-benchmarks-2026" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#08</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">China's 15th Five-Year Plan Targets AI Leadership by 2030</div>
+      <div class="card-brief">
+        China's "Two Sessions" legislative meetings approved the 15th Five-Year Plan (2026-2030), emphasizing a strong commitment to AI, quantum computing, and brain-computer interfaces. The plan aims to achieve a leading strategic position in AI industry applications between 2026 and 2030. The government work report pledges to "advance and expand the AI Plus Initiative" and encourage large-scale commercial AI application in key sectors including healthcare, where China is embedding AI across its digital healthcare ecosystem.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 16, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> People's Daily / Brookings</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="http://en.people.cn/n3/2026/0316/c90000-20436078.html" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#09</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Baidu Launches DuClaw — Zero-Deployment AI Agent Platform for Enterprise</div>
+      <div class="card-brief">
+        Baidu AI Cloud launched "DuClaw" on March 14, a fully managed, zero-deployment AI agent platform designed for enterprise integration. The launch was preceded by the "Red Finger Operator" mobile app enabling users to command AI agents from smartphones. Baidu is capitalizing on its full-stack AI and GPU cloud growth, with analysts maintaining positive outlooks due to its multi-pronged strategy including AI cloud infrastructure, robotaxi expansion, and AI-powered search enhancement.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 14, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Simply Wall St / AASTOCKS</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://simplywall.st/stocks/us/media/nasdaq-bidu/baidu/news/baidus-duclaw-ai-agent-platform-tests-enterprise-demand-and" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#10</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Alibaba-Backed PixVerse Raises $300M — AI Video Unicorn Status</div>
+      <div class="card-brief">
+        PixVerse, an AI video startup backed by Alibaba, secured $300 million in new funding, achieving unicorn status amidst rising competition in AI-generated video. Alibaba Cloud highlighted its 2025 customer successes, demonstrating how its Qwen and Wan model families are fueling global innovation. Alibaba also introduced "JVS Claw," a mobile app facilitating OpenClaw deployment, and unveiled RynnBrain, an AI model designed to empower robotics by enhancing physical world comprehension.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 13, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Tech Funding News / Manila Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://techfundingnews.com/pixverse-300m-unicorn-ai-video-alibaba/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#11</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">ByteDance Halts Seedance 2.0 Launch Over Hollywood Copyright Disputes</div>
+      <div class="card-brief">
+        ByteDance has temporarily suspended the global launch of its video-generation model Seedance 2.0 following copyright disputes with Hollywood studios. The suspension highlights growing tensions between AI companies and content creators over training data rights. The move comes as China's regulatory environment for AI becomes stricter, with some countries banning government use of Chinese models like DeepSeek due to data security concerns.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 16, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Manila Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.manilatimes.net/2026/03/16/business/foreign-business/bytedance-suspends-launch-of-video-ai-model-after-copyright-disputes/2300264" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Global Section -->
+  <div class="section-label">🌍 Global & Regional</div>
+  <div class="news-grid">
+
+    <!-- 12 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#12</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">EU</span>
+        </div>
+      </div>
+      <div class="card-title">EU AI Act High-Risk Rules Delayed to December 2027</div>
+      <div class="card-brief">
+        European Union member states agreed to delay implementation of stricter rules for high-risk AI systems, pushing enforcement to December 2027 — 16 months later than initially planned. The EU AI Act aims to establish obligations for AI developers including those behind ChatGPT and Gemini. Spain announced a €100 million allocation for collaborative AI projects with other EU nations as part of the IPCEI-AI initiative led by Germany to foster a next-generation European AI ecosystem.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 16, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> JD Supra / La Moncloa</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.jdsupra.com/legalnews/ai-trends-for-2026-eu-shifts-from-4447441/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#13</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">Asia</span>
+        </div>
+      </div>
+      <div class="card-title">Japan Developing AI Intelligence System for Defense Force by 2027</div>
+      <div class="card-brief">
+        Japan's defense agency is actively developing an AI-powered intelligence analysis system for its Ground Self-Defense Force, slated for introduction by 2027. The project involves Tokyo-based AI startup Sakana AI and aims to enhance information sharing and analysis within military units. Capabilities include analyzing enemy locations, converting voice communications to text, and integrating diverse information for optimal force deployment strategies. The move reflects broader Asia-Pacific military AI acceleration.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 16, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Asian News Network</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://asianews.network/japan-defence-agency-to-develop-ai-intelligence-analysis-system-for-ground-self-defence-force-by-2027/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#14</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+          <span class="tag tag-global">Global</span>
+        </div>
+      </div>
+      <div class="card-title">South Korea Pursues Anthropic Partnership to Diversify AI Alliances</div>
+      <div class="card-brief">
+        South Korea is actively pursuing Anthropic as a key AI partner to diversify its global AI collaborations beyond OpenAI. The Ministry of Science and ICT is working toward a formal cooperation framework with Anthropic, partly due to the company's strong emphasis on safe AI development. The partnership push comes amid escalating US-China AI tensions and represents South Korea's strategy to secure multiple reliable AI partnerships for its growing digital economy.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 16, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Korea Bizwire / Chosun</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="http://koreabizwire.com/seoul-moves-to-diversify-global-a-i-ties-with-anthropic-emerging-as-a-key-partner/346139" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>AI Daily Brief</strong> · Curated by Amy 🌸 · March 16, 2026<br />
+  Stories sourced from public news as of today. Not financial or professional advice.
+</div>
+
+</body>
+</html>
