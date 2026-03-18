@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Daily Brief — March 18, 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 48px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .header .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .header .subtitle {
+      color: #90a4ae;
+      font-size: 14px;
+    }
+
+    .header .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(79, 195, 247, 0.12);
+      border: 1px solid rgba(79, 195, 247, 0.3);
+      color: #4fc3f7;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .news-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 12px 0 0 12px;
+    }
+
+    .card.us::before { background: #4fc3f7; }
+    .card.china::before { background: #ef5350; }
+    .card.global::before { background: #66bb6a; }
+    .card.industry::before { background: #ffa726; }
+    .card.safety::before { background: #ab47bc; }
+
+    .card:hover {
+      border-color: #3a3a3a;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: #555;
+      min-width: 28px;
+      margin-top: 2px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .tag-us { background: rgba(79, 195, 247, 0.15); color: #4fc3f7; }
+    .tag-china { background: rgba(239, 83, 80, 0.15); color: #ef5350; }
+    .tag-global { background: rgba(102, 187, 106, 0.15); color: #66bb6a; }
+    .tag-industry { background: rgba(255, 167, 38, 0.15); color: #ffa726; }
+    .tag-safety { background: rgba(171, 71, 188, 0.15); color: #ce93d8; }
+    .tag-policy { background: rgba(38, 198, 218, 0.15); color: #26c6da; }
+    .tag-breaking { background: rgba(255, 82, 82, 0.2); color: #ff5252; }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .card-brief {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .meta-item .icon {
+      font-size: 12px;
+    }
+
+    .meta-item a {
+      color: #4fc3f7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .meta-item a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid #1e1e1e;
+      color: #444;
+      font-size: 12px;
+    }
+
+    .footer strong {
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 26px; }
+      .card-title { font-size: 16px; }
+      .card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">AI Daily Brief</div>
+  <h1>🤖 Top AI Stories</h1>
+  <div class="subtitle">Wednesday, March 18, 2026 · Curated for the global AI-aware reader</div>
+  <div class="badge-row">
+    <span class="badge">🇺🇸 United States</span>
+    <span class="badge">🇨🇳 China</span>
+    <span class="badge">🌍 Global</span>
+    <span class="badge">13 Stories</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- US Section -->
+  <div class="section-label">🇺🇸 United States</div>
+  <div class="news-grid">
+
+    <!-- 1 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#01</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Microsoft Reorganizes Copilot Teams, Mustafa Suleyman Shifts to "Superintelligence" Mission</div>
+      <div class="card-brief">
+        Microsoft announced a major restructuring of its AI division, unifying commercial and consumer Copilot teams under new EVP Jacob Andreou. Mustafa Suleyman, CEO of Microsoft AI, will now lead a dedicated "superintelligence team" focused on frontier model development — a move seen as reducing Microsoft's dependence on OpenAI. CEO Satya Nadella said the reorganization reflects the company's ambition to build its own world-class AI models while delivering more coherent product experiences.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 18, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Business Insider / The Decoder</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.businessinsider.com/microsoft-combines-copilot-teams-and-mustafa-suleyman-superintelligence-memos-2026-3" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#02</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Meta Delays "Avocado" AI Model — Reportedly Considering Licensing Google's Gemini</div>
+      <div class="card-brief">
+        Meta has postponed its next-gen "Avocado" AI model from March to at least May 2026, after internal testing showed it can't compete with Google's Gemini 3.0. In a stunning twist, Meta's AI leadership is reportedly considering temporarily licensing Gemini to power Facebook, Instagram, and WhatsApp AI features. The move signals a potential pivot away from Meta's open-source approach, even as Zuckerberg pushes for AGI with a projected $115–135B AI spend in 2026.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 18, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Quartz / TrendingTopics EU</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://qz.com/meta-avocado-delay-mark-zuckerberg-google-gemini" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#03</div>
+        <div class="card-tags">
+          <span class="tag tag-us">US</span>
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">Trump Administration Defends Anthropic Blacklisting in Federal Court</div>
+      <div class="card-brief">
+        The U.S. Justice Department defended the Pentagon's decision to blacklist Anthropic's AI tools for national security use, arguing the company's safety-first terms of service — which prohibit autonomous weapons and domestic surveillance — are "unacceptable for the Executive Branch." The legal battle escalates after Anthropic sued to challenge the blacklisting. The case has become a landmark test of whether AI companies can maintain ethical red lines when contracting with the federal government.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 18, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Straits Times / Bloomberg Law</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.straitstimes.com/world/united-states/trump-administration-defends-anthropic-blacklisting-in-us-court" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#04</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Anthropic Launches "Anthropic Institute" to Study AI's Societal Impact</div>
+      <div class="card-brief">
+        Anthropic established the Anthropic Institute, a new research and policy group dedicated to studying the societal challenges of increasingly powerful AI. The institute will focus on labor markets, economic disruption, societal resilience, security risks, and AI governance. The launch comes as Anthropic simultaneously fights the Trump administration's blacklisting of its tools, positioning the company as the industry's most vocal advocate for responsible AI development.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 18, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> IT Brief Australia</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://itbrief.com.au/story/anthropic-launches-institute-to-study-ai-s-societal-risks" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#05</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Micron Reports Today — AI Memory Demand Expected to Drive 137% Revenue Surge</div>
+      <div class="card-brief">
+        Micron Technology reports fiscal Q2 2026 earnings after market close, with analysts expecting revenue of ~$18.7–19.3 billion — a staggering 137–140% year-over-year increase. The boom is driven by insatiable demand for High-Bandwidth Memory (HBM) and DRAM from AI data centers. Micron's cloud memory unit doubled revenue last quarter and now represents 39% of total sales. The company recently began high-volume HBM4 production for Nvidia and announced a second chip fab in Taiwan.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 18, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Motley Fool / TipRanks</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.fool.com/investing/2026/03/16/prediction-micron-technology-stock-will-soar-highe/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#06</div>
+        <div class="card-tags">
+          <span class="tag tag-safety">Safety</span>
+        </div>
+      </div>
+      <div class="card-title">Teenagers Sue xAI — Allege Grok Created Child Sexual Abuse Material</div>
+      <div class="card-brief">
+        Three teenagers, including two minors, filed a lawsuit against Elon Musk's xAI on March 17, alleging that Grok was used to create and distribute AI-generated child sexual abuse material by manipulating their photos. The lawsuit claims xAI fostered an environment where such abuse was inevitable and seeks damages plus a ban on similar image-editing capabilities. The case adds to xAI's mounting troubles, with only 2 of its original 11 co-founders still remaining at the company.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 18, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> CNET / 19th News</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.cnet.com/tech/services-and-software/grok-ai-deepfake-porn-teen-girls-lawsuit-march-2026/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#07</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Google Launches "Personal Intelligence" — Gemini Now Reads Your Gmail and Photos</div>
+      <div class="card-brief">
+        Google rolled out "Personal Intelligence" for all U.S. users, enabling its Gemini assistant to access Gmail, Google Photos, and other personal services for deeply contextual responses. The feature positions Google to compete directly with Microsoft Copilot and Apple Intelligence in the personal AI race. Privacy advocates raised concerns about the scope of data access, while analysts called it the most significant expansion of consumer AI capabilities since ChatGPT's launch.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 18, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> HeyGoTrade</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.heygotrade.com/en/news/google-ai-expansion-challenges-microsoft-apple/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#08</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Unveils GPT-5.4 Mini and Nano — Faster, Cheaper Models for Real-Time Tasks</div>
+      <div class="card-brief">
+        OpenAI released GPT-5.4 Mini and Nano, compact models designed for speed and cost efficiency in real-time applications. GPT-5.4 Mini is reportedly twice as fast as the full model while retaining near-equivalent intelligence, and has been integrated into the free ChatGPT tier with subagent capabilities. The launch comes as OpenAI reportedly acknowledges Anthropic's enterprise success as a "wake-up call" and pivots harder toward coding tools and enterprise clients.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 18, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Geo.tv / India.com</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.geo.tv/latest/656145-openai-launches-gpt-54-mini-nano-faster-cheaper-ai-models-for-real-time-tasks" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- China Section -->
+  <div class="section-label">🇨🇳 China</div>
+  <div class="news-grid">
+
+    <!-- 9 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#09</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">Alibaba Unveils "Wukong" — AI Agent Platform for Enterprise Workflows</div>
+      <div class="card-brief">
+        Alibaba launched Wukong, an AI-powered enterprise platform enabling multiple AI agents to coordinate complex tasks within a unified, security-hardened interface. Currently in invitation-only beta via DingTalk, Wukong will expand to integrate Taobao, Tmall, Alipay, and Alibaba Cloud as modular agent capabilities. The launch follows Alibaba's consolidation of all AI operations — including Tongyi Lab and Qwen — into a new "Alibaba Token Hub" business group, directly led by CEO Eddie Wu.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 18, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> TechNode / Caixin Global</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://technode.global/2026/03/18/chinas-alibaba-unveils-wukong-ai-platform-for-enterprise-workflows/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#10</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">DeepSeek V4 Imminent — Scores 83.7% on SWE-bench, Partners with Huawei on Chinese Chips</div>
+      <div class="card-brief">
+        DeepSeek's upcoming V4 model is slated for an April 2026 launch after a "V4 Lite" variant briefly appeared on its website. Internal benchmarks show an 83.7% score on SWE-bench Verified, potentially outperforming Claude 3.5 and GPT-5 on multi-file software engineering tasks. In a strategic push for domestic AI self-reliance, DeepSeek has partnered with Huawei and Cambricon to optimize V4 for Chinese-made chips. The model will be natively multimodal, handling text, image, and video.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 18, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Dataconomy / NXCode</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://dataconomy.com/2026/03/16/deepseek-v4-and-tencents-new-hunyuan-model-to-launch-in-april/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#11</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Tencent Preps New Hunyuan Model for April — Led by New Chief AI Scientist Shunyu Yao</div>
+      <div class="card-brief">
+        Tencent is preparing to launch a new ~30B-parameter Hunyuan model in April, coinciding with DeepSeek V4's release. The model, led by newly appointed chief AI scientist Shunyu Yao, will focus on in-context learning and agent usability. Tencent has been aggressively expanding its agentic AI tools, including WorkBuddy (office assistant) and QClaw, which integrates AI agent capabilities directly into WeChat and QQ. At GDC 2026, Tencent also showcased AI-powered gaming solutions including MagicDawn lighting tech.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 18, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> KR-Asia / Dataconomy</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://kr-asia.com/tencent-gets-bolder-with-agentic-ai-as-openclaw-sparks-hype-and-competition" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Global Section -->
+  <div class="section-label">🌍 Global & Regional</div>
+  <div class="news-grid">
+
+    <!-- 12 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#12</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">EU</span>
+        </div>
+      </div>
+      <div class="card-title">EU Lawmakers Agree to Push AI Act High-Risk Deadlines to 2027–2028</div>
+      <div class="card-brief">
+        European Parliament members reached a preliminary political agreement to extend EU AI Act compliance deadlines for high-risk AI systems — from August 2026 to December 2027 for stand-alone systems, and August 2028 for AI embedded in products. The agreement also includes a proposed ban on AI systems that create non-consensual explicit deepfakes. The delays aim to give businesses more time as harmonized technical standards remain incomplete, but critics say the extensions risk undermining the Act's urgency.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 18, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> IAPP / Hyperight</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://iapp.org/news/a/meps-reach-preliminary-political-agreement-on-AI-omnibus" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#13</div>
+        <div class="card-tags">
+          <span class="tag tag-global">Global</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Deloitte: "Physical AI" Moving from Labs to Factory Floors at Scale</div>
+      <div class="card-brief">
+        Deloitte released a major report on "Physical AI" (PAI) — the merger of AI with physical systems like robots, autonomous vehicles, and smart factories — declaring it has crossed from experimentation to large-scale deployment. Industrial robotics is identified as PAI's "proving ground," with early adopters in manufacturing and logistics already scaling intelligent systems. The report predicts Physical AI will be the dominant theme in enterprise AI investment by 2028, rivalling the current generative AI wave.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 18, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Deloitte / PR Newswire</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.prnewswire.com/apac/news-releases/new-deloitte-paper-physical-ai-set-to-transform-industrial-operations-powering-the-next-wave-of-smart-manufacturing-302715778.html" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>AI Daily Brief</strong> · Curated by Amy 🌸 · March 18, 2026<br />
+  Stories sourced from public news as of today. Not financial or professional advice.
+</div>
+
+</body>
+</html>
