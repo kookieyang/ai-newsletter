@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Daily Brief — March 19, 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 48px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .header .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .header .subtitle {
+      color: #90a4ae;
+      font-size: 14px;
+    }
+
+    .header .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(79, 195, 247, 0.12);
+      border: 1px solid rgba(79, 195, 247, 0.3);
+      color: #4fc3f7;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .news-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 12px 0 0 12px;
+    }
+
+    .card.us::before { background: #4fc3f7; }
+    .card.china::before { background: #ef5350; }
+    .card.global::before { background: #66bb6a; }
+    .card.industry::before { background: #ffa726; }
+    .card.safety::before { background: #ab47bc; }
+
+    .card:hover {
+      border-color: #3a3a3a;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: #555;
+      min-width: 28px;
+      margin-top: 2px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .tag-us { background: rgba(79, 195, 247, 0.15); color: #4fc3f7; }
+    .tag-china { background: rgba(239, 83, 80, 0.15); color: #ef5350; }
+    .tag-global { background: rgba(102, 187, 106, 0.15); color: #66bb6a; }
+    .tag-industry { background: rgba(255, 167, 38, 0.15); color: #ffa726; }
+    .tag-safety { background: rgba(171, 71, 188, 0.15); color: #ce93d8; }
+    .tag-policy { background: rgba(38, 198, 218, 0.15); color: #26c6da; }
+    .tag-breaking { background: rgba(255, 82, 82, 0.2); color: #ff5252; }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .card-brief {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .meta-item .icon {
+      font-size: 12px;
+    }
+
+    .meta-item a {
+      color: #4fc3f7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .meta-item a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid #1e1e1e;
+      color: #444;
+      font-size: 12px;
+    }
+
+    .footer strong {
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 26px; }
+      .card-title { font-size: 16px; }
+      .card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">AI Daily Brief</div>
+  <h1>🤖 Top AI Stories</h1>
+  <div class="subtitle">Thursday, March 19, 2026 · Curated for the global AI-aware reader</div>
+  <div class="badge-row">
+    <span class="badge">🇺🇸 United States</span>
+    <span class="badge">🇨🇳 China</span>
+    <span class="badge">🌍 Global</span>
+    <span class="badge">14 Stories</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- US Section -->
+  <div class="section-label">🇺🇸 United States</div>
+  <div class="news-grid">
+
+    <!-- 1 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#01</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">Nvidia GTC 2026: Jensen Huang Unveils Vera Rubin Ultra, Projects $1 Trillion AI Revenue</div>
+      <div class="card-brief">
+        At GTC 2026 this week, Nvidia CEO Jensen Huang unveiled the Vera Rubin Ultra platform connecting up to 144 GPUs for trillion-parameter models, announced the next-gen Feynman architecture (2028) with the Rosa CPU, and projected $1 trillion in AI chip revenue through 2027. Huang reframed data centers as AI "token factories" and declared "the ChatGPT moment for autonomous driving is here," announcing partnerships with BYD, Hyundai, Nissan, Geely, and Uber for robotaxis by 2027.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 19, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Nvidia Blog / eWeek</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://blogs.nvidia.com/blog/gtc-2026-news/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#02</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Launches GPT-5.4 Mini and Nano — Targets High-Volume AI Workloads</div>
+      <div class="card-brief">
+        OpenAI released GPT-5.4 mini and nano today, its smallest and fastest models designed for high-volume enterprise workloads. GPT-5.4 mini improves on GPT-5 mini across coding, reasoning, and tool use while running over 2× faster. GPT-5.4 nano is the company's cheapest model yet, optimized for classification, data extraction, and ranking. The release signals OpenAI's push into the efficiency tier as competition from DeepSeek and Kimi drives down API pricing across the industry.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 19, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The New Stack / EdTech Innovation Hub</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://thenewstack.io/gpt-54-nano-mini/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#03</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Microsoft Weighs Legal Action Against Amazon and OpenAI Over $50B Cloud Deal</div>
+      <div class="card-brief">
+        Microsoft is reportedly considering suing Amazon and OpenAI over a $50 billion deal making AWS the exclusive third-party cloud provider for OpenAI's "Frontier" enterprise AI agent platform. Microsoft claims the arrangement violates its exclusive Azure partnership with OpenAI. The dispute centers on whether OpenAI's "stateful runtime environment" on AWS breaches the spirit of existing agreements. Negotiations are ongoing ahead of Frontier's launch, but a Microsoft executive stated plainly: "We will sue them if they breach it."
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 18, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Financial Times / Windows Central</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.windowscentral.com/microsoft/microsoft-is-reportedly-considering-suing-openai-after-amazons-usd50b-deal-shakes-their-exclusive-partnership" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#04</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">US Government Defends Anthropic "Supply Chain Risk" Blacklisting in Federal Court</div>
+      <div class="card-brief">
+        The Trump administration defended its unprecedented designation of Anthropic as a national security "supply chain risk" in court filings this week, calling the company an "unacceptable risk" because it could "disable or alter" its AI technology. Anthropic filed dual lawsuits on March 9 challenging the designation on First and Fifth Amendment grounds. Microsoft and the ACLU have filed briefs supporting Anthropic. The designation requires all federal agencies and contractors to eliminate Anthropic products from the supply chain during a six-month phase-out.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 18, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Al Jazeera / Axios</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.aljazeera.com/economy/2026/3/18/trump-administration-defends-anthropic-blacklisting-in-us-court" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#05</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">Senator Blackburn Releases "TRUMP AMERICA AI Act" — National AI Policy Framework Draft</div>
+      <div class="card-brief">
+        Senator Marsha Blackburn released a discussion draft of the "TRUMP AMERICA AI Act" today, proposing a national AI policy framework to standardize regulations across states. The framework emphasizes duties of care for developers, updated copyright protections, safeguards for minors, and measures against bias in AI systems. The bill arrives as the Commerce Department evaluates which state AI laws are "onerous" and the DOJ's AI Litigation Task Force prepares to challenge them in federal court.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 19, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> QuiverQuant</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.quiverquant.com/news/Press+Release%3A+Marsha+Blackburn+Releases+Draft+for+National+AI+Policy+Framework" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#06</div>
+        <div class="card-tags">
+          <span class="tag tag-safety">Safety</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">Teenagers Sue xAI Over Grok-Generated CSAM in Landmark Class-Action Lawsuit</div>
+      <div class="card-brief">
+        Three teenagers have filed a class-action lawsuit against Elon Musk's xAI, alleging that its Grok AI tool was used to generate nonconsensual sexually explicit images and child sexual abuse material from their photos. The plaintiffs claim xAI knowingly allowed the harmful content and deliberately licensed the technology to third-party app makers. The case follows previous European Commission investigations into Grok's image generation capabilities and could set legal precedent for AI-generated CSAM liability.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 16, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> 19th News / WFAE</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://19thnews.org/2026/03/women-girls-lawsuit-grok-ai-deepfakes/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#07</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">Anthropic's Claude Surging in Enterprise Market Share Against OpenAI</div>
+      <div class="card-brief">
+        Despite the federal supply chain risk designation, Anthropic's Claude has been rapidly gaining market share in business software subscriptions, with February adoption growing significantly against OpenAI's ChatGPT. The company is also battling a copyright lawsuit from BMG alleging unauthorized use of lyrics from Justin Bieber, Bruno Mars, Ariana Grande, and the Rolling Stones in Claude's training data. Catholic ethicists have filed an amicus brief supporting Anthropic in the Pentagon dispute on moral grounds.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 19, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Register / Rolling Stone</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.theregister.com/2026/03/19/anthropic_claude_market_share/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- China Section -->
+  <div class="section-label">🇨🇳 China</div>
+  <div class="news-grid">
+
+    <!-- 8 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#08</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">Mystery "Hunter Alpha" Model Sparks Frenzy — Suspected DeepSeek V4 Stealth Launch</div>
+      <div class="card-brief">
+        A mystery 1-trillion-parameter AI model called "Hunter Alpha" appeared on OpenRouter on March 11 and has processed over 160 billion tokens since. The model identifies itself as a "Chinese AI model primarily trained in Chinese" with a knowledge cutoff matching DeepSeek's chatbot. Developers note its chain-of-thought reasoning patterns strongly match DeepSeek's training methodology, and DeepSeek has a history of anonymous stealth launches. Neither DeepSeek nor OpenRouter have confirmed the connection. DeepSeek V4 is rumored for an official April launch.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 19, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Mashable / The Standard HK</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://mashable.com/article/mystery-ai-model-hunter-alpha-may-be-deepseek-in-disguise" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#09</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">Alibaba Reports Q3 Earnings Today — Unveils "Token Hub" AI Restructuring</div>
+      <div class="card-brief">
+        Alibaba reports fiscal Q3 2026 earnings today with revenue expected around $41.6–42B (+8% YoY). The bigger story is the company's dramatic AI restructuring: a new "Alibaba Token Hub" unit led directly by CEO Eddie Wu consolidates Tongyi Lab, the Qwen model team, and all MaaS operations. The move follows departures of senior Qwen executives. Meanwhile, the Qwen mobile app surged from 31M users in January to 203M in February. Alibaba also hiked AI cloud prices up to 34%.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 19, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> TipRanks / Caixin Global</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.caixinglobal.com/2026-03-17/alibaba-consolidates-ai-efforts-into-new-token-hub-unit-102423668.html" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#10</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Nvidia Restarts H200 Sales to China — Receives Licenses Despite Export Controls</div>
+      <div class="card-brief">
+        Nvidia has received licenses to sell its H200 AI accelerators to numerous Chinese customers, marking a significant re-entry into the market despite ongoing US export restrictions. The chips shipped are less advanced versions mandated by export controls, but the move signals a thawing of the AI chip blockade. The development comes as Chinese firms like DeepSeek and Moonshot AI have demonstrated that cost-effective models can compete with Western counterparts even on restricted hardware.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 19, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Taipei Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.taipeitimes.com/News/biz/archives/2026/03/19/2003854058" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#11</div>
+        <div class="card-tags">
+          <span class="tag tag-safety">Safety</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">CCTV Exposes "Data Poisoning" Vulnerability in Chinese AI Chatbots</div>
+      <div class="card-brief">
+        A CCTV investigation aired on World Consumer Rights Day (March 15) revealed that major Chinese AI chatbots are vulnerable to "data poisoning" — manipulated online content causing false recommendations. In one example, chatbots recommended a non-existent "Apollo 9" smart wristband. The exposé comes as China intensifies enforcement of AI content labeling rules and prepares draft regulations for human-like interactive AI services, emphasizing alignment with core socialist values and user protection.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 19, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Asian News Network</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://asianews.network/when-poisoned-ai-chatbots-recommend-fake-products-to-chinese-consumers/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Global Section -->
+  <div class="section-label">🌍 Global & Regional</div>
+  <div class="news-grid">
+
+    <!-- 12 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#12</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">EU</span>
+        </div>
+      </div>
+      <div class="card-title">EU Parliament Votes to Postpone High-Risk AI Rules — Could Push Deadlines to 2027–2028</div>
+      <div class="card-brief">
+        The European Parliament has voted to support postponing several key EU AI Act provisions for high-risk AI systems. For systems in critical infrastructure, education, and law enforcement, the new proposed deadline is December 2027; for AI safety components in regulated products, August 2028. The second draft of the Code of Practice on AI Content Transparency was published March 3 for stakeholder feedback. Member states must also establish national AI regulatory sandboxes by August 2026.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 16, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> European Parliament / Burges Salmon</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.europarl.europa.eu/news/pt/press-room/20260316IPR38219/meps-support-postponement-of-certain-rules-on-artificial-intelligence" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#13</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">Asia</span>
+        </div>
+      </div>
+      <div class="card-title">Vietnam's Standalone AI Law Takes Effect — First in Southeast Asia</div>
+      <div class="card-brief">
+        Vietnam became the first Southeast Asian nation with a comprehensive standalone AI law when its Law on Artificial Intelligence took effect on March 1. The risk-based framework mandates human oversight for generative AI, content labeling, and bans certain high-risk applications, with extraterritorial reach. The move comes as South Korea's AI Basic Act (effective January 22) and China's revised Cybersecurity Law with AI provisions (January 1) are also being actively enforced. Asia's regulatory landscape is rapidly catching up with the EU.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 19, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Rajah & Tann Asia / Asia Law Portal</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.rajahtannasia.com/viewpoints/new-law-on-artificial-intelligence-takes-effect-on-1-march-2026/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#14</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+          <span class="tag tag-global">Global</span>
+        </div>
+      </div>
+      <div class="card-title">Google Launches Stitch AI-Native UI Design Platform, March Pixel Drop with Agentic AI</div>
+      <div class="card-brief">
+        Google Labs unveiled Stitch, an AI-native UI design platform powered by Gemini 2.5 that generates high-fidelity interfaces from natural language prompts with Figma export and code generation. Separately, the March 2026 Pixel Drop brought agentic AI capabilities to Gemini on Pixel 6–10 phones, allowing users to assign multi-step tasks with minimal supervision. Google is also developing search controls to let websites opt out of AI features, responding to UK competition regulator concerns about AI overviews' impact on publishers.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 18, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Google Blog / Deccan Herald</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.techbuzz.ai/articles/google-labs-unveils-stitch-ai-native-ui-design-platform" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>AI Daily Brief</strong> · Curated by Amy 🌸 · March 19, 2026<br />
+  Stories sourced from public news as of today. Not financial or professional advice.
+</div>
+
+</body>
+</html>
