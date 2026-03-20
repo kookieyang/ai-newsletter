@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Daily Brief — March 20, 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 48px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .header .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .header .subtitle {
+      color: #90a4ae;
+      font-size: 14px;
+    }
+
+    .header .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(79, 195, 247, 0.12);
+      border: 1px solid rgba(79, 195, 247, 0.3);
+      color: #4fc3f7;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .news-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 12px 0 0 12px;
+    }
+
+    .card.us::before { background: #4fc3f7; }
+    .card.china::before { background: #ef5350; }
+    .card.global::before { background: #66bb6a; }
+    .card.industry::before { background: #ffa726; }
+    .card.safety::before { background: #ab47bc; }
+
+    .card:hover {
+      border-color: #3a3a3a;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: #555;
+      min-width: 28px;
+      margin-top: 2px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .tag-us { background: rgba(79, 195, 247, 0.15); color: #4fc3f7; }
+    .tag-china { background: rgba(239, 83, 80, 0.15); color: #ef5350; }
+    .tag-global { background: rgba(102, 187, 106, 0.15); color: #66bb6a; }
+    .tag-industry { background: rgba(255, 167, 38, 0.15); color: #ffa726; }
+    .tag-safety { background: rgba(171, 71, 188, 0.15); color: #ce93d8; }
+    .tag-policy { background: rgba(38, 198, 218, 0.15); color: #26c6da; }
+    .tag-breaking { background: rgba(255, 82, 82, 0.2); color: #ff5252; }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .card-brief {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .meta-item .icon {
+      font-size: 12px;
+    }
+
+    .meta-item a {
+      color: #4fc3f7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .meta-item a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid #1e1e1e;
+      color: #444;
+      font-size: 12px;
+    }
+
+    .footer strong {
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 26px; }
+      .card-title { font-size: 16px; }
+      .card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">AI Daily Brief</div>
+  <h1>🤖 Top AI Stories</h1>
+  <div class="subtitle">Friday, March 20, 2026 · Curated for the global AI-aware reader</div>
+  <div class="badge-row">
+    <span class="badge">🇺🇸 United States</span>
+    <span class="badge">🇨🇳 China</span>
+    <span class="badge">🌍 Global</span>
+    <span class="badge">🇪🇺 EU</span>
+    <span class="badge">14 Stories</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- US Section -->
+  <div class="section-label">🇺🇸 United States</div>
+  <div class="news-grid">
+
+    <!-- 1 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#01</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">Supermicro Executives Charged with Smuggling $2.5B in Nvidia AI Chips to China</div>
+      <div class="card-brief">
+        Three men — including Supermicro SVP and board member Yih-Shyan "Wally" Liaw — have been indicted in Manhattan federal court for conspiring to smuggle billions of dollars worth of AI servers with advanced Nvidia GPUs to China between 2024 and 2025. Prosecutors allege the defendants used fabricated documents, bogus audit inventories, and pass-through companies to evade U.S. export controls. Liaw was arrested in California; another defendant is a fugitive. Supermicro says it is cooperating with authorities.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 20, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Daily Maverick / DOJ</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.dailymaverick.co.za/article/2026-03-20-us-charges-3-tied-to-super-micro-computer-with-helping-smuggle-billions-of-dollars-of-ai-chips-to-china/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#02</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">Pentagon Orders Removal of Anthropic AI from Government Systems Within 180 Days</div>
+      <div class="card-brief">
+        The U.S. Department of Defense has classified Anthropic's Claude AI as a "supply chain risk" and ordered its removal from certain government operations within 180 days. The move follows Anthropic's refusal to allow unrestricted military use of Claude for surveillance and autonomous weapons. Anthropic has filed lawsuits alleging illegal retaliation. Despite the standoff, the company's enterprise market share has climbed to 40%, surpassing OpenAI's declining 27%.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 20, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> CBS News / The Register</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.cbsnews.com/news/pentagon-ai-anthropic-memo-remove-from-key-systems/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#03</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Acquires Python Toolmaker Astral — Codex Hits 2M Weekly Active Users</div>
+      <div class="card-brief">
+        OpenAI announced the acquisition of Astral, the startup behind popular open-source Python tools like uv, Ruff, and Ty. Astral's team will integrate into OpenAI's Codex platform to accelerate AI-native development. Codex now boasts over 2 million weekly active users — a threefold increase since January. The company also introduced GPT-5.4 mini and nano models, while reportedly halting some side projects to focus on business users and coding.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 20, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> OpenAI / DevOps.com</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://openai.com/index/openai-to-acquire-astral/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#04</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">Meta Unveils Four Generations of Custom MTIA AI Chips — Challenging Nvidia at Inference</div>
+      <div class="card-brief">
+        Meta revealed its MTIA 300, 400, 450, and 500 custom AI chips, built with Broadcom and designed for inference at scale. The MTIA 400 is already in data-center rollout and reportedly competitive with leading commercial GPUs. The MTIA 500 promises 4.5× the memory bandwidth and 25× the compute FLOPs of the 300 series. Mass production of the 450 and 500 is slated for 2027, as Meta aims to cut reliance on external chip vendors for its billions of users.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 20, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Tom's Hardware / The Register</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.tomshardware.com/tech-industry/semiconductors/metas-mtia-chip-lineup-joins-hyperscaler-push-to-replace-nvidia-at-inference" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#05</div>
+        <div class="card-tags">
+          <span class="tag tag-safety">Safety</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">Tennessee Teens Sue xAI Over AI-Generated Deepfake CSAM — Lawsuits Multiply</div>
+      <div class="card-brief">
+        Three Tennessee teenagers have filed a class-action lawsuit against Elon Musk's xAI, alleging Grok's AI models were used by a third-party app to generate nonconsensual nude images and videos of them. The suit claims xAI failed to implement industry-standard guardrails, and that Grok users generated millions of "nudified" images in late 2025 and early 2026. Separately, xAI hired Mistral co-founder Devendra Singh Chaplot, with Musk publicly admitting xAI was "not built right the first time."
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 20, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> WPLN / CNET</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://wpln.org/post/tennessee-teens-sue-elon-musks-xai-over-ai-generated-child-sexual-abuse-material/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#06</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">Google Launches "Vibe Design with Stitch" — AI-Native UI Design and Code Generation</div>
+      <div class="card-brief">
+        Google introduced Stitch, an AI-native canvas platform for UI design and code generation that accepts text, image, and voice commands. Alongside this, Google Drive is being transformed into an active knowledge base that Gemini can query and synthesize — auto-populating spreadsheets, generating formatted drafts, and creating presentations from natural language. Google also announced it is "leaning more" into national security contracts, deploying AI agents across Pentagon unclassified networks.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 20, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> AI Business / Business Insider</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://aibusiness.com/generative-ai/google-s-stitch-and-ai-driven-development" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- China Section -->
+  <div class="section-label">🇨🇳 China</div>
+  <div class="news-grid">
+
+    <!-- 7 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#07</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">Alibaba Targets $100B in AI & Cloud Revenue Over 5 Years — Raises AI Prices 34%</div>
+      <div class="card-brief">
+        Alibaba has set an ambitious goal to exceed $100 billion in AI and cloud revenue over the next five years, following a robust 36% quarterly growth in cloud. The company raised prices on some AI services by up to 34%, launched agentic AI tool Wukong, and restructured its AI divisions under a new "Alibaba Token Hub." Alibaba also confirmed its proprietary GPU is now in production at scale. However, the departure of Lin Junyang, head of the Qwen AI model division, raised questions about leadership stability.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 20, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> AP / PYMNTS</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.news4jax.com/tech/2026/03/19/chinas-alibaba-targets-100b-in-ai-and-cloud-revenue-over-5-years/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#08</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">DeepSeek V4 Imminent — Rumored Trillion-Parameter Multimodal Model</div>
+      <div class="card-brief">
+        DeepSeek's V4 model is anticipated as one of the most significant open-source AI releases of 2026 — rumors suggest a trillion-parameter multimodal model. A "V4 Lite" variant appeared on March 9, hinting at an imminent full release timed to coincide with China's "Two Sessions" parliamentary meetings. Meanwhile, a mystery "Hunter Alpha" model that sparked speculation of being DeepSeek V4 turned out to be Xiaomi's MiMo-V2-Pro, led by former DeepSeek researcher Luo Fuli.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 20, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> PYMNTS / TechRepublic</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.nxcode.io/resources/news/deepseek-v4-release-specs-benchmarks-2026" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#09</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">Baidu Launches "Lobsters" AI Agents — Rides China's Agentic AI Frenzy</div>
+      <div class="card-brief">
+        Baidu launched DuClaw, a zero-deployment agentic AI service integrating Baidu Search, Baike, and Scholar. The company also introduced a family of AI agents dubbed "lobsters" — built on an open-source agent framework — spanning desktop, cloud, mobile, and smart-home applications. Baidu announced a new $5 billion share buyback and its first dividend to reassure investors amid heavy AI investment. The agentic AI wave has become a major tech phenomenon in China.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 20, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Malay Mail / MarketScreener</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.malaymail.com/news/tech-gadgets/2026/03/18/meet-the-lobsters-baidu-rides-chinas-openclaw-frenzy-with-next-gen-ai-agents-to-do-it-all/212999" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#10</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">Leaked Documents Expose China's AI-Powered Surveillance Network Targeting Taiwan</div>
+      <div class="card-brief">
+        Leaked documents from Chinese tech firm GoLaxy detail an AI-driven surveillance and influence network targeting Taiwan. The revelations come as China's "Two Sessions" reiterated AI as a core driver of "new quality productive forces," with plans to promote agentic AI and open-source infrastructure. China's Supreme Court also announced an expedited legislative process for AI laws, while draft regulations emphasize "core socialist values" in AI agent and human-like interactive AI services.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 20, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Online Citizen / Forbes</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://theonlinecitizen.com/2026/03/19/leaked-documents-expose-china-s-ai-powered-surveillance-and-influence-network-targeting-taiwan" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Global Section -->
+  <div class="section-label">🌍 Global & Regional</div>
+  <div class="news-grid">
+
+    <!-- 11 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#11</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-global">EU</span>
+        </div>
+      </div>
+      <div class="card-title">Yann LeCun's AMI Labs Raises $1B Seed — Largest in European History</div>
+      <div class="card-brief">
+        Advanced Machine Intelligence Labs, founded by Turing Award winner Yann LeCun, has secured $1.03 billion in seed funding — the largest seed round in European history — valuing the Paris-based startup at $3.5 billion. Backed by Nvidia, Bezos Expeditions, Temasek, Samsung, and Eric Schmidt, AMI Labs is building "world models" as an alternative to LLMs, with applications in robotics, healthcare, and manufacturing. Research hubs span Paris, New York, Montreal, and Singapore.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 20, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Observer / Crunchbase</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://observer.com/2026/03/yann-lecun-ami-startup-funding-round-fund/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 12 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#12</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">EU</span>
+        </div>
+      </div>
+      <div class="card-title">EU Parliament Votes to Delay AI Act Deadlines — Proposes Ban on "Nudifier" Apps</div>
+      <div class="card-brief">
+        The European Parliament approved proposals to postpone certain high-risk AI system deadlines to December 2027 and extend watermarking compliance to November 2026. MEPs also backed a ban on AI "nudifier" systems that create non-consensual sexually explicit images. A new Resolution on Copyright and Generative AI was adopted on March 10, potentially reshaping training data licensing worldwide. Critics warn that a proposed "AI Act Omnibus" from the Commission could weaken safeguards.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 20, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> European Parliament / Trending Topics EU</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.trendingtopics.eu/eu-parliament-votes-to-delay-ai-act-deadlines-and-ban-nudifier-apps/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#13</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">Asia</span>
+        </div>
+      </div>
+      <div class="card-title">Vietnam Becomes First Southeast Asian Nation with Comprehensive AI Law</div>
+      <div class="card-brief">
+        Vietnam's Law on Artificial Intelligence took effect March 1, making it the first Southeast Asian country with a standalone AI regulatory regime. Modeled after the EU AI Act, it mandates human oversight for generative AI, content labeling, and bans certain high-risk applications, with extraterritorial reach. South Korea's AI Basic Act also entered force in January. Meanwhile, the UN AI Governance Advisory Board released its first global framework, aiming to bridge the gap between strict EU regulation and US self-regulation approaches.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 20, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Straits Times / IAPP</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.straitstimes.com/asia/se-asia/vietnam-ai-law-takes-effect-first-in-south-east-asia" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#14</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">Global</span>
+        </div>
+      </div>
+      <div class="card-title">UK Offers Publishers AI Overview Opt-Out — Google Agrees After CMA Pressure</div>
+      <div class="card-brief">
+        Google has agreed to give publishers an opt-out option for their content being used in AI Overviews and for training its AI models, following proposals from the UK's Competition and Markets Authority. Separately, actors, musicians, and writers welcomed the UK's revised stance on copyrighted work usage by AI. The move signals a potential shift toward stronger creator protections across the industry, with the EU's new copyright resolution adding further regulatory pressure on AI companies worldwide.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 20, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> VideoWeek / The Guardian</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://videoweek.com/2026/03/19/google-agrees-to-give-publishers-an-ai-overview-opt-out-but-concerns-remain/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>AI Daily Brief</strong> · Curated by Amy 🌸 · March 20, 2026<br />
+  Stories sourced from public news as of today. Not financial or professional advice.
+</div>
+
+</body>
+</html>
