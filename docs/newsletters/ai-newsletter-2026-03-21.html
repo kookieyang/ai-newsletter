@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Daily Brief — March 21, 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 48px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .header .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .header .subtitle {
+      color: #90a4ae;
+      font-size: 14px;
+    }
+
+    .header .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(79, 195, 247, 0.12);
+      border: 1px solid rgba(79, 195, 247, 0.3);
+      color: #4fc3f7;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .news-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 12px 0 0 12px;
+    }
+
+    .card.us::before { background: #4fc3f7; }
+    .card.china::before { background: #ef5350; }
+    .card.global::before { background: #66bb6a; }
+    .card.industry::before { background: #ffa726; }
+    .card.safety::before { background: #ab47bc; }
+
+    .card:hover {
+      border-color: #3a3a3a;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: #555;
+      min-width: 28px;
+      margin-top: 2px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .tag-us { background: rgba(79, 195, 247, 0.15); color: #4fc3f7; }
+    .tag-china { background: rgba(239, 83, 80, 0.15); color: #ef5350; }
+    .tag-global { background: rgba(102, 187, 106, 0.15); color: #66bb6a; }
+    .tag-industry { background: rgba(255, 167, 38, 0.15); color: #ffa726; }
+    .tag-safety { background: rgba(171, 71, 188, 0.15); color: #ce93d8; }
+    .tag-policy { background: rgba(38, 198, 218, 0.15); color: #26c6da; }
+    .tag-breaking { background: rgba(255, 82, 82, 0.2); color: #ff5252; }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .card-brief {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .meta-item .icon {
+      font-size: 12px;
+    }
+
+    .meta-item a {
+      color: #4fc3f7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .meta-item a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid #1e1e1e;
+      color: #444;
+      font-size: 12px;
+    }
+
+    .footer strong {
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 26px; }
+      .card-title { font-size: 16px; }
+      .card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">AI Daily Brief</div>
+  <h1>🤖 Top AI Stories</h1>
+  <div class="subtitle">Saturday, March 21, 2026 · Curated for the global AI-aware reader</div>
+  <div class="badge-row">
+    <span class="badge">🇺🇸 United States</span>
+    <span class="badge">🇨🇳 China</span>
+    <span class="badge">🌍 Global</span>
+    <span class="badge">14 Stories</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- US Section -->
+  <div class="section-label">🇺🇸 United States</div>
+  <div class="news-grid">
+
+    <!-- 1 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#01</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">White House Unveils National AI Legislative Blueprint — Seeks Federal Preemption of State Laws</div>
+      <div class="card-brief">
+        The White House released a comprehensive legislative blueprint for national AI policy, urging Congress to adopt a "light-touch" regulatory approach. The framework aims to preempt state-level AI laws in California, Colorado, Utah, and Texas deemed too burdensome, while outlining six priorities: child safety, energy cost control, IP rights, free speech protections, public education, and workforce readiness. The move sets up a major confrontation with states that have already enacted their own AI regulations.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 20, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> PBS / White House</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.pbs.org/newshour/nation/white-house-urges-congress-to-take-a-light-touch-on-ai-regulations-in-new-legislative-blueprint" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#02</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">NVIDIA GTC 2026: Jensen Huang Reframes AI Race Around Agentic & Physical AI</div>
+      <div class="card-brief">
+        At GTC 2026, NVIDIA CEO Jensen Huang pivoted the narrative away from benchmark wars, emphasizing "agentic AI" and "physical AI" as the next frontiers. Key reveals included the Vera Rubin GPU platform, new NIM microservices, and enterprise AI factory blueprints for industrializing autonomous agents. NVIDIA also announced partnerships across healthcare, manufacturing, robotics, and autonomous vehicles, plus a "Space Computing" initiative for AI chips in orbital data centers.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 20, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Cyber News Centre</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.cybernewscentre.com/jensen-huangs-big-reframe-the-ai-race-just-changed-its-rules/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#03</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Plans Desktop "Superapp" Merging ChatGPT, Codex & Atlas Browser</div>
+      <div class="card-brief">
+        OpenAI is reportedly combining its desktop products — ChatGPT, the Codex coding tool, and its AI-powered Atlas web browser — into a single "superapp." The consolidation aims to counter competition from Anthropic's Claude, which recently overtook ChatGPT as the most downloaded AI app in the US. OpenAI also announced its acquisition of Astral, integrating open-source Python tools like uv and Ruff into the Codex ecosystem.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 20, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Silicon Republic / InfoWorld</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.siliconrepublic.com/business/openai-to-reportedly-take-on-anthropic-with-new-desktop-superapp" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#04</div>
+        <div class="card-tags">
+          <span class="tag tag-us">US</span>
+          <span class="tag tag-safety">Safety</span>
+        </div>
+      </div>
+      <div class="card-title">Anthropic Designated "Supply Chain Risk" by Pentagon Over Weapons AI Refusal</div>
+      <div class="card-brief">
+        The Pentagon formally designated Anthropic as a "supply chain risk" after the company refused to grant blanket permission for Claude AI to be used in autonomous weapons systems or mass surveillance. Anthropic has vowed to challenge the designation in court, arguing it is legally unsound. The standoff escalates the ongoing tension between AI safety commitments and national security demands, with Anthropic's revenue reportedly nearly doubling to $20 billion despite the conflict.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 20, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> LA Times / Anthropic</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.latimes.com/business/story/2026-03-20/pentagons-attempt-to-strong-arm-anthropic-rouses-resistance-reflection-in-silicon-valley" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#05</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">Senators Push for Enhanced AI Chip Export Controls After Smuggling Incidents</div>
+      <div class="card-brief">
+        Senators Cotton and Huizenga have urged Commerce Secretary Howard Lutnick to strengthen enforcement of export controls on AI chips, citing recent smuggling incidents involving advanced semiconductors reaching restricted destinations. The push comes as US-China tech tensions intensify around AI hardware access and the upcoming DeepSeek V4 model reportedly optimized for domestic Chinese chips rather than NVIDIA hardware.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 21, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Quiver Quantitative</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.quiverquant.com/news/Press+Release%3A+Cotton+and+Huizenga+Urge+Secretary+Lutnick+for+Enhanced+Export+Controls+on+AI+Chips" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#06</div>
+        <div class="card-tags">
+          <span class="tag tag-safety">Safety</span>
+        </div>
+      </div>
+      <div class="card-title">Teenagers Sue xAI Over AI-Generated Non-Consensual Explicit Deepfakes</div>
+      <div class="card-brief">
+        Three Tennessee teenagers filed a class-action lawsuit against Elon Musk's xAI, alleging its AI models were used by an unnamed app to create non-consensual sexually explicit images and videos of them when they were minors. The case comes as xAI undergoes a major restructuring after losing 9 of its 11 original co-founders, with Musk citing "foundational flaws." xAI is also aggressively poaching clients from OpenAI and Anthropic.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 20, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> LA Times / OPB</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.latimes.com/business/story/2026-03-20/elon-musks-xai-sued-by-teenagers-over-sexually-explicit-ai-generated-deepfakes" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#07</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Meta Unveils Four Generations of Custom AI Chips — MTIA 300 Through 500</div>
+      <div class="card-brief">
+        Meta introduced four new generations of custom AI chips — MTIA 300, 400, 450, and 500 — to be deployed across its data centers by end of 2027. The chips are designed to power everything from content recommendations to high-end generative AI inferencing, reducing Meta's reliance on external vendors. Separately, Meta signed a $27 billion five-year infrastructure deal with Nebius, including $15B for NVIDIA's Vera Rubin platform.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 21, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Crescendo AI</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.crescendo.ai/news/latest-ai-news-and-updates" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- China Section -->
+  <div class="section-label">🇨🇳 China</div>
+  <div class="news-grid">
+
+    <!-- 8 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#08</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">DeepSeek V4 Imminent — "Hunter Alpha" Mystery Model Fuels Speculation</div>
+      <div class="card-brief">
+        DeepSeek's highly anticipated V4 multimodal model (text, image, and video generation) is nearing release, with some reports pointing to an April launch. Speculation intensified after "Hunter Alpha," an anonymous trillion-parameter model with a million-token context window, appeared on OpenRouter on March 11. Many believe it to be DeepSeek's next-gen system. DeepSeek has partnered with Huawei and Cambricon to optimize V4 for domestic Chinese chips, signaling a strategic decoupling from US hardware.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 21, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> PYMNTS / OODA Loop</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.pymnts.com/artificial-intelligence-2/2026/deepseek-poised-to-unveil-latest-ai-model/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#09</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Alibaba Targets $100B in AI & Cloud Revenue — Launches Wukong Agent Platform</div>
+      <div class="card-brief">
+        Alibaba committed to exceeding $100 billion in annual AI and cloud revenue within five years, revealing its T-Head chip division has shipped 470,000 AI chips. The company launched Wukong, an enterprise-focused agentic AI platform in invitation-only beta, while Alibaba Cloud raised prices up to 34% due to AI demand. However, Alibaba reported a 67% profit drop and cut its workforce by a third in 2025 as it pivots aggressively to AI. The head of its Qwen AI division also departed.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 20, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Register / AI Business</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.theregister.com/2026/03/20/alibaba_q3_2025/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#10</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Baidu Launches "DuClaw" — Zero-Deployment AI Agent Platform</div>
+      <div class="card-brief">
+        Baidu launched DuClaw on March 17, a fully managed service providing zero-deployment access to the MCP agent platform with pre-built integrations for Baidu Search, Baike, and Scholar. The service supports multiple foundation models including DeepSeek. This follows Baidu embedding AI agents directly into the Baidu App (700M MAU) and unveiling a comprehensive suite of "lobster" agents for desktop, cloud, mobile, and smart-home applications.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 17, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> MLQ AI / Malay Mail</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://mlq.ai/news/baidu-enters-chinas-openclaw-ai-rush-with-new-agent-tools/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#11</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">China's 15th Five-Year Plan Prioritizes AI, Robotics & National Data Market</div>
+      <div class="card-brief">
+        Following the "Two Sessions" parliamentary meetings, China's 15th Five-Year Plan (2026-2030) formally prioritized AI and robotics for manufacturing and supply chains, alongside establishing a national data market and AI security framework. The government committed to fostering agentic AI, supporting open-source AI infrastructure, and accelerating AI legislation. China's core AI industry, valued at 1.2 trillion yuan in 2025, is projected to surpass 10 trillion yuan by 2030.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 20, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> CGTN / IAPP</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://news.cgtn.com/news/2026-03-20/How-China-s-AI-Plus-initiative-drives-for-a-systemic-industrial-leap-1LFj6KflUvm/p.html" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Global Section -->
+  <div class="section-label">🌍 Global & Regional</div>
+  <div class="news-grid">
+
+    <!-- 12 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#12</div>
+        <div class="card-tags">
+          <span class="tag tag-global">Global</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Google Leases Custom AI Chips to Meta in Landmark Infrastructure Deal</div>
+      <div class="card-brief">
+        Google signed a significant agreement to lease access to its custom AI chips to Meta for training large AI models, marking a rare infrastructure partnership between two tech giants that are typically fierce competitors. The deal signals a shift in cloud AI dynamics and highlights the extreme demand for AI compute capacity as both companies race to scale their AI capabilities.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 21, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> WRAL</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.wral.com/business/technology/google-meta-leasing-intelligence-capacity-march-2026/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#13</div>
+        <div class="card-tags">
+          <span class="tag tag-global">Global</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Energy-Efficient AI Breakthrough: 100x Less Power with Neuro-Symbolic Approach</div>
+      <div class="card-brief">
+        Researchers developed a proof-of-concept for AI systems that could use 100 times less energy than current models while offering improved accuracy. The approach combines neural networks with symbolic reasoning (neuro-symbolic AI), addressing one of the industry's most pressing concerns as AI data centers drive surging electricity demand. The breakthrough arrives as the White House blueprint also flagged AI energy costs as a national priority.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 21, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Eurasia Review</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.eurasiareview.com/21032026-new-ai-models-could-slash-energy-use-while-dramatically-improving-performance/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#14</div>
+        <div class="card-tags">
+          <span class="tag tag-global">Global</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">AI-Designed Drugs Hit Mid-to-Late Stage Clinical Trials in Landmark Year</div>
+      <div class="card-brief">
+        2026 is shaping up as a landmark year for AI in drug discovery, with several AI-discovered and optimized drug candidates advancing to mid-to-late-stage clinical trials. MIT researchers also unveiled a generative AI model that streamlines protein-based drug design, potentially saving pharma companies billions in R&D costs. Meanwhile, a UCSF study found generative AI can match or outperform human expert teams in analyzing complex medical datasets.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 21, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> IBM / CBS News</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.ibm.com/think/insights/artificial-intelligence-future" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>AI Daily Brief</strong> · Curated by Amy 🌸 · March 21, 2026<br />
+  Stories sourced from public news as of today. Not financial or professional advice.
+</div>
+
+</body>
+</html>
