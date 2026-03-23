@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Daily Brief — March 23, 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 48px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .header .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .header .subtitle {
+      color: #90a4ae;
+      font-size: 14px;
+    }
+
+    .header .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(79, 195, 247, 0.12);
+      border: 1px solid rgba(79, 195, 247, 0.3);
+      color: #4fc3f7;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .news-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 12px 0 0 12px;
+    }
+
+    .card.us::before { background: #4fc3f7; }
+    .card.china::before { background: #ef5350; }
+    .card.global::before { background: #66bb6a; }
+    .card.industry::before { background: #ffa726; }
+    .card.safety::before { background: #ab47bc; }
+
+    .card:hover {
+      border-color: #3a3a3a;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: #555;
+      min-width: 28px;
+      margin-top: 2px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .tag-us { background: rgba(79, 195, 247, 0.15); color: #4fc3f7; }
+    .tag-china { background: rgba(239, 83, 80, 0.15); color: #ef5350; }
+    .tag-global { background: rgba(102, 187, 106, 0.15); color: #66bb6a; }
+    .tag-industry { background: rgba(255, 167, 38, 0.15); color: #ffa726; }
+    .tag-safety { background: rgba(171, 71, 188, 0.15); color: #ce93d8; }
+    .tag-policy { background: rgba(38, 198, 218, 0.15); color: #26c6da; }
+    .tag-breaking { background: rgba(255, 82, 82, 0.2); color: #ff5252; }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .card-brief {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .meta-item .icon {
+      font-size: 12px;
+    }
+
+    .meta-item a {
+      color: #4fc3f7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .meta-item a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid #1e1e1e;
+      color: #444;
+      font-size: 12px;
+    }
+
+    .footer strong {
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 26px; }
+      .card-title { font-size: 16px; }
+      .card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">AI Daily Brief</div>
+  <h1>🤖 Top AI Stories</h1>
+  <div class="subtitle">Monday, March 23, 2026 · Curated for the global AI-aware reader</div>
+  <div class="badge-row">
+    <span class="badge">🇺🇸 United States</span>
+    <span class="badge">🇨🇳 China</span>
+    <span class="badge">🌍 Global</span>
+    <span class="badge">🇪🇺 EU</span>
+    <span class="badge">14 Stories</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- US Section -->
+  <div class="section-label">🇺🇸 United States</div>
+  <div class="news-grid">
+
+    <!-- 1 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#01</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Musk Launches $20B "Terafab" — Tesla, SpaceX & xAI to Build Own Chip Factory in Austin</div>
+      <div class="card-brief">
+        Elon Musk formally announced "Terafab," a $20–25 billion semiconductor fabrication plant jointly developed by Tesla, SpaceX, and xAI in Austin, Texas. The facility will target 2nm process technology and aims to produce 100–200 billion custom AI and memory chips per year at full scale — roughly 70% of TSMC's entire current global output from a single site. Musk says 80% of compute will power orbital AI satellites, claiming space-based AI could be cheaper than terrestrial alternatives within 2–3 years. Small-batch production of Tesla's AI5 chip begins this year.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 22–23, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Tom's Hardware / Forbes / Electrek</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.tomshardware.com/tech-industry/elon-musk-formally-launches-20-billion-terafab-chip-project" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#02</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">SoftBank Breaks Ground on $500B AI Data Center in Ohio — Largest US Power Plant Planned</div>
+      <div class="card-brief">
+        SoftBank Group broke ground on a massive AI computing complex at the former Portsmouth uranium enrichment site in Piketon, Ohio, with a planned 10 GW data center capacity and a 9.2 GW gas-fired power plant — set to be the largest in the US at a single location. The initial phase costs $30–40 billion, with total investment potentially reaching $500 billion over 20 years. The project is part of Japan's $550 billion US investment commitment tied to trade tariff negotiations. The US Departments of Energy and Commerce are partnering on the initiative.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 21–23, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Japan Times / Taipei Times / US DOE</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.japantimes.co.jp/business/2026/03/21/companies/softbank-ohio-data-center/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#03</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Plans Desktop "Superapp" — Merging ChatGPT, Codex & Atlas Browser</div>
+      <div class="card-brief">
+        OpenAI is building a desktop "superapp" that will unify its ChatGPT conversational AI, Codex coding platform (now 2M+ weekly active users), and Atlas AI-powered web browser into a single application. The move, led by President Greg Brockman, targets professional and enterprise users and aims to reduce product fragmentation. Separately, OpenAI plans to nearly double headcount from 4,500 to 8,000 by end of 2026, securing over 1 million sq ft of new SF office space. The company also acquired open-source Python tool maker Astral to bolster Codex.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 23, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> PCMag / InfoWorld / The Star</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.pcmag.com/news/openai-plans-desktop-superapp-to-combine-chatgpt-codex-atlas-browser" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#04</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Meta Unveils Four New Custom AI Chips — MTIA 300 Through 500 Roadmap</div>
+      <div class="card-brief">
+        Meta revealed an aggressive custom silicon roadmap with four new MTIA chip generations (300, 400, 450, 500) deploying through 2027. Built on RISC-V architecture and fabricated by TSMC, the chips promise a 25x compute FLOPS increase and 4.5x HBM bandwidth gain from MTIA 300 to 500. New generations ship every ~6 months, focusing on generative AI inference. The move aims to reduce Meta's reliance on Nvidia and power everything from content ranking to AI chatbots across its apps. Hundreds of thousands of MTIA devices are already in production.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 23, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Tom's Hardware / Meta Engineering Blog</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://about.fb.com/news/2026/03/expanding-metas-custom-silicon-to-power-our-ai-workloads/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#05</div>
+        <div class="card-tags">
+          <span class="tag tag-safety">Safety</span>
+        </div>
+      </div>
+      <div class="card-title">xAI Faces Class-Action Lawsuit Over Grok-Generated CSAM — Global Regulators Probe</div>
+      <div class="card-brief">
+        Three teenage girls filed a class-action lawsuit against xAI and Elon Musk, alleging Grok's AI was used to generate child sexual abuse material (CSAM) of minors. Researchers estimate Grok produced ~3 million sexualized images including 23,000 depicting children in a nine-day period. The lawsuit claims xAI refused to implement industry-standard CSAM guardrails and profited from "Spicy Mode" content even after abuse became public. Regulators in the EU, California, Japan, Britain, Spain, and Australia have launched probes. xAI also lost a bid to block California's AI data disclosure law.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 23, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> CNET / Bloomberg Law / The Guardian</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.cnet.com/tech/services-and-software/grok-ai-deepfake-porn-teen-girls-lawsuit-march-2026/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#06</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Anthropic Launches "Claude Marketplace" for Enterprise B2B AI Apps</div>
+      <div class="card-brief">
+        Anthropic introduced the Claude Marketplace, a B2B distribution platform for enterprise software built on its Claude AI models. The move positions Anthropic as a hub for generative AI business applications, competing directly with OpenAI's ecosystem. Separately, Anthropic released a study of 80,000 users revealing that in lower-income regions AI is seen as a route to opportunity, while in developed markets users focus on managing complexity. The company continues its legal challenge against the Pentagon's "national security risk" designation following its refusal to allow unrestricted military AI use.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 23, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Digital Commerce 360 / The Register</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.digitalcommerce360.com/2026/03/16/anthropic-launches-claude-b2b-marketplace-enterprise-ai-applications/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#07</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Google AI Catches 25% of Missed Breast Cancers — Agentic Pixel Drop Rolls Out</div>
+      <div class="card-brief">
+        Google presented research showing its experimental AI system identified 25% of "interval" breast cancers previously missed by traditional screenings, with potential to reduce radiologist workloads by 40%. The study, published in Nature Cancer with Imperial College London and the UK NHS, adds to Google's 1M+ diabetic retinopathy screenings across India, Thailand, and Australia. Separately, Google's March 2026 Pixel Drop brings agentic AI to Gemini app, enabling autonomous task completion with minimal supervision, plus enhanced Circle to Search and new "Magic Cue" chat suggestions.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 23, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> EdTech Innovation Hub / Deccan Herald</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.deccanherald.com/technology/artificial-intelligence/march-2026-pixel-drop-google-rolls-out-android-update-with-new-ai-features-3920438" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- China Section -->
+  <div class="section-label">🇨🇳 China</div>
+  <div class="news-grid">
+
+    <!-- 8 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#08</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">Mystery "Hunter Alpha" AI Model Fuels DeepSeek V4 Speculation — Launch Rumored for April</div>
+      <div class="card-brief">
+        An anonymous AI model called "Hunter Alpha" appeared on the OpenRouter developer platform on March 11, sparking widespread speculation it's a stealth test of DeepSeek's next-generation system — potentially DeepSeek V4. The chatbot identifies itself as Chinese-trained with a knowledge cutoff mirroring DeepSeek's own system. However, some reports suggest it may actually be from Xiaomi. If it is DeepSeek V4, it would follow the V3/R1 models that upended the global AI industry in 2025 by demonstrating high performance at dramatically lower cost. Launch could come as early as April 2026.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 23, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Seeking Alpha / Economic Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://seekingalpha.com/news/4565643-what-is-hunter-alpha-ai-model-fuels-talk-of-new-system-at-deepseek" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#09</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Alibaba Targets $100B in AI & Cloud Revenue — Launches "Wukong" Enterprise AI Platform</div>
+      <div class="card-brief">
+        Alibaba unveiled Wukong, an enterprise AI platform that automates business workflows by coordinating multiple AI agents, available via invitation-only beta. The launch is part of a five-year push to hit $100B+ in AI and cloud revenue under the new "Alibaba Token Hub" business group. The company cut 34% of its workforce in 2025 to fund the AI pivot. Qwen AI models have surpassed 1 billion cumulative downloads with 300M+ monthly active users. Alibaba is also raising AI chip prices (Zhenwu 810E) by 5–34% and storage by 30% effective April 18, citing surging global demand.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 23, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> AI Business / Digital Commerce 360 / Xinhua</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://aibusiness.com/agentic-ai/alibaba-launches-enterprise-ai-agent-platform" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#10</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Baidu & Alibaba Hike AI Computing Prices Up to 34% as Demand Soars</div>
+      <div class="card-brief">
+        China's two biggest cloud providers are raising AI prices simultaneously. Baidu AI Cloud announced increases of 5–30% on AI computing products effective April 18, while Alibaba Cloud is hiking AI chip and storage prices by 5–34%. The moves reflect surging global demand for AI infrastructure and rising supply chain costs. Baidu also launched "DuClaw," a zero-deployment AI agent service with built-in Baidu Search, Baike, and Scholar tools, priced at ~$2.50/month for early subscribers. Both companies are betting that enterprise AI adoption will sustain higher pricing.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 23, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Morningstar / Yicai Global</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.morningstar.com/news/dow-jones/202603182039/chinas-big-tech-firms-raise-ai-prices-as-demand-soars" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#11</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">China's Military Seeks AI Systems to Counter US Warfighting Advantages</div>
+      <div class="card-brief">
+        A new report titled "China's Military AI Wish List" reveals that the Chinese military (PLA) is actively seeking to acquire artificial intelligence systems to counteract perceived US warfighting advantages. The report details China's strategic AI acquisition priorities spanning autonomous systems, decision-support AI, and electronic warfare capabilities. This comes as the broader US-China tech rivalry intensifies, with both nations racing to integrate AI into military operations. The Wire China also published a comprehensive "AI race scorecard" one year after the original DeepSeek shock.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 23, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> National Defense Magazine / The Wire China</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.nationaldefensemagazine.org/articles/2026/3/23/algorithmic-warfare-china-seeking-ai-to-counter-us-military-strengths" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Global Section -->
+  <div class="section-label">🌍 Global & Regional</div>
+  <div class="news-grid">
+
+    <!-- 12 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#12</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">White House Unveils National AI Policy Framework — Calls for Federal Preemption of State Laws</div>
+      <div class="card-brief">
+        The Trump administration released a "National Policy Framework for Artificial Intelligence" on March 20, outlining seven key legislative priorities: child safety, economic growth, IP protection, free speech, AI innovation, workforce development, and critically — federal preemption of "cumbersome" state AI laws. The framework opposes creating a new federal AI agency, instead routing oversight through existing regulators (SEC, FDA, FTC). Senator Blackburn introduced the "TRUMP AMERICA AI Act" to codify the recommendations. The approach notably favors innovation over the rights-focused EU model.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 20, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> White House / CNET / Parker Poe</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.whitehouse.gov/articles/2026/03/president-donald-j-trump-unveils-national-ai-legislative-framework/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#13</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">EU</span>
+        </div>
+      </div>
+      <div class="card-title">EU Moves to Ban AI "Nudification" Apps — Delays High-Risk AI Rules to 2027</div>
+      <div class="card-brief">
+        The European Parliament and Council agreed to amend the EU AI Act to explicitly ban AI-generated non-consensual sexual content ("nudification apps"), partly in response to the Grok CSAM scandal. A full plenary vote is expected March 26. Simultaneously, MEPs are pushing to postpone high-risk AI compliance from August 2026 to December 2027 (or August 2028 for sector-specific products), citing unfinished technical standards. The watermarking deadline may shift to February 2027. The moves come as part of the broader Digital Omnibus package streamlining EU digital regulation.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 23, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> EU Parliament / Cybernews / The Next Web</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.europarl.europa.eu/news/en/press-room/20260316IPR38219/meps-support-postponement-of-certain-rules-on-artificial-intelligence" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#14</div>
+        <div class="card-tags">
+          <span class="tag tag-global">Asia</span>
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">Vietnam Becomes First Southeast Asian Nation with Standalone AI Law — India Hosts AI Bharat Expo</div>
+      <div class="card-brief">
+        Vietnam's comprehensive Law on Artificial Intelligence, which took effect March 1, is now the first standalone AI regime in Southeast Asia, adopting an EU-style risk-based model with mandated human oversight for generative AI, content labeling, and bans on certain high-risk applications. Meanwhile, India's Convergence India 2026 expo kicks off today (March 23–25) in New Delhi, featuring the AI Bharat Expo with 55,000+ attendees. This follows India's historic AI Impact Summit in February where 92 countries endorsed responsible AI development — the first global AI summit hosted in the Global South.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 23, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Rajah & Tann Asia / AI Bharat Expo</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.rajahtannasia.com/viewpoints/new-law-on-artificial-intelligence-takes-effect-on-1-march-2026/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>AI Daily Brief</strong> · Curated by Amy 🌸 · March 23, 2026<br />
+  Stories sourced from public news as of today. Not financial or professional advice.
+</div>
+
+</body>
+</html>
