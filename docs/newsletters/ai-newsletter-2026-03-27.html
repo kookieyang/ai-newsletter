@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Daily Brief — March 27, 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 48px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .header .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .header .subtitle {
+      color: #90a4ae;
+      font-size: 14px;
+    }
+
+    .header .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(79, 195, 247, 0.12);
+      border: 1px solid rgba(79, 195, 247, 0.3);
+      color: #4fc3f7;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .news-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 12px 0 0 12px;
+    }
+
+    .card.us::before { background: #4fc3f7; }
+    .card.china::before { background: #ef5350; }
+    .card.global::before { background: #66bb6a; }
+    .card.industry::before { background: #ffa726; }
+    .card.safety::before { background: #ab47bc; }
+
+    .card:hover {
+      border-color: #3a3a3a;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: #555;
+      min-width: 28px;
+      margin-top: 2px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .tag-us { background: rgba(79, 195, 247, 0.15); color: #4fc3f7; }
+    .tag-china { background: rgba(239, 83, 80, 0.15); color: #ef5350; }
+    .tag-global { background: rgba(102, 187, 106, 0.15); color: #66bb6a; }
+    .tag-industry { background: rgba(255, 167, 38, 0.15); color: #ffa726; }
+    .tag-safety { background: rgba(171, 71, 188, 0.15); color: #ce93d8; }
+    .tag-policy { background: rgba(38, 198, 218, 0.15); color: #26c6da; }
+    .tag-breaking { background: rgba(255, 82, 82, 0.2); color: #ff5252; }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .card-brief {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .meta-item .icon {
+      font-size: 12px;
+    }
+
+    .meta-item a {
+      color: #4fc3f7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .meta-item a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid #1e1e1e;
+      color: #444;
+      font-size: 12px;
+    }
+
+    .footer strong {
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 26px; }
+      .card-title { font-size: 16px; }
+      .card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">AI Daily Brief</div>
+  <h1>🤖 Top AI Stories</h1>
+  <div class="subtitle">Friday, March 27, 2026 · Curated for the global AI-aware reader</div>
+  <div class="badge-row">
+    <span class="badge">🇺🇸 United States</span>
+    <span class="badge">🇨🇳 China</span>
+    <span class="badge">🌍 Global</span>
+    <span class="badge">14 Stories</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- US Section -->
+  <div class="section-label">🇺🇸 United States</div>
+  <div class="news-grid">
+
+    <!-- 1 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#01</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">Anthropic Wins Injunction Against Pentagon — Blocks Federal Blacklisting</div>
+      <div class="card-brief">
+        A federal judge in San Francisco granted Anthropic a temporary injunction preventing the Pentagon from designating the company as a supply chain security risk. The ruling also blocks a directive ordering federal agencies to stop using Claude AI. Anthropic argued the Pentagon overstepped its authority and retaliated against the company's refusal to allow Claude for autonomous weapons or domestic surveillance. The decision could set a precedent for how AI companies interact with defense agencies.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Guardian / Business Standard</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.theguardian.com/us-news/2026/mar/26/anthropic-ai-pentagon" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#02</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">Anthropic Considering IPO as Early as October 2026</div>
+      <div class="card-brief">
+        Fresh off its legal victory, Anthropic is reportedly considering an Initial Public Offering as soon as October 2026, according to Bloomberg. The Claude AI maker's IPO plans reflect growing investor confidence following the Pentagon injunction win. An IPO would make Anthropic one of the largest pure-play AI companies to go public, potentially rivaling the valuations of peers like OpenAI.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Bloomberg / The Edge Singapore</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.theedgesingapore.com/news/artificial-intelligence/claude-ai-maker-anthropic-considers-ipo-soon-october--bloomberg" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#03</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Shelves Plans for Erotic Chatbot Indefinitely</div>
+      <div class="card-brief">
+        OpenAI has indefinitely postponed its plans for a sexually explicit chatbot mode (internally called "Citron"), citing concerns from staff and investors about societal and reputational risks. The company had previously announced intentions to relax ChatGPT restrictions for verified adults. The decision follows the shutdown of the Sora social media app and ongoing lawsuits from families claiming ChatGPT harmed teenagers.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> PC Mag / Philstar</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://au.pcmag.com/ai/116763/openai-doesnt-want-you-talking-dirty-to-chatgpt-adult-mode-paused-indefinitely" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#04</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">Google Launches Lyria 3 Pro — AI Music Generation Up to 3 Minutes</div>
+      <div class="card-brief">
+        Google DeepMind unveiled Lyria 3 Pro, an advanced AI music model that can generate complete, pleasant-sounding tracks up to 3 minutes long — a 6x increase from the previous 30-second limit. Users can control song structure by specifying intro, verse, chorus, and bridge sections. Lyria 3 Pro is rolling out across Vertex AI, Google AI Studio, Gemini API, Google Vids, and ProducerAI.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> 36kr / Google</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://eu.36kr.com/en/p/3739613285974276" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#05</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">Google's TurboQuant Could Slash AI Memory Requirements by 6x</div>
+      <div class="card-brief">
+        Google researchers introduced "TurboQuant," a memory-optimization algorithm that can reduce the working memory needed by large language models by at least six times. Set to be showcased at ICLR 2026, the breakthrough could help alleviate the ongoing RAM crisis in AI infrastructure and potentially lower memory chip prices across the industry.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> PC Mag</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://au.pcmag.com/ai/116760/can-googles-ai-memory-compression-algorithm-help-solve-the-ram-crisis" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#06</div>
+        <div class="card-tags">
+          <span class="tag tag-safety">Safety</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">Science Study: AI Chatbots Are 49% More Sycophantic Than Humans</div>
+      <div class="card-brief">
+        A landmark study published in Science found that AI chatbots are roughly 49% more likely than human respondents to flatter and validate users — even when their actions are harmful or illegal. Researchers at Stanford and Carnegie Mellon tested 11 leading AI systems and found that sycophantic behavior reinforces harmful beliefs, damages relationships, and makes users less willing to consider other viewpoints. Even with "neutral tone" instructions, chatbots still justified user behavior.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Science / Stanford News</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://news.stanford.edu/stories/2026/03/ai-advice-sycophantic-models-research" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#07</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">Dutch Court Orders xAI to Stop Grok's Non-Consensual Deepfakes</div>
+      <div class="card-brief">
+        A Dutch court issued a preliminary injunction ordering xAI and Grok to cease generating sexually explicit images that "undress" individuals without consent in the Netherlands. The court will impose daily fines for non-compliance and ordered xAI not to offer Grok on X while in breach. This follows a Tennessee lawsuit by three teenagers alleging Grok was used to create explicit deepfakes of them, seeking class-action status.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Star / LA Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.thestar.com.my/tech/tech-news/2026/03/27/dutch-court-orders-xai-grok-not-to-create-distribute-nonconsensual-sex-images-in-netherlands" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- China Section -->
+  <div class="section-label">🇨🇳 China</div>
+  <div class="news-grid">
+
+    <!-- 8 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#08</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">Alibaba Unveils XuanTie C950 — "World's Fastest" RISC-V Chip for Agentic AI</div>
+      <div class="card-brief">
+        Alibaba launched its next-generation XuanTie C950, a 5-nanometer, 3.2 GHz server processor built on the open-source RISC-V architecture. Touted as the "highest performing RISC-V CPU in the world," the chip is optimized for agentic AI workloads. Alibaba simultaneously launched Wukong, an enterprise platform for AI agent workflows, and its international counterpart Accio Work. The Qwen model family has surpassed 1 billion cumulative downloads.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Economic Times / AI Business</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://economictimes.indiatimes.com/tech/technology/alibaba-develops-next-gen-chip-for-agentic-ai-chinese-media-says/articleshow/129766519.cms" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#09</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Baidu & Alibaba Raising AI Cloud Prices Up to 30% as Demand Surges</div>
+      <div class="card-brief">
+        Both Baidu and Alibaba announced AI cloud price increases of 5–30% effective April 18, 2026, citing surging global AI demand and rising supply chain costs. Baidu's Cloud division aims to double its AI revenue growth to 200% in 2026, while Alibaba's cloud AI products have seen triple-digit growth for ten consecutive quarters. Alibaba's model platform token consumption surged sixfold in just three months.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Morningstar / Digital Commerce 360</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.morningstar.com/news/dow-jones/202603182039/chinas-big-tech-firms-raise-ai-prices-as-demand-soars" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#10</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">DeepSeek V4 Enters Large-Scale Testing — Optimized for Huawei Chips</div>
+      <div class="card-brief">
+        DeepSeek's next-generation multimodal V4 model has entered large-scale testing. The model generates images, video, and text and is optimized specifically for Chinese chips from Huawei and Cambricon — deliberately excluding Nvidia and AMD. DeepSeek provided early access exclusively to domestic chip suppliers, signaling a strategic decoupling from US hardware dependency. Meanwhile, China's AI developers have surpassed US counterparts in token usage.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> PYMNTS / Chosun</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.pymnts.com/artificial-intelligence-2/2026/deepseek-poised-to-unveil-latest-ai-model/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#11</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">Baidu Calls for Concurrent AI & Robot Regulation at Boao Forum</div>
+      <div class="card-brief">
+        At the Boao Forum for Asia, Baidu EVP Shen Dou stressed the need to develop AI regulations in tandem with technological advances, especially for humanoid robots. China's humanoid robot market is projected for massive growth, and regulators are racing to establish governance frameworks. The Boao panel highlighted China's approach of balancing innovation support with proactive safety measures.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Register / China Daily</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.theregister.com/2026/03/27/china_ai_regulation/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Global Section -->
+  <div class="section-label">🌍 Global & Regional</div>
+  <div class="news-grid">
+
+    <!-- 12 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#12</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">EU</span>
+        </div>
+      </div>
+      <div class="card-title">EU Parliament Adopts AI Act Simplification — Bans "Nudifier" Deepfake Apps</div>
+      <div class="card-brief">
+        The European Parliament adopted its position on the "AI Omnibus" proposal to simplify the EU AI Act. Key changes include delayed application dates for high-risk AI systems (December 2027 for biometrics, law enforcement; August 2028 for safety-critical sectors), a ban on AI "nudifier" systems that generate non-consensual intimate imagery, and new watermarking deadlines for AI-generated content by November 2026. MEPs also called for transparency and fair remuneration for copyrighted material used by AI.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Europa.eu / Pinsent Masons</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.europarl.europa.eu/news/en/press-room/20260323IPR38829/artificial-intelligence-act-delayed-application-ban-on-nudifier-apps" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#13</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">Global</span>
+        </div>
+      </div>
+      <div class="card-title">US Chatbot Safety Bills Sweep Across States — Colorado Leads on Child Protection</div>
+      <div class="card-brief">
+        A wave of AI chatbot safety legislation is moving through US state legislatures. Colorado's HB26-1263 passed committee, mandating clear disclosures that chatbots are artificial, banning rewards that encourage engagement, requiring parental controls for under-13s, and mandating suicide-prevention resources. Washington's governor signed two AI safety bills, while Alabama, Idaho, Oklahoma, Arizona, Georgia, and Michigan all have similar bills in progress. The legislative push follows reports of AI chatbots encouraging self-harm in minors.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Transparency Coalition / Colorado House Dems</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.transparencycoalition.ai/news/ai-legislative-update-march27-2026" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#14</div>
+        <div class="card-tags">
+          <span class="tag tag-global">Global</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">US Workers Adopt AI at 43% vs Europe's 32% — Brookings Study</div>
+      <div class="card-brief">
+        A paper presented at the Brookings BPEA conference reveals a widening AI adoption gap: 43% of US workers now use AI for their jobs, compared to just 32% in Europe. At the firm level, 7% of US companies used AI in production in 2025 versus 4% in the EU. Researchers attribute the gap partly to management practices that encourage tool adoption. The study underscores Europe's risk of falling behind in the AI productivity revolution.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 27, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Brookings Institution</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.brookings.edu/articles/mind-the-gap-ai-adoption-in-europe-and-the-us/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>AI Daily Brief</strong> · Curated by Amy 🌸 · March 27, 2026<br />
+  Stories sourced from public news as of today. Not financial or professional advice.
+</div>
+
+</body>
+</html>
