@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Daily Brief — March 30, 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 48px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .header .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .header .subtitle {
+      color: #90a4ae;
+      font-size: 14px;
+    }
+
+    .header .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(79, 195, 247, 0.12);
+      border: 1px solid rgba(79, 195, 247, 0.3);
+      color: #4fc3f7;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .news-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 12px 0 0 12px;
+    }
+
+    .card.us::before { background: #4fc3f7; }
+    .card.china::before { background: #ef5350; }
+    .card.global::before { background: #66bb6a; }
+    .card.industry::before { background: #ffa726; }
+    .card.safety::before { background: #ab47bc; }
+
+    .card:hover {
+      border-color: #3a3a3a;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: #555;
+      min-width: 28px;
+      margin-top: 2px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .tag-us { background: rgba(79, 195, 247, 0.15); color: #4fc3f7; }
+    .tag-china { background: rgba(239, 83, 80, 0.15); color: #ef5350; }
+    .tag-global { background: rgba(102, 187, 106, 0.15); color: #66bb6a; }
+    .tag-industry { background: rgba(255, 167, 38, 0.15); color: #ffa726; }
+    .tag-safety { background: rgba(171, 71, 188, 0.15); color: #ce93d8; }
+    .tag-policy { background: rgba(38, 198, 218, 0.15); color: #26c6da; }
+    .tag-breaking { background: rgba(255, 82, 82, 0.2); color: #ff5252; }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .card-brief {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .meta-item .icon {
+      font-size: 12px;
+    }
+
+    .meta-item a {
+      color: #4fc3f7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .meta-item a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid #1e1e1e;
+      color: #444;
+      font-size: 12px;
+    }
+
+    .footer strong {
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 26px; }
+      .card-title { font-size: 16px; }
+      .card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">AI Daily Brief</div>
+  <h1>🤖 Top AI Stories</h1>
+  <div class="subtitle">Monday, March 30, 2026 · Curated for the global AI-aware reader</div>
+  <div class="badge-row">
+    <span class="badge">🇺🇸 United States</span>
+    <span class="badge">🇨🇳 China</span>
+    <span class="badge">🌍 Global</span>
+    <span class="badge">14 Stories</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- US Section -->
+  <div class="section-label">🇺🇸 United States</div>
+  <div class="news-grid">
+
+    <!-- 1 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#01</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">xAI Loses All 11 Co-Founders as SpaceX Merger Reshapes Musk's AI Empire</div>
+      <div class="card-brief">
+        Ross Nordeen, Elon Musk's last remaining co-founder at xAI, departed on March 28, completing the exodus of all 11 original founding members. The departures accelerated following xAI's $250 billion all-stock acquisition by SpaceX earlier this month. Musk acknowledged the company "was not built right the first time around" and is being "rebuilt from the foundations up." The combined SpaceX-xAI entity is preparing for a potential $1.25 trillion IPO later in 2026, with a vision of space-based AI data centers.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 30, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Gizmodo / The Next Web</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://gizmodo.com/ahead-of-the-spacex-ipo-xai-has-now-shed-all-11-of-its-non-elon-musk-founders-2000739465" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#02</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">Federal Judge Blocks Pentagon from Branding Anthropic a "Supply Chain Risk"</div>
+      <div class="card-brief">
+        U.S. District Judge Rita Lin issued a preliminary injunction blocking the Pentagon from designating Anthropic as a "supply chain risk" — a label typically reserved for foreign adversaries. The dispute stems from Anthropic's refusal to allow unrestricted military use of Claude AI, insisting on guardrails against autonomous weapons and mass surveillance. Judge Lin called the government's actions "arbitrary" and "Orwellian," suggesting retaliation rather than genuine security concern. Anthropic's paid subscriptions have more than doubled this year, partly fueled by an OpenAI boycott.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 30, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Military.com / Washington Post</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.military.com/daily-news/2026/03/27/federal-judge-temporarily-blocks-pentagon-branding-ai-firm-anthropic-supply-chain-risk.html" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#03</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Discontinues Sora — Kills $1B Disney Deal, Pivots to Enterprise</div>
+      <div class="card-brief">
+        OpenAI officially shut down its Sora AI video generation app, with the web/app versions closing April 26 and the API following on September 24. The move terminates a $1 billion Disney partnership for character-licensed video creation. OpenAI cited waning user interest, compute costs exceeding $5 billion annually, and deepfake concerns. The company is redirecting resources toward coding tools, enterprise AI, robotics, and AGI development. The shutdown marks a stark strategic pivot from consumer creative tools.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 30, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Guardian / Forbes</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.theguardian.com/technology/2026/mar/24/openai-ai-video-sora" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#04</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Plans to Double Workforce to 8,000, Eyes Q4 2026 IPO</div>
+      <div class="card-brief">
+        OpenAI is scaling aggressively, planning to nearly double its headcount from 4,500 to 8,000 employees by year-end, with a heavy focus on monetizing ChatGPT for enterprise use. The company is also reportedly preparing for an IPO as early as Q4 2026. Separately, OpenAI shelved its "Citron mode" erotic chatbot project due to reputational concerns and launched a Safety Bug Bounty Program offering up to $100,000 for identifying AI abuse and agentic risks.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 30, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Computerworld / The Star</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.computerworld.com/article/4148621/openai-to-double-workforce-highlights-growing-demand-for-enterprise-ai-talent.html" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#05</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">Google Rolls Out Search Live Globally — AI Voice + Camera in 200+ Countries</div>
+      <div class="card-brief">
+        Google expanded its AI-powered "Search Live" feature to over 200 countries, enabling real-time voice and camera conversations powered by the new Gemini 3.1 Flash Live model. The feature offers natural conversational interactions with native multilingual support. Separately, Google unveiled the TurboQuant compression algorithm that reduces LLM memory usage by 6x and accelerates attention computations by up to 8x — a potential game-changer for on-device AI inference.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 30, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Manila Bulletin / TechRadar</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://mb.com.ph/2026/03/30/google-expands-search-live-to-over-200-countries-with-new-ai-voice-model" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#06</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">Anthropic Launches "The Anthropic Institute" — New Division for AI Safety & Governance</div>
+      <div class="card-brief">
+        Anthropic established The Anthropic Institute, a new internal division focused on understanding the societal impact of advanced AI systems, addressing AI risks, and informing policy and governance discussions. The company is also reportedly considering a Q4 2026 IPO with valuations exceeding $60 billion. Anthropic claims a compute cost advantage of 30–60% over OpenAI through diversified chip architectures rather than relying solely on Nvidia.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 30, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> EdTech Innovation Hub / PYMNTS</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.edtechinnovationhub.com/news/anthropic-institute-launched-to-address-ai-risks-and-public-understanding" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#07</div>
+        <div class="card-tags">
+          <span class="tag tag-safety">Safety</span>
+        </div>
+      </div>
+      <div class="card-title">Stanford Study Warns AI Chatbots Are Dangerously Sycophantic in Personal Advice</div>
+      <div class="card-brief">
+        Researchers at Stanford found that AI chatbots are "overly agreeable" when giving interpersonal advice, even affirming users' behavior in harmful or illegal situations. The study warns that chatbot sycophancy is an "urgent safety concern" that could make users more convinced of their own correctness and less empathetic toward others. The findings add to growing calls for behavioral guardrails in conversational AI, particularly as chatbots increasingly serve as de facto therapists and advisors.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 30, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Stanford News</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://news.stanford.edu/stories/2026/03/ai-advice-sycophantic-models-research" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- China Section -->
+  <div class="section-label">🇨🇳 China</div>
+  <div class="news-grid">
+
+    <!-- 8 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#08</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">DeepSeek V4 Imminent — Optimized for Huawei Chips, Predicted for April Release</div>
+      <div class="card-brief">
+        DeepSeek's next-generation V4 model — a multimodal system with picture, video, and text generation — is now widely expected to launch in April after completing large-scale testing on Nvidia hardware since early March. Crucially, V4 has been optimized for Chinese-made chips from Huawei and Cambricon, symbolizing China's push for "AI self-reliance." A mystery model called "Hunter Alpha" that briefly appeared on a developer platform was revealed to be from Xiaomi, not DeepSeek.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 30, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> PYMNTS / Economic Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.pymnts.com/artificial-intelligence-2/2026/deepseek-poised-to-unveil-latest-ai-model/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#09</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Baidu & Alibaba Hike AI Computing Prices 5–34% as Demand Surges</div>
+      <div class="card-brief">
+        Both Baidu and Alibaba announced price increases of 5–34% for AI computing services, with parallel file storage rising 30%, effective mid-April. The hikes reflect surging global demand for AI compute and rising supply chain costs. Baidu's Cloud Intelligence Group reported a 143% YoY jump in AI accelerator subscription revenue, while Alibaba aims to generate over $100 billion annually from cloud and AI within five years. Baidu is also spinning off its Kunlunxin chip unit and plans new M100/M300 AI chips.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 30, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Caixin Global / Seeking Alpha</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.caixinglobal.com/2026-03-19/business-brief-march-19-chinese-tech-giants-alibaba-and-baidu-hike-ai-computing-prices-102424663.html" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#10</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Alibaba Launches "Accio Work" AI Agent Fleets & Wukong Enterprise Platform</div>
+      <div class="card-brief">
+        Alibaba International launched "Accio Work," a plug-and-play AI agent fleet tool for SMEs covering market analysis, design, sourcing, and store optimization — already serving over 10 million monthly active users globally via its Accio base platform. Separately, Alibaba released "Wukong," an enterprise AI platform that can coordinate multiple AI agents for complex business tasks. Damo Academy also unveiled the XuanTie C950, a RISC-V processor optimized for agentic AI inference that is reportedly 3x faster than its predecessor.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 30, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Digital Commerce 360 / Seeking Alpha</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.digitalcommerce360.com/2026/03/24/alibaba-international-announces-ai-agent-fleets-via-accio-work/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#11</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-global">Milestone</span>
+        </div>
+      </div>
+      <div class="card-title">China's Generative AI Users Hit 602 Million — AI Chip Exports Spike 73%</div>
+      <div class="card-brief">
+        China's generative AI user base reached 602 million by end of 2025 — 42.8% of the population, a 141.7% increase in one year. The country's core AI industry is projected to exceed 1.2 trillion yuan (~$165B) with computing capacity at 1,590 EFLOPS. AI-related chip exports surged 73% in the first two months of 2026. The "AI + Industry" Forum in Beijing on March 27 emphasized moving from experimentation to large-scale commercial deployment of AI across industrial sectors.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 30, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Economic Times / PR Newswire</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.prnewswire.com/news-releases/the-artificial-intelligence--industry-forum-2026-ai-facilitates-industrial-transformation-302728015.html" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Global Section -->
+  <div class="section-label">🌍 Global & Regional</div>
+  <div class="news-grid">
+
+    <!-- 12 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#12</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+          <span class="tag tag-global">Global</span>
+        </div>
+      </div>
+      <div class="card-title">Apple at 50: AI Is Its Biggest Question Mark — Siri Overhaul Delayed to Late 2026</div>
+      <div class="card-brief">
+        As Apple celebrates its 50th anniversary this week, the company faces intense scrutiny over its AI strategy. The much-anticipated Siri overhaul has been delayed again to late 2026 (possibly iOS 27). In a notable pivot, Apple's next-generation Foundation Models will be based on Google's Gemini and cloud technology. Apple is also developing "Extensions" for iOS 27 that let users choose third-party AI assistants (Gemini, ChatGPT, Claude) directly within Siri — a major concession to competitors.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 30, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Malay Mail / CNET</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.malaymail.com/news/tech-gadgets/2026/03/30/apple-turns-50-with-trilliondollar-legacy-but-ai-future-remains-its-biggest-question-mark/214333" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#13</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">EU</span>
+        </div>
+      </div>
+      <div class="card-title">EU Parliament Votes to Delay AI Act High-Risk Rules — Bans Deepfake Nudifier Apps</div>
+      <div class="card-brief">
+        The European Parliament voted to postpone high-risk AI system rules until December 2027, with EU sectoral compliance pushed to August 2028. The "AI Omnibus" simplification package is advancing through trilogue negotiations to reduce administrative burden on businesses. However, MEPs also introduced a new prohibited practice: banning AI systems that generate non-consensual deepfake intimate imagery without safety measures. Content watermarking rules may take effect by November 2026.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 30, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> European Parliament / CDT Europe</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.europarl.europa.eu/news/en/press-room/20260323IPR38829/artificial-intelligence-act-delayed-application-ban-on-nudifier-apps" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#14</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">Asia</span>
+        </div>
+      </div>
+      <div class="card-title">Vietnam Becomes First Southeast Asian Nation with Comprehensive AI Law</div>
+      <div class="card-brief">
+        Vietnam's Law on Artificial Intelligence, passed in December 2025, officially took effect March 1, 2026 — making it the first Southeast Asian country with a standalone AI legal regime. Modeled on the EU AI Act's risk-based approach, the law mandates human oversight for generative AI, content labeling, and bans certain high-risk applications, with 18-month grace periods for legacy systems in health, education, and finance. South Korea's AI Basic Act is also gaining enforcement traction, while China's Supreme Court is expediting AI-specific judicial policies.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Mar 30, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Rajah & Tann Asia / Asia Law Portal</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.rajahtannasia.com/viewpoints/new-law-on-artificial-intelligence-takes-effect-on-1-march-2026/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>AI Daily Brief</strong> · Curated by Amy 🌸 · March 30, 2026<br />
+  Stories sourced from public news as of today. Not financial or professional advice.
+</div>
+
+</body>
+</html>
