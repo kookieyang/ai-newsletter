@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Daily Brief — April 2, 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 48px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .header .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .header .subtitle {
+      color: #90a4ae;
+      font-size: 14px;
+    }
+
+    .header .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(79, 195, 247, 0.12);
+      border: 1px solid rgba(79, 195, 247, 0.3);
+      color: #4fc3f7;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .news-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 12px 0 0 12px;
+    }
+
+    .card.us::before { background: #4fc3f7; }
+    .card.china::before { background: #ef5350; }
+    .card.global::before { background: #66bb6a; }
+    .card.industry::before { background: #ffa726; }
+    .card.safety::before { background: #ab47bc; }
+
+    .card:hover {
+      border-color: #3a3a3a;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: #555;
+      min-width: 28px;
+      margin-top: 2px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .tag-us { background: rgba(79, 195, 247, 0.15); color: #4fc3f7; }
+    .tag-china { background: rgba(239, 83, 80, 0.15); color: #ef5350; }
+    .tag-global { background: rgba(102, 187, 106, 0.15); color: #66bb6a; }
+    .tag-industry { background: rgba(255, 167, 38, 0.15); color: #ffa726; }
+    .tag-safety { background: rgba(171, 71, 188, 0.15); color: #ce93d8; }
+    .tag-policy { background: rgba(38, 198, 218, 0.15); color: #26c6da; }
+    .tag-breaking { background: rgba(255, 82, 82, 0.2); color: #ff5252; }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .card-brief {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .meta-item .icon {
+      font-size: 12px;
+    }
+
+    .meta-item a {
+      color: #4fc3f7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .meta-item a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid #1e1e1e;
+      color: #444;
+      font-size: 12px;
+    }
+
+    .footer strong {
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 26px; }
+      .card-title { font-size: 16px; }
+      .card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">AI Daily Brief</div>
+  <h1>🤖 Top AI Stories</h1>
+  <div class="subtitle">Thursday, April 2, 2026 · Curated for the global AI-aware reader</div>
+  <div class="badge-row">
+    <span class="badge">🇺🇸 United States</span>
+    <span class="badge">🇨🇳 China</span>
+    <span class="badge">🌍 Global</span>
+    <span class="badge">14 Stories</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- US Section -->
+  <div class="section-label">🇺🇸 United States</div>
+  <div class="news-grid">
+
+    <!-- 1 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#01</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">Anthropic's Claude Code Source Code Accidentally Leaked via npm</div>
+      <div class="card-brief">
+        Anthropic suffered a major embarrassment when ~512,000 lines of Claude Code source code were accidentally published to the npm registry due to a misconfigured debug file. Security researcher Chaofan Shou discovered the leak, which was quickly mirrored across GitHub. The exposed code revealed unreleased features including an autonomous agent mode called "KAIROS" and a "Buddy" companion system. Anthropic has filed over 8,000 copyright takedowns but developers are rewriting the code in other languages to evade them. The incident is Anthropic's second security slip in a week, following an earlier leak of draft blog posts about an unreleased model codenamed "Mythos."
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> LA Times / PCMag / CNET</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.latimes.com/business/story/2026-04-01/anthropic-accidentally-leaked-thousands-of-lines-of-code" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#02</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Closes Record $122 Billion Funding Round — Valued at $852 Billion</div>
+      <div class="card-brief">
+        OpenAI has secured the largest private funding round in history at $122 billion in committed capital, propelling its valuation to $852 billion. Key investors include Amazon ($50B), Nvidia ($30B), and SoftBank ($30B), with Microsoft continuing participation. Despite the massive influx, OpenAI projects ~$14B in losses for 2026 and doesn't expect profitability until 2030. The company is exploring a potential IPO within 18 months and reportedly planning a desktop "superapp" integrating its chatbot, coding tool, and web browser.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> AI Business / Zacks / Tech Africa News</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://aibusiness.com/generative-ai/openai-valued-852b-after-new-funding-round" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#03</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">SpaceX Files for Record $1.75 Trillion IPO Following xAI Merger</div>
+      <div class="card-brief">
+        SpaceX has confidentially filed an S-1 with the SEC for what would be the largest IPO in history, targeting a $1.75 trillion valuation. The filing follows the February 2026 merger with Elon Musk's xAI, which integrated Grok AI models into SpaceX's operational architecture. The "Space-AI" conglomerate aims to raise $50–75B, with up to 30% allocated to individual investors. The public listing could come as early as June 2026 on Nasdaq, with proceeds earmarked for Starship commercialization and uncrewed Mars missions.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Forbes / CBS News / The Guardian</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.forbes.com/sites/tylerroush/2026/04/01/musk-closer-to-trillionaire-status-spacex-reportedly-files-for-ipo/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#04</div>
+        <div class="card-tags">
+          <span class="tag tag-us">US</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Google Kills Desktop Search — All Queries Move to AI Search on April 22</div>
+      <div class="card-brief">
+        Google announced that effective April 22, 2026, traditional desktop search results pages will be retired entirely. All search queries will be handled exclusively by Google AI Search, the company's conversational AI experience. The move represents the most dramatic shift in Google Search's 28-year history and has sent shockwaves through the SEO industry. Separately, Google upgraded AI Pro subscribers to 5TB storage and enhanced access to Gemini, Veo 3, and Nano Banana Pro models at no extra cost.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Reddit r/SEO / Thurrott</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.reddit.com/r/SEO/comments/1s9jubu/google_moving_to_aicentric_search_in_3_weeks/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#05</div>
+        <div class="card-tags">
+          <span class="tag tag-safety">Safety</span>
+          <span class="tag tag-us">US</span>
+        </div>
+      </div>
+      <div class="card-title">Unregulated Chatbots "Putting Lives at Risk" — The Lancet and Aarhus Study</div>
+      <div class="card-brief">
+        A review in The Lancet Psychiatry and a companion study from Aarhus University found that chatbot use worsened delusions and self-harm in vulnerable individuals. Critics argue AI companies have failed to implement basic safeguards like pre-use screening for suicidal ideation or psychotic symptoms — a standard practice in other health systems. Over 200 child development experts are also calling on Google to prohibit AI-generated videos from being shown to children on YouTube Kids.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Guardian / Spokesman</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.theguardian.com/technology/2026/apr/01/unregulated-chatbots-are-putting-lives-at-risk" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#06</div>
+        <div class="card-tags">
+          <span class="tag tag-us">US</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Yann LeCun's AMI Labs Raises $1B+ to Build "World Models" — Says LLMs Are Dead End</div>
+      <div class="card-brief">
+        In a lecture at Brown University, AI pioneer and Meta Chief AI Scientist Yann LeCun doubled down on his controversial claim that large language models are not the future of AI. He advocates for "world models" — systems that create abstract representations of their environment and predict outcomes of actions. His new venture, AMI Labs, has raised over $1 billion to develop this approach, which he believes is crucial for achieving human-like intelligence and enabling AI to take safe actions in the physical world.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Brown University News</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.brown.edu/news/2026-04-01" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- China Section -->
+  <div class="section-label">🇨🇳 China</div>
+  <div class="news-grid">
+
+    <!-- 7 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#07</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">100+ Baidu Robotaxis Simultaneously Stall in Wuhan — Passengers Stranded</div>
+      <div class="card-brief">
+        Over 100 Baidu Apollo Go robotaxis simultaneously stalled in Wuhan on March 31 due to a system-wide failure, stranding passengers and sparking minor crashes. The mass shutdown exposed critical vulnerabilities in centralized control of large-scale autonomous vehicle fleets. Ironically, just one day later, Baidu launched fully driverless Apollo Go commercial service in Dubai — its first international deployment — partnering with Dubai Taxi Company after receiving the emirate's inaugural driverless testing permit in January.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> MLQ AI / National Today / PR Newswire</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://mlq.ai/news/baidus-apollo-go-robotaxis-suffer-massive-outage-stranding-passengers-and-sparking-crashes-in-wuhan/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#08</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Alibaba Consolidates AI into "Token Hub" Unit — Targets $100B in AI/Cloud Revenue</div>
+      <div class="card-brief">
+        Alibaba is reorganizing all its AI operations into a new unit called "Alibaba Token Hub" under CEO Eddie Wu. The company's agentic AI tools on Taobao and Tmall have reportedly saved 5 million merchants an estimated 100 billion yuan. Alibaba also launched Accio Work for SME e-commerce operations (now at 10M monthly active users), unveiled the Wukong agentic AI tool, and released a new chip specifically for agentic AI and inference workloads. The company has set a five-year target of $100B in AI and cloud revenue.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Investing.com / TechWire Asia / Barchart</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.investing.com/news/stock-market-news/alibaba-stock-rises-on-report-of-new-ai-unit-formation-93CH-4562467" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#09</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">DeepSeek V4 Imminent — Trillion-Parameter Multimodal Model with 1M Context Window</div>
+      <div class="card-brief">
+        DeepSeek is preparing to release its V4 model in April, expected to be a trillion-parameter multimodal system handling text, image, and video generation with a 1 million token context window and an innovative "Long-Term Memory" system. The V4 Lite variant briefly appeared on DeepSeek's website in March. Reports indicate training was delayed due to issues with Huawei Ascend 910B hardware, forcing a shift to Nvidia GPUs. DeepSeek also suffered a 7+ hour outage on March 29–30 as it prepared for the update.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> TechRound / Financial Express / Reddit</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://techround.co.uk/tech/deepseek-just-had-its-worst-outage-ever-and-that-tells-you-everything-about-where-ai-is-heading/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#10</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">China Drafts Rules for AI Companions and Interactive AI Services</div>
+      <div class="card-brief">
+        The Cyberspace Administration of China (CAC) released draft regulations for "human-like interactive AI services," covering AI companions, personalized virtual assistants, and chatbots. The rules emphasize user protection — particularly for minors and the elderly — with strict compliance obligations for service providers. Meanwhile, Shenzhen activated a 10,000-card AI compute cluster powered by domestically developed Huawei Ascend 910C chips, part of the city's push to become a global AI hub by 2028 amid US export restrictions.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 2, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Mayer Brown / CyberNews</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.mayerbrown.com/en/insights/publications/2026/04/china-issues-draft-rules-on-interactive-ai-services" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Global Section -->
+  <div class="section-label">🌍 Global & Regional</div>
+  <div class="news-grid">
+
+    <!-- 11 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#11</div>
+        <div class="card-tags">
+          <span class="tag tag-global">Global</span>
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">EU AI Act Enters Critical Phase — Most Provisions Apply August 2, 2026</div>
+      <div class="card-brief">
+        The majority of the EU AI Act's provisions become applicable on August 2, 2026, with rules for general-purpose AI models already in effect. High-risk AI system deadlines have been pushed to December 2027 for standalone systems and August 2028 for embedded products. Meanwhile, the Council of Europe approved an international AI Framework Convention in March 2026, and the UK's Bank of England released its response on enabling safe AI innovation in financial services. A Code of Practice for labeling AI-generated content is expected by June.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 2, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Europa.eu / Barr Advisory / Lewis Silkin</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.barradvisory.com/resource/eu-ai-act-2026/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 12 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#12</div>
+        <div class="card-tags">
+          <span class="tag tag-global">Asia</span>
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">Asia's AI Regulation Wave — Vietnam, South Korea, Taiwan Lead New Frameworks</div>
+      <div class="card-brief">
+        A wave of national AI laws is sweeping across Asia. Vietnam became the first Southeast Asian nation with a comprehensive standalone AI law (effective March 1, 2026), mandating human oversight for generative AI and banning certain high-risk applications. South Korea's AI Basic Act took effect January 22 with extraterritorial reach, while Taiwan enacted its AI Basic Act in January. Japan's AI Promotion Act has been in force since June 2025. The rapid proliferation signals Asia moving from soft governance to hard regulation.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 2, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Asia Law Portal / Law.Asia / CIO.com</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://law.asia/asia-ai-governance-framework/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#13</div>
+        <div class="card-tags">
+          <span class="tag tag-global">Global</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">AI Revenue to Hit $1.4 Trillion Annually by 2030 — B2B Dominates at 95%+</div>
+      <div class="card-brief">
+        Despite growing fears of an "AI bubble," new estimates project AI service revenue will reach $1.4 trillion annually by 2030, with B2B applications accounting for over 95% of the opportunity. Demand is surging so fast that data center capacity is running short, with Microsoft, Meta, Google, and Amazon planning tens of billions more in infrastructure investment this year. Even Anthropic is rationing consumer access due to compute constraints. Biotech IPOs are also rebounding with AI playing a central role in drug development.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 2, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> PYMNTS / D Market Forces / BioSpace</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://dmarketforces.com/ai-revenue-estimated-to-reach-1-4trn-annually/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#14</div>
+        <div class="card-tags">
+          <span class="tag tag-global">Global</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Taiwan-Japan Alliance Showcases On-Premise AI Solutions at Japan IT Week</div>
+      <div class="card-brief">
+        Taiwanese and Japanese tech companies — including Neuchips, Netiotek, and ShareGuru — are collaborating to showcase on-premise AI solutions at Japan IT Week. The partnership targets surging demand for enhanced data security and localized performance as generative AI applications migrate from cloud to internal corporate environments. The initiative highlights a broader trend of enterprises seeking sovereignty over their AI infrastructure amid growing data protection concerns across Asia-Pacific.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 2, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> PR Newswire APAC</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.prnewswire.com/apac/news-releases/a-new-chapter-in-taiwan-japan-tech-collaboration-netiotek-and-shareguru-to-showcase-on-premise-ai-solutions-powered-by-neuchips-at-japan-it-week-302729531.html" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>AI Daily Brief</strong> · Curated by Amy 🌸 · April 2, 2026<br />
+  Stories sourced from public news as of today. Not financial or professional advice.
+</div>
+
+</body>

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Daily Brief — April 1, 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 48px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .header .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .header .subtitle {
+      color: #90a4ae;
+      font-size: 14px;
+    }
+
+    .header .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(79, 195, 247, 0.12);
+      border: 1px solid rgba(79, 195, 247, 0.3);
+      color: #4fc3f7;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .news-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 12px 0 0 12px;
+    }
+
+    .card.us::before { background: #4fc3f7; }
+    .card.china::before { background: #ef5350; }
+    .card.global::before { background: #66bb6a; }
+    .card.industry::before { background: #ffa726; }
+    .card.safety::before { background: #ab47bc; }
+
+    .card:hover {
+      border-color: #3a3a3a;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: #555;
+      min-width: 28px;
+      margin-top: 2px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .tag-us { background: rgba(79, 195, 247, 0.15); color: #4fc3f7; }
+    .tag-china { background: rgba(239, 83, 80, 0.15); color: #ef5350; }
+    .tag-global { background: rgba(102, 187, 106, 0.15); color: #66bb6a; }
+    .tag-industry { background: rgba(255, 167, 38, 0.15); color: #ffa726; }
+    .tag-safety { background: rgba(171, 71, 188, 0.15); color: #ce93d8; }
+    .tag-policy { background: rgba(38, 198, 218, 0.15); color: #26c6da; }
+    .tag-breaking { background: rgba(255, 82, 82, 0.2); color: #ff5252; }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .card-brief {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .meta-item .icon {
+      font-size: 12px;
+    }
+
+    .meta-item a {
+      color: #4fc3f7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .meta-item a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid #1e1e1e;
+      color: #444;
+      font-size: 12px;
+    }
+
+    .footer strong {
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 26px; }
+      .card-title { font-size: 16px; }
+      .card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">AI Daily Brief</div>
+  <h1>🤖 Top AI Stories</h1>
+  <div class="subtitle">Wednesday, April 1, 2026 · Curated for the global AI-aware reader</div>
+  <div class="badge-row">
+    <span class="badge">🇺🇸 United States</span>
+    <span class="badge">🇨🇳 China</span>
+    <span class="badge">🌍 Global</span>
+    <span class="badge">14 Stories</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- US Section -->
+  <div class="section-label">🇺🇸 United States</div>
+  <div class="news-grid">
+
+    <!-- 1 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#01</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Closes Record $122 Billion Round — Valuation Hits $852 Billion</div>
+      <div class="card-brief">
+        OpenAI has completed the largest private funding round in history at $122 billion, catapulting its post-money valuation to roughly $852 billion. Major backers include Amazon, NVIDIA, SoftBank, and Microsoft, with an additional $3 billion from individual investors. The company now generates over $2 billion per month in revenue and is reportedly taking initial steps toward a public listing as early as late 2026. Rival Anthropic is also nearing $19 billion in annualized revenue, underscoring the breakneck growth across the frontier AI market.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Guardian / Neowin</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.neowin.net/news/openai-becomes-a-852-billion-giant-with-record-breaking-122b-funding-round/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#02</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Launches GPT-5.4 — 1M-Token Context, Autonomous Multi-Step Workflows</div>
+      <div class="card-brief">
+        OpenAI has unveiled GPT-5.4, featuring a 1-million-token context window and the ability to autonomously execute multi-step workflows across software environments. The model scored 75% on the OSWorld-V benchmark, surpassing the 72.4% human baseline, and matched or beat professional performance in numerous knowledge-work scenarios. The launch signals a shift toward AI as an autonomous digital coworker rather than a mere chatbot assistant.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Crescendo AI / CW Taiwan</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.crescendo.ai/news/latest-ai-news-and-updates" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#03</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Shutting Down Sora — Pivots to Coding Tools and Enterprise</div>
+      <div class="card-brief">
+        OpenAI is discontinuing its Sora video-generation tool, with the web and app shutting down April 26 and the API following on September 24. The move comes after a reportedly canceled $1 billion Disney licensing deal and reflects a strategic pivot toward coding tools and enterprise customers ahead of a potential IPO. The abrupt announcement caught employees and partners off guard. Sora will continue only as an internal research project focused on world models.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Decoder / LA Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://the-decoder.com/openai-sets-two-stage-sora-shutdown-with-app-closing-april-2026-and-api-following-in-september/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#04</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-safety">Safety</span>
+        </div>
+      </div>
+      <div class="card-title">Anthropic Accidentally Leaks Claude Code Source — 500K Lines Exposed via npm</div>
+      <div class="card-brief">
+        Anthropic's full source code for Claude Code was accidentally published through an npm package, exposing over 500,000 lines of TypeScript across ~2,000 files. Security researcher Chaofan Shou discovered the leak, which revealed unreleased features including an always-on agent codenamed "Kairos" and internal model codenames like "Capybara" for a Claude 4.6 variant. Anthropic confirmed it was a human-error packaging issue with no customer data exposed. The company is issuing DMCA takedowns for mirrored copies.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> CNET / The Register</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.cnet.com/tech/anthropic-accidentally-exposes-source-code-for-claude-code/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#05</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">NVIDIA Invests $2 Billion in Marvell — NVLink Fusion Alliance Formed</div>
+      <div class="card-brief">
+        NVIDIA announced a $2 billion strategic investment in Marvell Technology, centering on the NVLink Fusion platform that enables customers to build "semi-custom" AI infrastructure. Marvell will provide custom XPUs and NVLink-compatible networking, while NVIDIA supplies its Vera CPU, ConnectX NICs, and Spectrum-X switches. The partnership also extends to silicon photonics for energy-efficient data transmission and 5G/6G network transformation. Marvell shares surged 11% on the news.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> GlobeNewsWire / Marvell</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.globenewswire.com/news-release/2026/03/31/3265406/0/en/NVIDIA-AI-Ecosystem-Expands-as-Marvell-Joins-Forces-Through-NVLink-Fusion.html" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#06</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">All 11 xAI Co-Founders Have Now Left — Musk Says Rebuilding "From Foundations"</div>
+      <div class="card-brief">
+        Every one of Elon Musk's original 11 xAI co-founders has departed, with Ross Nordeen — the last holdout — leaving in March. The exodus accelerated after xAI's acquisition by SpaceX in an all-stock deal valuing the combined entity at $1.25 trillion. Musk acknowledged that xAI "was not built right the first time" and is being rebuilt from scratch. The mass departure underlines the brutally competitive AI talent market in 2026.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Next Web / Silicon Republic</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://thenextweb.com/news/xai-all-cofounders-departed-musk-spacex-rebuild" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#07</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">California Defies Trump, Imposes New AI Regulations on State Contractors</div>
+      <div class="card-brief">
+        California is implementing new standards for AI companies operating in the state, prioritizing public safety and individual rights in defiance of federal deregulation calls. Companies seeking state contracts must demonstrate policies preventing distribution of illegal content, addressing harmful bias, and avoiding unlawful discrimination, detention, and surveillance. The move makes California the de facto US AI regulatory leader and could set a template for other states.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> The Guardian</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.theguardian.com/us-news/2026/mar/30/california-ai-regulations-trump" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- China Section -->
+  <div class="section-label">🇨🇳 China</div>
+  <div class="news-grid">
+
+    <!-- 8 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#08</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">Baidu Robotaxi Fleet Freezes in Wuhan — 100+ Apollo Go Cars Stranded</div>
+      <div class="card-brief">
+        A major "system failure" caused at least 100 Baidu Apollo Go robotaxis to suddenly stop in the middle of roads across Wuhan on the night of March 31. Passengers were able to exit safely but some were trapped for nearly two hours. Police confirmed the outage was caused by a systemic technical failure, and an investigation is underway. The incident reignites safety concerns about China's rapidly expanding autonomous driving fleets.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Straits Times / WKZO</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.straitstimes.com/asia/east-asia/baidu-robotaxis-freeze-in-chinas-wuhan-sparking-flurry-of-police-calls" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#09</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">DeepSeek V4 Expected Mid-April — Trillion-Parameter Multimodal with Long-Term Memory</div>
+      <div class="card-brief">
+        DeepSeek's next-generation V4 model is expected to launch in mid-to-late April, featuring native multimodal capabilities at a trillion-parameter scale with a 1M-token context window. The model introduces a breakthrough "Long-Term Memory" system that retains user preferences across sessions. Development faced delays due to Huawei Ascend 910B hardware issues, forcing a partial pivot to NVIDIA GPUs. V4 is expected to compete directly with GPT-5.4, Gemini 3, and Claude Opus 4.6.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Reddit OSINT / Financial Express</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.reddit.com/r/DeepSeek/comments/1s694qu/osint_report_deepseek_v4_release_timeline/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#10</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Alibaba Consolidates AI into "Token Hub" Unit — Raises AI Prices 34%</div>
+      <div class="card-brief">
+        Alibaba is reorganizing its AI operations into a new unit called "Alibaba Token Hub," led by CEO Eddie Wu, to streamline research, product, and design teams with an emphasis on monetization. The company has simultaneously increased AI service and chip prices by over a third to recoup investments amid surging demand. Alibaba also released its closed-source Qwen3.5 model and unveiled the XuanTie C950 RISC-V processor — billed as the "highest performing RISC-V CPU in the world" — designed for agentic AI workloads.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Investing.com / Techzine EU</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.investing.com/news/stock-market-news/alibaba-stock-rises-on-report-of-new-ai-unit-formation-93CH-4562467" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#11</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Baidu Joins China's AI Agent Frenzy — Launches DuClaw Zero-Deployment Platform</div>
+      <div class="card-brief">
+        Baidu has launched DuClaw, a zero-deployment service for its OpenClaw agent platform, aiming to make multimodal AI agents more accessible for businesses. The company is simultaneously rolling out DuMate desktop assistants, the RedClaw mobile platform, and integrating agent capabilities into its Xiaodu smart-device unit. Over 90% of Baidu's 4,000+ campus recruitment positions for 2026 are AI-related, signaling an all-in bet on the agentic AI era.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Investing.com / Tech in Asia</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.investing.com/news/stock-market-news/baidu-joins-chinas-openclaw-frenzy-with-new-ai-agents-4566265" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Global Section -->
+  <div class="section-label">🌍 Global & Regional</div>
+  <div class="news-grid">
+
+    <!-- 12 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#12</div>
+        <div class="card-tags">
+          <span class="tag tag-global">Global</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Google's Sergey Brin: AI Agents Are the "Next Big Leap" — Internal Tool "Agent Smith" Goes Viral</div>
+      <div class="card-brief">
+        At a recent town hall, Google co-founder Sergey Brin declared AI agents the major focus for Google in 2026. An internal tool called "Agent Smith" that automates a wide variety of tasks has become so popular that access had to be restricted. Google is mandating AI adoption for both technical and non-technical staff and launched a $30 million global initiative to help governments adopt AI for public services, with applications closing April 3.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Times of India / Google.org</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://timesofindia.indiatimes.com/technology/tech-news/google-cofounder-sergey-brin-to-employees-at-town-hall-this-year-a-big-role-will-be-played-by-/articleshow/129891289.cms" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#13</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">EU</span>
+        </div>
+      </div>
+      <div class="card-title">EU AI Act High-Risk Deadlines May Slip to 2027 — Digital Omnibus Reshapes Timeline</div>
+      <div class="card-brief">
+        The European Parliament voted in March to delay the application of high-risk AI system rules under the EU AI Act, with the proposed "Digital Omnibus" potentially deferring enforcement to December 2027. The August 2, 2026 deadline for high-risk obligations still stands officially, but harmonized technical standards aren't expected until H2 2026 at the earliest. Analysts recommend companies proceed with compliance anyway, treating any extension as refinement time rather than a reason to pause.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> CIO.com / Delors Centre</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.cio.com/article/4150989/european-parliament-delays-implementation-of-parts-of-the-eu-ai-act.html" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#14</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">Asia</span>
+        </div>
+      </div>
+      <div class="card-title">Vietnam Becomes First Southeast Asian Nation with Standalone AI Law — IP Rules Follow</div>
+      <div class="card-brief">
+        Vietnam's comprehensive Law on Artificial Intelligence — which took effect March 1 — is now the first standalone AI regime in Southeast Asia. It adopts a risk-based model mandating human oversight for generative AI, content labeling, and prohibitions on certain high-risk applications, with extraterritorial reach. As of April 1, updated IP regulations also empower the government to define conditions for establishing intellectual property rights for AI-created works. Grace periods of up to 18 months apply to legacy high-risk systems.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Tech Policy Press / Vietnam Briefing</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.techpolicy.press/vietnams-new-ai-law-balances-innovation-push-with-tight-state-control/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>AI Daily Brief</strong> · Curated by Amy 🌸 · April 1, 2026<br />
+  Stories sourced from public news as of today. Not financial or professional advice.
+</div>
+
+</body>
+</html>
