@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Daily Brief — April 3, 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 48px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .header .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 12px;
+    }
+
+    .header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .header .subtitle {
+      color: #90a4ae;
+      font-size: 14px;
+    }
+
+    .header .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(79, 195, 247, 0.12);
+      border: 1px solid rgba(79, 195, 247, 0.3);
+      color: #4fc3f7;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4fc3f7;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    .news-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 12px 0 0 12px;
+    }
+
+    .card.us::before { background: #4fc3f7; }
+    .card.china::before { background: #ef5350; }
+    .card.global::before { background: #66bb6a; }
+    .card.industry::before { background: #ffa726; }
+    .card.safety::before { background: #ab47bc; }
+
+    .card:hover {
+      border-color: #3a3a3a;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: #555;
+      min-width: 28px;
+      margin-top: 2px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .tag-us { background: rgba(79, 195, 247, 0.15); color: #4fc3f7; }
+    .tag-china { background: rgba(239, 83, 80, 0.15); color: #ef5350; }
+    .tag-global { background: rgba(102, 187, 106, 0.15); color: #66bb6a; }
+    .tag-industry { background: rgba(255, 167, 38, 0.15); color: #ffa726; }
+    .tag-safety { background: rgba(171, 71, 188, 0.15); color: #ce93d8; }
+    .tag-policy { background: rgba(38, 198, 218, 0.15); color: #26c6da; }
+    .tag-breaking { background: rgba(255, 82, 82, 0.2); color: #ff5252; }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .card-brief {
+      font-size: 14px;
+      color: #b0b0b0;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .meta-item .icon {
+      font-size: 12px;
+    }
+
+    .meta-item a {
+      color: #4fc3f7;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .meta-item a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid #1e1e1e;
+      color: #444;
+      font-size: 12px;
+    }
+
+    .footer strong {
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 26px; }
+      .card-title { font-size: 16px; }
+      .card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">AI Daily Brief</div>
+  <h1>🤖 Top AI Stories</h1>
+  <div class="subtitle">Friday, April 3, 2026 · Curated for the global AI-aware reader</div>
+  <div class="badge-row">
+    <span class="badge">🇺🇸 United States</span>
+    <span class="badge">🇨🇳 China</span>
+    <span class="badge">🌍 Global</span>
+    <span class="badge">14 Stories</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- US Section -->
+  <div class="section-label">🇺🇸 United States</div>
+  <div class="news-grid">
+
+    <!-- 1 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#01</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Shuts Down Sora — Redirects Resources to Automated Researchers</div>
+      <div class="card-brief">
+        OpenAI is discontinuing its Sora video-generation platform, with the web and app experiences shutting down April 26 and the API following on September 24. The tool was reportedly costing $1 million per day to operate while user engagement declined sharply from its peak. CEO Sam Altman expressed regret to Disney CEO Josh D'Amaro, whose company had planned a $1 billion investment around Sora. OpenAI says it's reallocating compute and product capacity toward next-generation automated researchers, coding tools, and enterprise customers.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 3, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Variety / LA Times / Forbes</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://au.variety.com/2026/digital/news/why-openai-shut-down-sora-sam-altman-felt-terrible-disney-ceo-josh-damaro-34875/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#02</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Anthropic Acquires Coefficient Bio for $400M+ — Expands into Healthcare AI</div>
+      <div class="card-brief">
+        Anthropic has acquired Coefficient Bio, a stealth startup building AI models for biological research, in an all-stock deal valued at over $400 million. The team will join Anthropic's Health Care Life Sciences division. The acquisition signals Anthropic's aggressive vertical expansion beyond general-purpose AI, targeting the lucrative biotech and drug discovery market. It comes as Anthropic also deals with the Trump administration appealing a court ruling that had blocked Pentagon punitive measures against the company over its military AI restrictions.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 3, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Newcomer / Economic Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.newcomer.co/p/anthropic-buys-stealth-dimension" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#03</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Google & Nvidia Launch Gemma 4 — Open-Source AI From Phones to Data Centers</div>
+      <div class="card-brief">
+        Google officially released Gemma 4, its latest open-source AI model family under Apache 2.0 license, in collaboration with Nvidia. Available in four sizes (2B to 31B parameters), Gemma 4 runs on everything from Android smartphones and Raspberry Pi to Nvidia Blackwell GPUs and Google Cloud TPUs. The model supports agentic workflows, audio/video processing, and advanced reasoning. It's also the foundation for next-gen Gemini Nano and is already optimized for Nvidia's inference stack. Google simultaneously announced TurboQuant, a compression algorithm that cuts AI memory use 6x.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 2, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Mashable / SiliconAngle / Google Cloud Blog</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://mashable.com/article/google-releases-gemma-4-open-ai-model-now-open-source-how-to-try-it" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#04</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Q1 2026 VC Hits Record $297B — AI Startups Capture 81% of All Funding</div>
+      <div class="card-brief">
+        Global venture capital funding shattered all records in Q1 2026, reaching $297 billion — a 150% increase year-over-year. AI startups captured $239 billion (81%) of total funding. Four of the five largest venture rounds ever closed this quarter: OpenAI ($122B), Anthropic ($30B), xAI ($20B), and Waymo ($16B), collectively accounting for 63% of all global venture investment. The US dominated with $247B (83%) of the total. The numbers signal an unprecedented concentration of capital into frontier AI companies.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 2, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Crunchbase / Benzinga / Trending Topics EU</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://news.crunchbase.com/venture/record-breaking-funding-ai-global-q1-2026/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#05</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">Trump Admin Appeals Anthropic Ruling — Pentagon AI Dispute Escalates</div>
+      <div class="card-brief">
+        The Trump administration has appealed a federal judge's order that blocked punitive measures against Anthropic after the company refused unrestricted military use of Claude AI. The dispute centers on Anthropic's two red lines: no mass surveillance of Americans and no fully autonomous weapons. The Pentagon had threatened contract termination and "supply chain risk" designation. The appeal escalates what has become the defining legal battle over AI companies' right to set ethical boundaries on government use of their technology.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 3, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Crux Now</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://cruxnow.com/church-in-the-usa/2026/04/trump-administration-appeals-ruling-that-blocked-pentagon-action-against-anthropic-over-ai-dispute" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#06</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+        </div>
+      </div>
+      <div class="card-title">US States Advance Dozens of AI Bills — Chatbot Safety, Healthcare, Privacy</div>
+      <div class="card-brief">
+        A wave of state-level AI legislation is advancing across the US. Tennessee's governor signed SB 1580 prohibiting AI from impersonating mental health professionals. Georgia, Michigan, and Idaho are advancing chatbot safety bills requiring AI disclosure and minor protection protocols. Alabama and Minnesota are debating AI restrictions in healthcare coverage decisions. Meanwhile, NIST published AI 800-4 on post-deployment monitoring challenges, and AI industry groups are pouring over $100 million into 2026 midterm elections to shape federal oversight.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 3, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Transparency Coalition / Blank Rome / Everett Post</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.transparencycoalition.ai/news/ai-legislative-update-april3-2026" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="card us">
+      <div class="card-header">
+        <div class="card-num">#07</div>
+        <div class="card-tags">
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">OpenAI Acquires Tech Podcast TBPN — Media Expansion Signals AGI Push</div>
+      <div class="card-brief">
+        OpenAI has acquired TBPN, the popular tech news podcast hosted by John Coogan and Jordi Hays. CEO of AGI Deployment Fidji Simo said the move aims to foster "constructive conversations about the changes AI creates" as OpenAI approaches its AGI goals. The surprise acquisition marks OpenAI's first move into media ownership and raises questions about editorial independence. OpenAI also closed a funding round with $122 billion in committed capital, valuing the company at $852 billion.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 3, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Times of India / Manila Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://timesofindia.indiatimes.com/technology/tech-news/openai-acquires-tech-talk-news-show-tbpn-read-ceo-agi-deployment-fidji-simos-message-to-employees/articleshow/129988475.cms" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- China Section -->
+  <div class="section-label">🇨🇳 China</div>
+  <div class="news-grid">
+
+    <!-- 8 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#08</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">Alibaba Launches Qwen3.6-Plus — Pivots From Open-Source to Enterprise Monetization</div>
+      <div class="card-brief">
+        Alibaba unveiled Qwen3.6-Plus, a new flagship model emphasizing enhanced agentic coding and multimodal reasoning for enterprise applications. The company also introduced the Wukong agentic AI platform and expanded enterprise tools like Accio Work. In a strategic pivot, Alibaba is moving away from open-source releases toward paid enterprise solutions and has adopted an "AI-first" hiring strategy, with over 80% of open positions now AI-related. The shift signals China's AI giants are transitioning from user growth to revenue generation.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 2, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Seeking Alpha / Benzinga / Morningstar</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://seekingalpha.com/news/4571944-alibaba-unveils-agentic-ai-focused-model-qwen36-plus" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#09</div>
+        <div class="card-tags">
+          <span class="tag tag-breaking">Breaking</span>
+          <span class="tag tag-china">China</span>
+        </div>
+      </div>
+      <div class="card-title">Baidu's Apollo Go Launches Driverless Taxis in Dubai — 100+ Robotaxis Stall in Wuhan</div>
+      <div class="card-brief">
+        In a tale of two cities, Baidu launched fully driverless commercial ride-hailing in Dubai on April 1, partnering with Dubai Taxi Company with plans for 1,000+ autonomous vehicles. But days earlier, over 100 Apollo Go robotaxis simultaneously froze mid-traffic in Wuhan, stranding passengers on roads and elevated highways in the platform's worst outage. Police attributed it to a "system malfunction." The juxtaposition highlights both the ambition and fragility of large-scale autonomous vehicle deployments.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 1, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> PR Newswire / The Next Web / SCMP</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://thenextweb.com/news/baidu-apollo-go-robotaxi-wuhan-mass-malfunction" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#10</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">DeepSeek V4 Imminent — Training Delayed by Huawei Chip Issues, Pivoted to Nvidia</div>
+      <div class="card-brief">
+        DeepSeek V4 is expected to launch in April 2026 as a native multimodal model with trillion-parameter scale, a 1 million token context window, and a novel Long-Term Memory (LTM) system. However, the release was delayed after encountering issues with Huawei Ascend 910B hardware during training, forcing an architecture pivot back to Nvidia GPUs. The setback is notable given China's push for chip self-sufficiency. DeepSeek also suffered its longest-ever outage on March 30, with the chatbot down for hours across China.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 2, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Reddit OSINT / Economic Times / Times of India</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://economictimes.indiatimes.com/tech/technology/deepseek-goes-down-for-seven-hours-in-biggest-outage-since-debut/articleshow/129893900.cms" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="card china">
+      <div class="card-header">
+        <div class="card-num">#11</div>
+        <div class="card-tags">
+          <span class="tag tag-china">China</span>
+          <span class="tag tag-industry">Industry</span>
+        </div>
+      </div>
+      <div class="card-title">Chinese Chipmakers Capture 41% of Domestic AI Server Market — Nvidia's Share Slides</div>
+      <div class="card-brief">
+        Chinese chipmakers, led by Huawei, captured 41% of the domestic AI server market in 2025, a dramatic increase driven by US sanctions restricting access to advanced Nvidia GPUs. Nvidia's market share in China has dropped correspondingly. The shift accelerates China's chip self-sufficiency roadmap, even as DeepSeek's V4 training difficulties with Huawei hardware expose the performance gap between domestic and US-made AI chips. The dynamic creates a complex feedback loop: sanctions push domestic adoption, but capability gaps remain.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 2, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Computing UK</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.computing.co.uk/news/2026/chips-components/china-s-chip-challenge-to-nvidia-asian-tech-roundup" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Global Section -->
+  <div class="section-label">🌍 Global & Regional</div>
+  <div class="news-grid">
+
+    <!-- 12 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#12</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">EU</span>
+        </div>
+      </div>
+      <div class="card-title">EU AI Act Enforcement Looms — High-Risk Deadlines May Slip to 2027</div>
+      <div class="card-brief">
+        The EU AI Act's main enforcement date of August 2, 2026 approaches, but proposed Digital Omnibus changes could defer high-risk AI system rules to December 2027. Fines can reach €35 million or 7% of global revenue. The European Parliament also approved the Council of Europe's Framework Convention on AI, the first legally binding international AI treaty. Meanwhile, US officials warned that the EU AI Act could put Europe at a "structural disadvantage" in the global tech race, and the EU allocated €307M in Horizon Europe funding for trustworthy AI research.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 3, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Compliance Week / Lewis Silkin / Europa.eu</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://www.complianceweek.com/regulatory-policy/eu-prioritizes-ai-regulation-and-frameworks-despite-omnibus-delays/36552.article" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#13</div>
+        <div class="card-tags">
+          <span class="tag tag-policy">Policy</span>
+          <span class="tag tag-global">Asia</span>
+        </div>
+      </div>
+      <div class="card-title">Asia-Pacific AI Regulation Wave — Vietnam, South Korea, Singapore Lead</div>
+      <div class="card-brief">
+        Asia-Pacific is experiencing an unprecedented wave of AI regulation. Vietnam became the first Southeast Asian nation with a comprehensive standalone AI law (effective March 1). South Korea's AI Basic Act took effect January 22 with risk management and transparency mandates. Singapore launched the world's first governance framework specifically for agentic AI. Taiwan's AI Basic Act also became effective in January. Meanwhile, China released draft rules for agentic AI, and Hong Kong announced a new AI R&D institute. Regional AI spending is projected to hit $78 billion in 2026.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 3, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Asia Law Portal / Bloomberg / CIO.com</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://asialawportal.com/asia-legal-enforcement-and-ai-update-2026/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="card global">
+      <div class="card-header">
+        <div class="card-num">#14</div>
+        <div class="card-tags">
+          <span class="tag tag-safety">Safety</span>
+          <span class="tag tag-global">Global</span>
+        </div>
+      </div>
+      <div class="card-title">67% of Orgs Deploy AI Despite Acknowledged Security Risks — Governance Failing to Keep Up</div>
+      <div class="card-brief">
+        New research from TrendAI reveals that organizations worldwide are accelerating AI deployment despite known security and compliance risks. The study found 67% of business and IT decision-makers felt pressured to approve AI tools, with one in seven describing their concerns as "extreme" but overridden due to competitive pressure. The governance gap is widening: AI adoption velocity far exceeds the maturity of oversight frameworks. Separately, Anthropic accidentally leaked ~1,900 files and 512,000 lines of Claude Code source code, underscoring the practical difficulty of AI-era security.
+      </div>
+      <div class="card-meta">
+        <span class="meta-item"><span class="icon">🕒</span> Apr 3, 2026</span>
+        <span class="meta-item"><span class="icon">📰</span> Asia News Network / LA Times</span>
+        <span class="meta-item"><span class="icon">🔗</span> <a href="https://asianews.network/organizations-overlook-ai-risk-as-governance-fails-to-keep-up/" target="_blank">Read original</a></span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>AI Daily Brief</strong> · Curated by Amy 🌸 · April 3, 2026<br />
+  Stories sourced from public news as of today. Not financial or professional advice.
+</div>
+
+</body>
+</html>
